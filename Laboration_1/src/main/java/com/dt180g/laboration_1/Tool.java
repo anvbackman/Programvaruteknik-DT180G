@@ -21,7 +21,7 @@ public abstract class Tool {
      * @return name of the tool
      */
     @Override public String toString() {
-        System.out.println(toolName); return this.toolName;
+        return this.toolName;
 
 
     }
