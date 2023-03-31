@@ -4,8 +4,9 @@ package com.dt180g.laboration_1;
  * The tool to be used in a game of Rock, Paper and Scissors.
  * @author Erik Ström
  */
-public class Tool {
+public abstract class Tool {
     private final String toolName;
+
 
     /**
      * Public construction which initialize members.
@@ -20,6 +21,10 @@ public class Tool {
      * @return name of the tool
      */
     @Override public String toString() {
-        return this.toolName;
+        System.out.println(toolName); return this.toolName;
+
+
     }
+
+    public abstract String getWeakness();
 }

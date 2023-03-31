@@ -22,11 +22,11 @@ public class Player {
      */
     public Player(final String nameOfPlayer) {
         this.tools = new ArrayList<Tool>(
-            Arrays.asList(new Tool("Rock"), new Tool("Paper"),
-                    new Tool("Scissors"))
+            Arrays.asList(new ToolRock(), new ToolPaper(), new ToolScissors())
         );
         this.playerName = nameOfPlayer;
     }
+
 
     /**
      * Accessor for player's name.
