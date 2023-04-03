@@ -28,37 +28,12 @@ public class Game {
      * @return the victorious player.
      */
     private Player determineWinner(final Tool firstPlayerTool, final Tool secondPlayerTool) {
-
+        // Checking to see if tool of player 2 matches the weakness of player 1s tool
+        // and then returning player2 if it does. Else returning player1.
         if (secondPlayerTool.toString().equals(firstPlayerTool.getWeakness())) {
-//            System.out.println("Elvira vinner");
             return player2;
         }
-        else {
-//            System.out.println("Kevin vinner!");
-//            System.out.println(("Player2 tool is " + secondPlayerTool));
-//            System.out.println("player 1 weakness is " + firstPlayerTool.getWeakness());
-            return player1;
-        }
-
-//        System.out.println("Weakness is " + firstPlayerTool.getWeakness());
-//
-
-
-//        return player1;
-
-//        return player2;
-
-//        return determineWinner(firstPlayerTool, secondPlayerTool);
-//        else {
-//            return player1;
-//        }
-//        return switch (firstPlayerTool.toString()) {
-
-//            case "Rock" -> secondPlayerTool.toString().equals("Scissors") ? player1 : player2;
-//            case "Paper" -> secondPlayerTool.toString().equals("Rock") ? player1 : player2;
-//            case "Scissors" -> secondPlayerTool.toString().equals("Paper") ? player1 : player2;
-//            default -> player1;  // why??
-//        };
+        else { return player1; }
     }
 
     /**

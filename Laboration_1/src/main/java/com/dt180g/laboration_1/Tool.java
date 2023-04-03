@@ -7,7 +7,6 @@ package com.dt180g.laboration_1;
 public abstract class Tool {
     private final String toolName;
 
-
     /**
      * Public construction which initialize members.
      * @param nameOfTool the name of tool
@@ -21,10 +20,11 @@ public abstract class Tool {
      * @return name of the tool
      */
     @Override public String toString() {
-        return this.toolName;
+        return this.toolName.toLowerCase();
 
 
     }
 
+    // Getting the tools weaknesses from the extended classes
     public abstract String getWeakness();
 }
