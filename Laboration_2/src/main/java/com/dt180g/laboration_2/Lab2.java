@@ -17,3 +17,4 @@ public final class Lab2 {
         System.out.println("Lab assignment 2");
     }
 }
+
