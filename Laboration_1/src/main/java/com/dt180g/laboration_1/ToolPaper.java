@@ -8,7 +8,7 @@ public class ToolPaper extends Tool {
     }
 
     // Setting the tools weakness and returns it to getWeakness()
-    public String getWeakness() {
-        return "Scissors".toLowerCase();
+    public Tool getWeakness() {
+        return new ToolScissors();
     }
 }

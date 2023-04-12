@@ -8,9 +8,10 @@ public class ToolRock extends Tool {
     }
 
     // Setting the tools weakness and returns it to getWeakness()
-    public String getWeakness() {
-        return "Paper".toLowerCase();
+    public Tool getWeakness() {
+        return new ToolPaper();
     }
 }
+
 
 

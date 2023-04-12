@@ -30,10 +30,12 @@ public class Game {
     private Player determineWinner(final Tool firstPlayerTool, final Tool secondPlayerTool) {
         // Checking to see if tool of player 2 matches the weakness of player 1s tool
         // and then returning player2 if it does. Else returning player1.
-        if (secondPlayerTool.toString().equals(firstPlayerTool.getWeakness())) {
+        if (secondPlayerTool.toString().equals(firstPlayerTool.getWeakness().toString())) {
             return player2;
         }
-        else { return player1; }
+        else {
+            return player1;
+        }
     }
 
     /**
