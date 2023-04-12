@@ -68,7 +68,6 @@ amount of matches needed before the game is finished.
 By getting the tools names and weaknesses from ToolRock, ToolPaper and ToolScissors classes we can both exclude the risk
 of new tools being added and also exclude the risk of a player getting a point for the wrong reason.
 Lastly we can see that the new implementation matches what was expected from the updated class diagram.
-
 By reaching the goals set, we may establish that the purpose of this assignment has been fulfilled.
 
 ### Personal Reflection
