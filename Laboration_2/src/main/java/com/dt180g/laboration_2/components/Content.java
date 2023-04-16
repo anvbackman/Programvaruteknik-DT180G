@@ -4,24 +4,37 @@ import com.dt180g.laboration_2.decorators.SpyMaster;
 import com.dt180g.laboration_2.support.Constants;
 import com.dt180g.laboration_2.support.InvalidAuthorizationException;
 
-public abstract class Content {
+public abstract class Content implements MessageInterface {
 
     private static int encryptionLevel;
-    StringBuilder message = new StringBuilder();
+//    StringBuilder message = new StringBuilder();
     int offset;
     int alphaPos;
 
+    protected static void increaseEncryptionLevel(int increaseLevel) {
+    }
+
+    protected static void setEncryptionLevel(int setLevel) {
+    }
+
+    protected static Content getEncryptionLevel(Content encryptionLevel, Object authenticator) {
+        if (authenticator.getClass().equals(SpyMaster.class)) {
+            return encryptionLevel;
+        }
+        else {
+            throw new InvalidAuthorizationException("Only spy masters may access encryption depth.");
+        }
+
+    }
 
 
-
-    StringBuilder cipher(String message, int rotValue) {
+    protected StringBuilder cipher(String message, int rotValue) {
         StringBuilder encryptedMessage = new StringBuilder();
 
         for (char ch : message.toCharArray()) {
             if (!Character.isAlphabetic(ch)) {
                 encryptedMessage.append(ch);
-            }
-            else {
+            } else {
                 if (Character.isUpperCase(ch)) {
                     offset = 'A';
 
@@ -31,12 +44,15 @@ public abstract class Content {
 
                 }
                 alphaPos = ((ch - offset) + rotValue) % Constants.ALPHABET_LENGTH;
-                char encryptedChar = (char)alphaPos;
+                char encryptedChar = (char) alphaPos;
                 encryptedMessage.append(encryptedChar);
+
+            }
 
         }
         return encryptedMessage;
     }
+}
 
 //    public static int getEncryptionLevel() {
 
@@ -65,4 +81,4 @@ public abstract class Content {
 //            String alphaPos = ((ch - offset) + rotValue) % Constants.ALPHABET_LENGTH;
 
 
-}
+

@@ -8,6 +8,7 @@ public class ToolRock extends Tool {
     }
 
     // Setting the tools weakness and returns it to getWeakness()
+    @Override
     public Tool getWeakness() {
         return new ToolPaper();
     }

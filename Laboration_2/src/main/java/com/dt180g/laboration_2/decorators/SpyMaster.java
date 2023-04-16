@@ -1,4 +1,13 @@
 package com.dt180g.laboration_2.decorators;
 
-public class SpyMaster {
+import com.dt180g.laboration_2.components.Content;
+
+public class SpyMaster extends Operative {
+
+    private final int decryptionKey;
+
+    public SpyMaster(Content content) {
+
+    }
+
 }

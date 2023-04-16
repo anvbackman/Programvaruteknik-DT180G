@@ -14,7 +14,7 @@ public abstract class Tool {
      * Public construction which initialize members.
      * @param nameOfTool the name of tool
      */
-    public Tool(final String nameOfTool) {
+    protected Tool(final String nameOfTool) {
         this.toolName = nameOfTool;
     }
 

@@ -7,7 +7,8 @@ package com.dt180g.laboration_2.components;
 public interface MessageInterface {
     /**
      * Used to retrieve message content.
+     *
      * @return message as string.
      */
-    String getMessage();
+    StringBuilder getMessage();
 }

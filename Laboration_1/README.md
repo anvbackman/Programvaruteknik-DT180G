@@ -34,13 +34,14 @@ Tool class, we will implement a way for the game to get each tools weakness.
 ### Tool
 
 Since the Tool class will serve as an abstract base class, we may start by changing this right away.
+According to the updated diagram, the constructor will need to be protected. Here one can simply change from public to protected.
 We then know that a method is needed in order to get the weakness of each tool. This method is created as an abstract
 String method.
 
-The classes ToolRock, ToolPaper and RockScissors are then created and will extend the Tool class.
+The classes ToolRock, ToolPaper and RockScissors are then created and will extend the Tool class..
 In order to set the names of the tools we may create a constructor with its respective name. This is then sent to the
 nameOfTool String inside the Tool class.
-To store the weakness of each tool, the method getWeakness is created where the tools weakness is stored as a String.
+To store the weakness of each tool, the method getWeakness is created which will Override getWeakness in the Tool class.
 
 
 ### Player
