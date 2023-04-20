@@ -10,5 +10,5 @@ public interface MessageInterface {
      *
      * @return message as string.
      */
-    StringBuilder getMessage();
+    String getMessage();
 }

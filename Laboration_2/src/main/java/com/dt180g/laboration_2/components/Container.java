@@ -1,10 +1,10 @@
 package com.dt180g.laboration_2.components;
 
-public abstract class Container extends Content {
+public class Container extends Content {
 
     private final String message;
     public Container(String newMessage, int encryptionLevel) {
-//        this.message = message;
+
 
         if (encryptionLevel < 0) {
             encryptionLevel = 10;
@@ -16,8 +16,7 @@ public abstract class Container extends Content {
 
     }
 
-    @Override
-    public StringBuilder getMessage() {
+    @Override public String getMessage() {
         return message;
     }
 }

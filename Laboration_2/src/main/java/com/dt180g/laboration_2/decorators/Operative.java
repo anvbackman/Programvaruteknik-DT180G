@@ -8,12 +8,9 @@ public abstract class Operative extends Content {
 
     protected Operative(Content content) {
         this.content = content;
-
     }
 
-    @Override
-    public StringBuilder getMessage() {
+    @Override public String getMessage() {
         return content.getMessage();
     }
-
 }

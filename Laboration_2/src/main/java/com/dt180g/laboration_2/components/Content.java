@@ -11,14 +11,18 @@ public abstract class Content implements MessageInterface {
     int offset;
     int alphaPos;
 
-    protected static void increaseEncryptionLevel(int increaseLevel) {
+    protected static int increaseEncryptionLevel(int increaseLevel) {
+        encryptionLevel = encryptionLevel + increaseLevel;
+        return encryptionLevel;
     }
 
-    protected static void setEncryptionLevel(int setLevel) {
+    protected static int setEncryptionLevel(int setLevel) {
+        encryptionLevel = setLevel;
+        return encryptionLevel;
     }
 
-    protected static Content getEncryptionLevel(Content encryptionLevel, Object authenticator) {
-        if (authenticator.getClass().equals(SpyMaster.class)) {
+    protected static int getEncryptionLevel(Content content) {
+        if (content.getClass().equals(SpyMaster.class)) {
             return encryptionLevel;
         }
         else {
@@ -28,7 +32,7 @@ public abstract class Content implements MessageInterface {
     }
 
 
-    protected StringBuilder cipher(String message, int rotValue) {
+    protected String cipher(String message, int rotValue) {
         StringBuilder encryptedMessage = new StringBuilder();
 
         for (char ch : message.toCharArray()) {
@@ -50,7 +54,7 @@ public abstract class Content implements MessageInterface {
             }
 
         }
-        return encryptedMessage;
+        return encryptedMessage.toString();
     }
 }
 

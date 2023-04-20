@@ -7,18 +7,18 @@ public class Spy extends Operative {
 
     private int encryptValue;
 
-    public int Spy(Content content) {
+    public Spy(Content content) {
 
 //        int low = Constants.LOWER_BOUNDARY;
 //        int high = Constants.UPPER_BOUNDARY;
-
+        super(content);
         encryptValue = (Constants.UPPER_BOUNDARY - Constants.LOWER_BOUNDARY + 1) + Constants.LOWER_BOUNDARY;
-        return encryptValue;
+        Content.increaseEncryptionLevel(encryptValue);
+//        return encryptValue;
     }
 
-    @Override
-    public StringBuilder getMessage() {
-        return cipher(super.getMessage().toString(), encryptValue);
+    @Override public String getMessage() {
+        return cipher(super.getMessage(), encryptValue);
     }
 
 }
