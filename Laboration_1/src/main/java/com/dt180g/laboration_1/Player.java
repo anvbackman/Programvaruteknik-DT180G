@@ -23,8 +23,7 @@ public class Player {
     public Player(final String nameOfPlayer) {
         this.tools = new ArrayList<Tool>(
                 // Getting Tool names from their respective class
-            Arrays.asList(new ToolRock(), new ToolPaper(), new ToolScissors())
-        );
+            Arrays.asList(new ToolRock(), new ToolPaper(), new ToolScissors()));
         this.playerName = nameOfPlayer;
     }
 
