@@ -128,6 +128,7 @@ for (char ch : message.toCharArray()) {
     }
 ```
 
+---
 ### Operative class
 
 The abstract operative class will be used as a decorator and extends the Content class.
@@ -142,7 +143,7 @@ In order to override the getMessage String, we simply return it using the conten
 protected Operative(Content content) { this.content = content; }
 ```
 
-
+---
 ### Container class
 Same as the Operative class, this class will extend the Content class.
 This class will store the message content, hence we start with creating a variable to store it.
@@ -158,6 +159,7 @@ to the message String, which will then be returned using the getMessage() method
 @Override public String getMessage() { return message; }
 ```
 
+---
 ### Spy class
 The regular spy class will extend the Operative class and will be used to transport messages and to
 increase the encryption level.
@@ -176,6 +178,7 @@ The encryption value is then returned via the getMessage() method where it is ci
 @Override public String getMessage() { return cipher(super.getMessage(), encryptValue); }
 ```
 
+---
 ### SpyMaster class
 The SpyMaster class will also extend the Operative class but the SpyMaster class will also be able to read
 the encrypted messages by decrypting them.
@@ -189,6 +192,8 @@ int encryptionDepth = Content.getEncryptionLevel(this);
 ```
 The decryption is then returned using the cipher in the getMessage() method.
 
+
+---
 ## Discussion
 
 ### Validation
@@ -196,13 +201,35 @@ In order to validate that the implementation works and that the purposes has bee
 executed several times and Maven has been used to run unit tests without failure. 
 
 The Content class has been implemented as the abstract base component and adheres to the specification shown
-in the class diagram and the abstract base decorator Operative has been implemented so from which the decorators
-can derive.
-The Container class has been created to store the encrypted message and base encryption.
+in the class diagram. The Content class is now able to increase and set the encryption level and verify that
+the only handler able to decrypt the messages is the SpyMaster and otherwise throw an exception. The implementation
+of the cipher is also working as intended by ciphering the messages to encrypt them.
+An alternative approach in the Content class would be to check if the handler is a SpyMaster by using instanceof.
+Which would make it more readable. How ever, the use of this would depend on the case since the use of
+the instanceof approach will return True even if said object is a subclass of the specified class.
+```
+protected static int getEncryptionLevel(Content content) {
+        if (content instanceof SpyMaster) {
+            return encryptionLevel;
+```
 
-The Spy class has been implemented so that increase of encryption value is possible. This by checking 
-that the encryption level is positive. If not, the spy class will set it to 10. The spy class will then
-return the increased encryption value.
+The abstract base decorator Operative has been implemented so from which the decorators
+can derive. And is used to store references made to the previous component. The Operative classes implementation
+has been made simple but suitable for this assignment.
+
+The Container class has been created to store the encrypted message and base encryption and to make sure that
+the encryption level is never set to a negative value by setting it to 10 if that's the case. 
+The implementation is simple and solves the problem of facing negative values for the encryption level.
+
+The Spy class has been implemented so that a randomized increase of encryption value is possible. 
+An alternative solution to the calculation would be to use Javas class SecureRandom 
+instead of Math.floor which would generate a random number that is said to be more secure since the random number
+is harder to predict.
+```
+SecureRandom random = new SecureRandom();
+        encryptValue = random.nextInt(Constants.UPPER_BOUNDARY - Constants.LOWER_BOUNDARY + 1) + Constants.LOWER_BOUNDARY;
+        Content.increaseEncryptionLevel(encryptValue);
+```
 
 The SpyMaster class is created according to the specifications and is the only one who can decipher the
 encrypted messages, by reversing the calculation that encrypted it. It then sets the encryption depth and
@@ -214,6 +241,7 @@ rather easy.
 
 By reaching the goals set, it can be established that the purposes of this assignment has been fulfilled.
 
+---
 ### Personal Reflections
 Through this lab and its modules, I feel that I have gained a lot more knowledge about interfaces, decorators and unit testing.
 I've had my ups and downs with the lab, but it has been enjoyable getting to solve them. I would say that
