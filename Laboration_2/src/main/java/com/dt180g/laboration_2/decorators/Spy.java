@@ -4,7 +4,7 @@ import com.dt180g.laboration_2.components.Content;
 import com.dt180g.laboration_2.support.Constants;
 
 /**
- * Spy class that is a concrete syp operative deriving from the Operative class. Spy class is used to transport messages
+ * Spy class that is a concrete spy operative deriving from the Operative class. Spy class is used to transport messages
  * @author Andreas Backman
  */
 public class Spy extends Operative {

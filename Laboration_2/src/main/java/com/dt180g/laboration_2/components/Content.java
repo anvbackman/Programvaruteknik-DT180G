@@ -41,8 +41,9 @@ public abstract class Content implements MessageInterface {
      * Method to check that the encryption level equals that of the SpyMaster and either returns the encryption level
      * or throws an exception
      *
-     * @param content
+     * @param content the content
      * @return the encryption level
+     * @throws InvalidAuthorizationException if user is not SpyMaster
      */
     protected static int getEncryptionLevel(Content content) {
         if (content.getClass().equals(SpyMaster.class)) {
