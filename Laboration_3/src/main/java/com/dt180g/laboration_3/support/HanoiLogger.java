@@ -5,31 +5,42 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.*;
 
-
+/**
+ * HanoiLogger class which creates the logger and specifies when it will be used.
+ * @author Andreas Backman
+ */
 public class HanoiLogger {
 
 
-
+    // Variables for the HanoiLogger instance and the logger
     private static HanoiLogger instance;
     private Logger logger;
 
 
-
+    /**
+     * Constructor for getting the instance and creating a new logger if the instance is set to null
+     * @return the instance
+     */
     public static HanoiLogger getInstance() {
         if (instance == null) {
             instance = new HanoiLogger();
         }
-
         return instance;
     }
 
-
+    /**
+     * Method for logging the message when it should be logged and when the logger isn't null
+     * @param message the logger text
+     */
     public void logInfo(String message) {
         if (AppConfig.shouldUseLog() && logger != null) {
             logger.info((message));
         }
     }
 
+    /**
+     * Method to close the logger by iterating over logger.getHandlers() and closing them
+     */
     public void closeLogger() {
         for (Handler handler : logger.getHandlers()) {
             handler.close();
@@ -37,6 +48,9 @@ public class HanoiLogger {
         }
     }
 
+    /**
+     * Method for resetting the logger by checking if the logger should be used, closing it and then initializing it.
+     */
     public void resetLogger() {
         if (AppConfig.shouldUseLog()) {
             closeLogger();
@@ -44,6 +58,11 @@ public class HanoiLogger {
         }
     }
 
+    /**
+     * Method for initializing the logger by setting the logger, creating a filehandler using the specified path
+     * setting the logging level and formatting the log record. The method is also made to catch an erryr when
+     * initializing the logger.
+     */
     private void initializeLogger() {
         try {
             logger = Logger.getLogger(HanoiLogger.class.getName());
@@ -71,34 +90,17 @@ public class HanoiLogger {
 
     }
 
+    /**
+     * Constructor for initialize the logger if the logger should be used.
+     */
     private HanoiLogger() {
 
         if (AppConfig.shouldUseLog()) {
             initializeLogger();
+
         }
     }
 
-
-
-
-//    private Logger logger = Logger.getLogger(HanoiLogger.class.getName());
-//
-//
-
-//
-//    public void closeLogger() {
-//        LogManager.getLogManager().reset();
-//    }
-//
-//    public void logInfo(String message) {
-//        logger.info(message);
-//    }
-//
-//    private void initializeLogger() {
-//
-//    }
-//
-//    private HanoiLogger() { initializeLogger(); }
 
 
 }
