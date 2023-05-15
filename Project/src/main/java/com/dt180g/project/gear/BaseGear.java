@@ -1,6 +1,7 @@
 package com.dt180g.project.gear;
 
-import java.util.List;
+import java.util.*;
+
 
 public abstract class BaseGear {
 
@@ -12,7 +13,20 @@ public abstract class BaseGear {
     protected BaseGear(String type, String gearName, String classRestrictions) {
         this.type = type;
         this.gearName = gearName;
-        this.classRestrictions = classRestrictions;
+        ;
+        this.classRestrictions = new ArrayList<>();
+        String[] classNames = classRestrictions.split(",");
+        for (String className : classNames) {
+            try {
+                Class<?> classes = Class.forName(className.trim());
+                this.classRestrictions.add(classes);
+            }
+            catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 
     public String getType() {

@@ -11,13 +11,12 @@ public abstract class BaseStat {
         this.baseValue = baseValue;
     }
 
-    public void getStatName(String statName) {
-
+    public String getStatName(String statName) {
+        return statName;
     }
 
-    public void getBaseValue(int baseValue) {
-        baseValue = baseValue + staticModifier + dynamicModifier;
-
+    public int getBaseValue() {
+        return baseValue;
     }
 
     public int getModifiedValue() {
@@ -28,7 +27,9 @@ public abstract class BaseStat {
         return staticModifier + dynamicModifier;
     }
 
-    public void getStaticModifier(int staticModifier) {}
+    public int getStaticModifier() {
+        return staticModifier;
+    }
 
     public void adjustStaticModifier(int ad) {}
 
@@ -36,7 +37,8 @@ public abstract class BaseStat {
 
     public void resetDynamicModifier() {}
 
+    @Override
     public String toString() {
-        return statName;
+        return getStatName(statName) + getModifiedValue() + getTotalModifier();
     }
 }

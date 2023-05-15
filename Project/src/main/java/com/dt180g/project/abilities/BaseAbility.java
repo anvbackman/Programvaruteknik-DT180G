@@ -30,7 +30,8 @@ public abstract class BaseAbility {
 
     public abstract int getAmountOfTargets();
 
-    public abstract boolean execute(int attackValue, boolean targetEnemies);
+    public abstract boolean execute(int attackValue, boolean targets);
+
 
     @Override
     public abstract String toString();
