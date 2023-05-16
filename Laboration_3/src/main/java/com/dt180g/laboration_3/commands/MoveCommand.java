@@ -12,8 +12,8 @@ import com.dt180g.laboration_3.support.HanoiLogger;
 public class MoveCommand implements CommandInterface {
 
     // Variables to hold from and to which tower the player would like to move
-    int fromTower;
-    int toTower;
+    private int fromTower;
+    private int toTower;
     // Getting the logger
     HanoiLogger logger = HanoiLogger.getInstance();
 
@@ -30,6 +30,7 @@ public class MoveCommand implements CommandInterface {
     /**
      * Method to execute the moves selected and then log the move
      */
+    @Override
     public void execute() {
         HanoiEngine.INSTANCE.performMove(fromTower, toTower, true);
         logger.logInfo(fromTower + " " + toTower);

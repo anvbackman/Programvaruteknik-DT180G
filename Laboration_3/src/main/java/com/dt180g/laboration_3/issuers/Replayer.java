@@ -39,32 +39,34 @@ public class Replayer {
     /**
      * Method for getting data from log file. Reading the number of discs and initializes a new game using that amount
      * of discs. It also reads the log file and executes the corresponding move and executes ShowCommand if needed.
-     * @throws IOException if an I/O error occurs
+     * @throws IOException if a I/O error occurs
+     * @throws NumberFormatException if a NumberFormatException error occurs
+     * @throws IndexOutOfBoundsException if an IndexOutOfBoundsException error occurs
      */
-    public void runReplay() throws IOException {
+    public void runReplay() throws IOException, NumberFormatException, IndexOutOfBoundsException {
         int numDiscs = Integer.parseInt(bufferedReader.readLine().trim());
-        CommandManager.getInstance().executeCommand(new NewGameCommand(numDiscs));
+        CommandManager.INSTANCE.executeCommand(new NewGameCommand(numDiscs));
         String line;
 
         while ((line = bufferedReader.readLine()) != null) {
-            try {
-                if (line.equals(AppConfig.LOG_UNDO_SYMBOL)) {
-                    CommandManager.getInstance().undoMove();
-                }
-                else {
-                    String[] moveData = line.split(" ");
-                    int sourceIndex = Integer.parseInt(moveData[0]);
-                    int destIndex = Integer.parseInt(moveData[1]);
-                    CommandManager.getInstance().executeCommand(new MoveCommand(sourceIndex, destIndex));
-                }
-                if (AppConfig.shouldShowReplayMoves()) {
-                    CommandManager.getInstance().executeCommand(new ShowCommand());
-                }
+            if (line.equals(AppConfig.LOG_UNDO_SYMBOL)) {
+                CommandManager.INSTANCE.undoMove();
             }
-            catch (NumberFormatException | IndexOutOfBoundsException e) {
-                throw new IOException("Invalid log file format: " + e.getMessage());
+            else {
+                String[] moveData = line.split(" ");
+                int sourceIndex = Integer.parseInt(moveData[0]);
+                int destIndex = Integer.parseInt(moveData[1]);
+                CommandManager.INSTANCE.executeCommand(new MoveCommand(sourceIndex, destIndex));
+            }
+            if (AppConfig.shouldShowReplayMoves()) {
+                CommandManager.INSTANCE.executeCommand(new ShowCommand());
+            }
+
+            if (bufferedReader != null) {
+                bufferedReader.close();
             }
         }
+
 
     }
 

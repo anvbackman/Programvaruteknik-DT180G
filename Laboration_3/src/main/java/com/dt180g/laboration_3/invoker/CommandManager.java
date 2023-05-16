@@ -15,7 +15,7 @@ import java.util.LinkedList;
  */
 public class CommandManager {
     // Creating the class INSTANCE
-    public static CommandManager INSTANCE = new CommandManager();
+    public static final CommandManager INSTANCE = new CommandManager();
     // Deque for holding the undo and redo moves
     private Deque<MoveCommand> undoMoves;
     private Deque<MoveCommand> redoMoves;
@@ -28,13 +28,7 @@ public class CommandManager {
         undoMoves = new LinkedList<>();
     }
 
-    /**
-     * Constructor for getting the instance
-     * @return the instance
-     */
-    public static CommandManager getInstance() {
-        return INSTANCE;
-    }
+
 
     /**
      * Method to execute commands depending on if the command is an instance of the classes NewGameCommand
@@ -63,25 +57,37 @@ public class CommandManager {
     /**
      * Method for undoing the latest move by popping the last made move, unexecuting the undone command and pushing it to
      * redoMoves so that the player can change its mind.
+     * @throws InvalidMoveException if undoMoves is null
      */
     public void undoMove() {
-        if (undoMoves != null) {
-            MoveCommand undoneCommand = undoMoves.pop();
-            undoneCommand.unExecute();
-            redoMoves.push(undoneCommand);
+        try {
+            if (!undoMoves.isEmpty()) {
+                MoveCommand undoneCommand = undoMoves.pop();
+                undoneCommand.unExecute();
+                redoMoves.push(undoneCommand);
 
+            }
+        }
+        catch (InvalidMoveException e) {
+            System.out.println(e.getMessage());
         }
     }
 
     /**
      * Method for redoing an undone move by popping the move from redoMoves, execute the redoneCommand and push
      * the command to undoMoves.
+     * @throws InvalidMoveException if redoMoves is null
      */
     public void redoMove() {
-        if (redoMoves != null) {
-            MoveCommand redoneCommand = redoMoves.pop();
-            redoneCommand.execute();
-            undoMoves.push(redoneCommand);
+        try {
+            if (!redoMoves.isEmpty()) {
+                MoveCommand redoneCommand = redoMoves.pop();
+                redoneCommand.execute();
+                undoMoves.push(redoneCommand);
+            }
+        }
+        catch (InvalidMoveException e) {
+            System.out.println(e.getMessage());
         }
 
     }
