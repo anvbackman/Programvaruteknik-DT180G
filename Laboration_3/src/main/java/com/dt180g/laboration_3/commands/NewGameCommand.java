@@ -13,7 +13,7 @@ import com.dt180g.laboration_3.validation.InvalidMoveException;
  */
 public class NewGameCommand implements CommandInterface {
     // Variable for holding the selected disc amount
-    int discAmount;
+    private int discAmount;
     // Getting the logger
     HanoiLogger logger = HanoiLogger.getInstance();
 
@@ -29,6 +29,7 @@ public class NewGameCommand implements CommandInterface {
      * Method to execute the new game by checking that the used discAmount is within the allowed range and then
      * initializes the game and resets the logger.
      */
+    @Override
     public void execute() {
 
         if (discAmount < AppConfig.DISC_AMOUNT_MINIMUM) { discAmount = 2; }

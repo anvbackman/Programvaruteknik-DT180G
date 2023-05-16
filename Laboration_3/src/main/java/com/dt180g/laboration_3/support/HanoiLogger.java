@@ -25,7 +25,13 @@ public class HanoiLogger {
         if (instance == null) {
             instance = new HanoiLogger();
         }
+        else if (instance.logger == null) {
+            if (AppConfig.shouldUseLog()) {
+                instance.initializeLogger();
+            }
+        }
         return instance;
+
     }
 
     /**
@@ -83,7 +89,9 @@ public class HanoiLogger {
         }
 
         catch(URISyntaxException | IOException e) {
-            logger.log(Level.INFO, "Error initializing the logger", e);
+            System.err.println("Error initializing the logger" + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
         }
 
 
@@ -97,7 +105,9 @@ public class HanoiLogger {
 
         if (AppConfig.shouldUseLog()) {
             initializeLogger();
-
+        }
+        else {
+            logger = null;
         }
     }
 
