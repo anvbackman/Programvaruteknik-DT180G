@@ -20,7 +20,7 @@ public abstract class BaseStat {
     }
 
     public int getModifiedValue() {
-        return baseValue;
+        return baseValue + staticModifier + dynamicModifier;
     }
 
     public int getTotalModifier() {
@@ -31,11 +31,17 @@ public abstract class BaseStat {
         return staticModifier;
     }
 
-    public void adjustStaticModifier(int ad) {}
+    public void adjustStaticModifier(int staticModifier) {
+        this.staticModifier += staticModifier;
+    }
 
-    public void adjustDynamicModifier(int k) {}
+    public void adjustDynamicModifier(int dynamicModifier) {
+        this.dynamicModifier += dynamicModifier;
+    }
 
-    public void resetDynamicModifier() {}
+    public void resetDynamicModifier() {
+        this.dynamicModifier = 0;
+    }
 
     @Override
     public String toString() {

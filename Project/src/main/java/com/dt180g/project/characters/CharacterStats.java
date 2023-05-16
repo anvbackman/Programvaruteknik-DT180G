@@ -6,7 +6,11 @@ public class CharacterStats {
 
     private Map<String, BaseStat> stats;
 
-    public CharacterEquipment(List<Integer>) {
+    public CharacterEquipment(List<Integer> id) {
 
+    }
+
+    public String toString() {
+        return stats.toString();
     }
 }

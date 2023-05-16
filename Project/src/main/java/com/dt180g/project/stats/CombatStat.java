@@ -13,6 +13,7 @@ public class CombatStat extends BaseStat {
         this.traitReliance = traitReliance;
     }
 
+    @Override
     public int getBaseValue() {
         double value = Math.round(attributeReliance.getModifiedValue() * AppConfig.COMBAT_STAT_MULTIPLIER + traitReliance.getModifiedValue() * AppConfig.COMBAT_STAT_MULTIPLIER);
         return (int) value;

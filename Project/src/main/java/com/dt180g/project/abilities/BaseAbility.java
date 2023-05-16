@@ -1,6 +1,7 @@
 package com.dt180g.project.abilities;
 
 import com.dt180g.project.GameEngine;
+import com.dt180g.project.support.AppConfig;
 
 public abstract class BaseAbility {
 
@@ -13,7 +14,10 @@ public abstract class BaseAbility {
     }
 
     protected boolean performAbility(String info, int amountOfTargets, int damage, boolean targetEnemies) {
-        return performAbility(info, amountOfTargets, damage, targetEnemies);
+//        String logMessage = info + " (" + actionPointCost + " AP, " + energyCost + " Energy)";
+        AbilityInfo abilityInfo = new AbilityInfo(info, amountOfTargets, damage, targetEnemies, isMagic(), isHeal());
+        boolean abilityPerformed = GameEngine.INSTANCE.characterAttack(abilityInfo);
+        return abilityPerformed;
     }
 
     public int getActionPointCost() {
