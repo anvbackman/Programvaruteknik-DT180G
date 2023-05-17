@@ -21,6 +21,7 @@ public class HeavyAttack extends BaseAbility {
         return AppConfig.ABILITY_SINGLE_TARGET;
     }
 
+    @Override
     public boolean execute(int attackValue, boolean targets) {
         String info = toString();
         int amountOfTargets = getAmountOfTargets();
@@ -28,12 +29,10 @@ public class HeavyAttack extends BaseAbility {
         boolean targetEnemies = targets;
         AbilityInfo abilityInfo = new AbilityInfo(info, amountOfTargets, damage, targetEnemies, isMagic(), isHeal());
         return GameEngine.INSTANCE.characterAttack(abilityInfo);
-
-
     }
 
     @Override
     public String toString() {
-        return "HeavyAttack";
+        return AppConfig.ABILITY_HEAVY_ATTACK + " (" + getActionPointCost() + getEnergyCost() + ")";
     }
 }

@@ -4,9 +4,11 @@ import com.dt180g.project.GameEngine;
 import com.dt180g.project.support.AppConfig;
 
 public class FocusedHeal extends BaseAbility {
+    private String magicalPhrase;
 
     public FocusedHeal() {
         super(AppConfig.MEDIUM_AP_COST, AppConfig.LOW_ENERGY_COST);
+        magicalPhrase = AppConfig.MAGICAL_PHRASE_4;
     }
 
     public boolean isMagic() {
@@ -21,6 +23,7 @@ public class FocusedHeal extends BaseAbility {
         return AppConfig.ABILITY_SINGLE_TARGET;
     }
 
+    @Override
     public boolean execute(int attackValue, boolean targets) {
         String info = toString();
         int amountOfTargets = getAmountOfTargets();
@@ -29,11 +32,10 @@ public class FocusedHeal extends BaseAbility {
         AbilityInfo abilityInfo = new AbilityInfo(info, amountOfTargets, damage, targetEnemies, isMagic(), isHeal());
         return GameEngine.INSTANCE.characterAttack(abilityInfo);
 
-
     }
 
     @Override
     public String toString() {
-        return AppConfig.MAGICAL_PHRASE_4 + ": FocusedHeal";
+        return magicalPhrase + AppConfig.ABILITY_FOCUSED_HEAL + " (" + getActionPointCost() + getEnergyCost() + ")";
     }
 }

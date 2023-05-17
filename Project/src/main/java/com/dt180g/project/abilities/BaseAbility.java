@@ -14,7 +14,6 @@ public abstract class BaseAbility {
     }
 
     protected boolean performAbility(String info, int amountOfTargets, int damage, boolean targetEnemies) {
-//        String logMessage = info + " (" + actionPointCost + " AP, " + energyCost + " Energy)";
         AbilityInfo abilityInfo = new AbilityInfo(info, amountOfTargets, damage, targetEnemies, isMagic(), isHeal());
         boolean abilityPerformed = GameEngine.INSTANCE.characterAttack(abilityInfo);
         return abilityPerformed;
@@ -34,7 +33,7 @@ public abstract class BaseAbility {
 
     public abstract int getAmountOfTargets();
 
-    public abstract boolean execute(int attackValue, boolean targets);
+    public abstract boolean execute(int attackValue, boolean targets); // I alla abilities execute kan det behövas if (targets) else return false;
 
 
     @Override

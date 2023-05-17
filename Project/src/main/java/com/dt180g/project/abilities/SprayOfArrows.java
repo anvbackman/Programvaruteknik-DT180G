@@ -29,11 +29,10 @@ public class SprayOfArrows extends BaseAbility {
         AbilityInfo abilityInfo = new AbilityInfo(info, amountOfTargets, damage, targetEnemies, isMagic(), isHeal());
         return GameEngine.INSTANCE.characterAttack(abilityInfo);
 
-
     }
 
     @Override
     public String toString() {
-        return "SprayOfArrows";
+        return AppConfig.ABILITY_SPRAY_OF_ARROWS + " (" + getActionPointCost() + getEnergyCost() + ")";
     }
 }

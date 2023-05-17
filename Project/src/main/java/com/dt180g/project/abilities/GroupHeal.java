@@ -5,8 +5,10 @@ import com.dt180g.project.support.AppConfig;
 
 public class GroupHeal extends BaseAbility {
 
+    private String magicalPhrase;
     public GroupHeal() {
         super(AppConfig.HIGHEST_AP_COST, AppConfig.HIGH_ENERGY_COST);
+        magicalPhrase = AppConfig.MAGICAL_PHRASE_3;
     }
 
     public boolean isMagic() {
@@ -21,6 +23,7 @@ public class GroupHeal extends BaseAbility {
         return AppConfig.ABILITY_GROUP_TARGET;
     }
 
+    @Override
     public boolean execute(int attackValue, boolean targets) {
         String info = toString();
         int amountOfTargets = getAmountOfTargets();
@@ -34,6 +37,6 @@ public class GroupHeal extends BaseAbility {
 
     @Override
     public String toString() {
-        return AppConfig.MAGICAL_PHRASE_3 + ": GroupHeal";
+        return magicalPhrase + AppConfig.ABILITY_GROUP_HEAL + " (" + getActionPointCost() + getEnergyCost() + ")";
     }
 }

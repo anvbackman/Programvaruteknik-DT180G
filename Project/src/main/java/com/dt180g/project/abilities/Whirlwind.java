@@ -21,6 +21,7 @@ public class Whirlwind extends BaseAbility {
         return AppConfig.ABILITY_GROUP_TARGET;
     }
 
+    @Override
     public boolean execute(int attackValue, boolean targets) {
         String info = toString();
         int amountOfTargets = getAmountOfTargets();
@@ -29,11 +30,9 @@ public class Whirlwind extends BaseAbility {
         AbilityInfo abilityInfo = new AbilityInfo(info, amountOfTargets, damage, targetEnemies, isMagic(), isHeal());
         return GameEngine.INSTANCE.characterAttack(abilityInfo);
 
-
     }
 
     @Override
     public String toString() {
-        return "Whirlwind";
-    }
+        return AppConfig.ABILITY_WHIRLWIND + " (" + getActionPointCost() + getEnergyCost() + ")";    }
 }

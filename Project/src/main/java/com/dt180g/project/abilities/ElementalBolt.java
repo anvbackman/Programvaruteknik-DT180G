@@ -5,8 +5,14 @@ import com.dt180g.project.support.AppConfig;
 
 public class ElementalBolt extends BaseAbility {
 
-    public ElementalBolt() {
+    private String magicalPhrase;
+    private String element;
+
+
+    public ElementalBolt(String element) {
         super(AppConfig.MEDIUM_AP_COST, AppConfig.LOW_ENERGY_COST);
+        this.element = element;
+        magicalPhrase = AppConfig.MAGICAL_PHRASE_2;
     }
 
     public boolean isMagic() {
@@ -21,6 +27,7 @@ public class ElementalBolt extends BaseAbility {
         return AppConfig.ABILITY_SINGLE_TARGET;
     }
 
+    @Override
     public boolean execute(int attackValue, boolean targets) {
         String info = toString();
         int amountOfTargets = getAmountOfTargets();
@@ -34,6 +41,6 @@ public class ElementalBolt extends BaseAbility {
 
     @Override
     public String toString() {
-        return AppConfig.MAGICAL_PHRASE_2 + ": ElementalBolt";
+        return magicalPhrase + element + AppConfig.ABILITY_ELEMENTAL_BOLT + " (" + getActionPointCost() + getEnergyCost() + ")";
     }
 }

@@ -1,11 +1,15 @@
 package com.dt180g.project.characters;
 
+import com.dt180g.project.GameEngine;
+import com.dt180g.project.GameRunner;
 import com.dt180g.project.abilities.AbilityInfo;
 import com.dt180g.project.abilities.BaseAbility;
 import com.dt180g.project.support.AppConfig;
 import com.dt180g.project.support.Randomizer;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 public abstract class BaseCharacter {
 
     private CharacterStats characterStats;
@@ -27,60 +31,155 @@ public abstract class BaseCharacter {
     }
 
     protected void executeAction(boolean execute) {
-        Deque<BaseAbility> actions = determineActions();
-        int availableAP = characterStats.getAP();
-        int availableEnergy = characterStats.getEnergy();
 
-        for (BaseAbility ability : actions) {
-            AbilityInfo abilityInfo = ability;
+        Deque<BaseAbility> selectedAbilities = determineActions();
+        int availableAP = getActionPoints();
+        int availableEnergy = getEnergyLevel();
+
+        for (BaseAbility ability : selectedAbilities) {
             int abilityAPCost = ability.getActionPointCost();
             int abilityEnergyCost = ability.getEnergyCost();
 
-            if (availableAP >= abilityAPCost && availableEnergy >= abilityEnergyCost) {
-                ability.execute();
-                availableAP -= abilityAPCost;
-                availableEnergy -= abilityEnergyCost;
+            // Check if the ability can be afforded
+            if (abilityAPCost <= availableAP && abilityEnergyCost <= availableEnergy) {
+                // Perform the specific logic for triggering the ability
+                boolean abilityTriggered = ability.execute(abilityAPCost, execute);
+
+                if (abilityTriggered) {
+                    // Register cost reductions
+                    availableAP -= abilityAPCost;
+                    availableEnergy -= abilityEnergyCost;
+                }
+
             }
+
         }
+        // Update the character's action points and energy level
+        characterStats.adjustActionPoints(availableAP);
+        characterStats.adjustEnergyLevel(availableEnergy);
 
-        characterStats.setAP(availableAP);
-        characterStats.setEnergy(availableEnergy);
-
+        // Target enemies if execute is true, otherwise target heroes
+        if (execute) {
+            targetEnemies(selectedAbilities);
+        }
+        else {
+            targetHeroes(selectedAbilities);
+        }
     }
 
     private Deque<BaseAbility> determineActions() {
+        Deque<BaseAbility> selectedAbilities = new LinkedList<>();
+        List<BaseAbility> availableAbilities = new ArrayList<>(abilities);
         int actionsPerTurn = AppConfig.ACTIONS_PER_TURN;
-        List<BaseAbility> relevantAbilities = new ArrayList<>();
+        int numAbilities = availableAbilities.size();
+        int numActions = Math.min(actionsPerTurn, numAbilities);
 
-        for (BaseAbility ability : abilities) {
-            if (ability.isRelevant(this)) {
-                relevantAbilities.add(ability);
-            }
+//        Randomizer randomizer = new Randomizer().getRandomValue(numActions);
+
+        for (int i = 0; i < numActions; i++) {
+            int randomIndex = Randomizer.INSTANCE.getRandomValue(numAbilities);
+            BaseAbility ability = availableAbilities.remove(randomIndex);
+            selectedAbilities.add(ability);
+            numAbilities--;
         }
-        Collections.shuffle(relevantAbilities, new Randomizer());
-        return new ArrayDeque<>(relevantAbilities.subList(0, actionsPerTurn));
+        return selectedAbilities;
     }
 
-    public List<Integer> registerDamage(int damage, boolean isMagic) {
 
+    // Public accessors
+    public String getCharacterName() {
+        return GameEngine.INSTANCE.getHeroes().toString();
+    }
+
+    public CharacterStats getCharacterStats() {
+        return characterStats;
+    }
+
+    public CharacterEquipment getEquipment() {
+        return equipment;
+    }
+
+    public int getActionPoints() { // Tveek?
+        return characterStats.getCurrentActionPoints();
+    }
+
+    public int getHitPoints() {
+        return characterStats.getCurrentHitPoints();
+    }
+
+    public int getEnergyLevel() {
+        return characterStats.getCurrentEnergyLevel();
+    }
+
+    public List<BaseAbility> getAbilities() {
+        return abilities;
+    }
+
+    public boolean isDead() {
+        return characterStats.getCurrentHitPoints() <= 0;
+        // en annan tanke var
+        // if (characterStats.getCurrentHitPoints() == 0) {
+        //            boolean dead = true;
+        //            return dead;
+        //        }
+        //        else {
+        //            return false;
+        //        }
+    }
+
+
+
+
+
+
+
+
+
+    public List<Integer> registerDamage(int damage, boolean isMagic) {
+        int mitigateAmount;
+        int actualDamage;
+
+        if (isMagic) {
+            mitigateAmount = (int) (damage * characterStats.getDefenceRate());
+        }
+        else {
+            int armorProtection = (int) equipment.getTotalArmorProtection();
+            double totalMitigation = characterStats.getDefenceRate() * armorProtection;
+            mitigateAmount = (int) (damage * totalMitigation);
+        }
+
+        actualDamage = damage - mitigateAmount;
+
+        List<Integer> damageInfo = new ArrayList<>();
+        damageInfo.add(mitigateAmount);
+        damageInfo.add(actualDamage);
+
+        return damageInfo;
     }
 
     public int registerHealing(int heal) {
-        return heal;
+        int currentHP = characterStats.getCurrentHitPoints();
+        int newHP = currentHP + heal;
+        characterStats.adjustHitPoints(newHP); // kan vara getCurrentHitPoints också
+        return newHP;
     }
 
     public void roundReset() {
-        int resetAP = AppConfig.ROUND_RESET_AP;
-        int resetEnergy = AppConfig.ROUND_RESET_ENERGY;
-        characterStats.setAP(resetAP);
-        characterStats.setEnergy(resetEnergy);
+        characterStats.resetActionPoints(AppConfig.ROUND_RESET_AP);
+        characterStats.resetEnergyLevel(AppConfig.ROUND_RESET_ENERGY);
     }
 
     public void doTurn() {
-
+        executeAction(true);
+        roundReset();
     }
 
     public String toString() {
-        return characterStats.toString() + equipment.toString();
+//        return characterStats.toString() + equipment.toString(); eller
+        String characterInfo = "Character: " + getCharacterName() + "\n";
+        characterInfo += "Stats: " + characterStats.toString() + "\n";
+        characterInfo += "Equipment: " + equipment.toString();
+
+        return characterInfo;
     }
 }
