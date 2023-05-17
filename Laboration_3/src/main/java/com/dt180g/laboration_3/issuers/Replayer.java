@@ -61,13 +61,7 @@ public class Replayer {
             if (AppConfig.shouldShowReplayMoves()) {
                 CommandManager.INSTANCE.executeCommand(new ShowCommand());
             }
-
-            if (bufferedReader != null) {
-                bufferedReader.close();
-            }
         }
-
-
+        bufferedReader.close();
     }
-
 }
