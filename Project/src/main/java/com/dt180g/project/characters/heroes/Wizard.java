@@ -1,4 +1,10 @@
 package com.dt180g.project.characters.heroes;
 
-public class Wizard {
+import com.dt180g.project.support.AppConfig;
+
+public class Wizard extends BaseHero {
+
+    public Wizard(String characterName) {
+        super(characterName, AppConfig.ATTRIBUTE_VALUES_WIZARD_HERO);
+    }
 }

@@ -27,7 +27,14 @@ public abstract class BaseCharacter {
     }
 
     protected String getTurnInformation(String turn) {
-        return turn;
+        String character = getCharacterName();
+        int actionPoints = getActionPoints();
+        int hitPoints = getHitPoints();
+        int energyLevel = getEnergyLevel();
+
+        String turnInfo = "[" + turn.toUpperCase() + "] " + character + " | " + actionPoints + " AP | " +
+                hitPoints + " HP | " + energyLevel + " Energy";
+        return turnInfo;
     }
 
     protected void executeAction(boolean execute) {

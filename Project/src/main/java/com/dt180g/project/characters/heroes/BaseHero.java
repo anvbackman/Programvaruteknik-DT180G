@@ -2,7 +2,9 @@ package com.dt180g.project.characters.heroes;
 
 import com.dt180g.project.abilities.BaseAbility;
 import com.dt180g.project.characters.BaseCharacter;
+import com.dt180g.project.characters.CharacterEquipment;
 import com.dt180g.project.characters.CharacterStats;
+import com.dt180g.project.gear.Armor;
 import com.dt180g.project.gear.GearManager;
 import com.dt180g.project.gear.Weapon;
 import com.dt180g.project.support.AppConfig;
@@ -14,47 +16,71 @@ public abstract class BaseHero extends BaseCharacter {
     private String characterName;
 
     protected BaseHero(String characterName, List<Integer> attributeValue) {
-        super(attributeValue);
+        super(new CharacterStats(attributeValue));
         this.characterName = characterName;
-        equipHero();
-
     }
 
-    protected void equipHero(Class<?> equip) {
+    protected equipHero(Class<?> equip) {
+        GearManager gearManager = GearManager.getInstance();
+        CharacterEquipment characterEquipment = new CharacterEquipment();
 
-        Weapon weapon1;
-        Weapon weapon2;
+        if (equip.equals(Weapon.class)) {
 
-        if (nånting.equals("Two Handed")) {
-            weapon1 = GearManager.getInstance().getRandomWeapon();
-            weapon2 = null;
+            Weapon twoHandedWeapon = gearManager.getRandomWeapon();
+            Weapon oneHandedWeapon = gearManager.getRandomOneHandedWeapon();
+            Weapon weapon1;
+            Weapon weapon2;
+
+            if (equip.equals(twoHandedWeapon)) {
+                weapon1 = twoHandedWeapon;
+                weapon2 = null;
+                characterEquipment.addWeapon(weapon1);
+                characterEquipment.addWeapon(weapon2);
+            }
+            else if (equip.equals(oneHandedWeapon)){
+                weapon1 = oneHandedWeapon;
+                weapon2 = oneHandedWeapon;
+                characterEquipment.addWeapon(weapon1);
+                characterEquipment.addWeapon(weapon2);
+            }
+
+
+
         }
-        else {
-            weapon1 = GearManager.getInstance().getRandomOneHandedWeapon();
-            weapon2 = GearManager.getInstance().getRandomOneHandedWeapon();
+
+        if (equip.equals(Armor.class)) {
+
+            Armor chest = gearManager.getRandomArmorOfType();
+            Armor hands = gearManager.getRandomArmorOfType();
+            Armor head = gearManager.getRandomArmorOfType();
+            Armor feet = gearManager.getRandomArmorOfType();
+            Armor legs = gearManager.getRandomArmorOfType();
+
+            characterEquipment.addArmorPiece(chest);
+            characterEquipment.addArmorPiece(hands);
+            characterEquipment.addArmorPiece(head);
+            characterEquipment.addArmorPiece(feet);
+            characterEquipment.addArmorPiece(legs);
         }
 
-        Armor head = GearManager.getInstance().getRandomArmorOfType(Armor.HEAD);
-        Armor chest = GearManager.getInstance().getRandomArmorOfType(Armor.CHEST);
-        Armor Hands = GearManager.getInstance().getRandomArmorOfType(Armor.HANDS);
-        Armor legs = GearManager.getInstance().getRandomArmorOfType(Armor.LEGS);
-        Armor feet  = GearManager.getInstance().getRandomArmorOfType(Armor.FEET);
-
-        setArmor
 
     }
 
     public void resetHeroStats() {
-        super.roundReset();
+        CharacterStats characterStats = getCharacterStats();
+
+        characterStats.resetActionPoints();
+        characterStats.resetHitPoints();
+        characterStats.resetEnergyLevel();
 
     }
 
     public String getCharacterName() {
-        return " The ".split(characterName).toString();
+        return characterName;
     }
 
     public void doTurn() {
 
-        performHeroAction();
+
     }
 }
