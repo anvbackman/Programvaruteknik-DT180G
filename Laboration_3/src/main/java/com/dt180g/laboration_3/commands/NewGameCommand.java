@@ -14,8 +14,6 @@ import com.dt180g.laboration_3.validation.InvalidMoveException;
 public class NewGameCommand implements CommandInterface {
     // Variable for holding the selected disc amount
     private int discAmount;
-    // Getting the logger
-    HanoiLogger logger = HanoiLogger.getInstance();
 
     /**
      * Constructor for setting this.discAmount to discAmount*
@@ -37,8 +35,8 @@ public class NewGameCommand implements CommandInterface {
         if (discAmount > AppConfig.DISC_AMOUNT_MAXIMUM) { discAmount = 7; }
 
         HanoiEngine.INSTANCE.resetGame(discAmount);
-        logger.resetLogger();
-        logger.logInfo(String.valueOf(discAmount));
+        HanoiLogger.getInstance().resetLogger();
+        HanoiLogger.getInstance().logInfo(String.valueOf(discAmount));
 
     }
 }
