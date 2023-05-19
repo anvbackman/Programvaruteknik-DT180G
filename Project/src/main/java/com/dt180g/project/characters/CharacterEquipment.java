@@ -84,7 +84,7 @@ public class CharacterEquipment {
 
         if (weapons != null && !weapons.isEmpty()) {
             for (Weapon weapon : weapons) {
-                stringBuilder.append("[WEAPON TYPE] | " + BaseGear.getType()).append("WEILD | " + Weapon.getWeild()).append("DAMAGE " + getTotalWeaponDamage() + " | ")
+                stringBuilder.append("[WEAPON TYPE] | " + BaseGear.getType()).append("WEILD | " + Weapon.getWield()).append("DAMAGE " + getTotalWeaponDamage() + " | ")
                         .append("WEAPON name").append(" of " + BaseGear.getStat()).append();
             }
         }

@@ -20,7 +20,7 @@ public abstract class BaseHero extends BaseCharacter {
         this.characterName = characterName;
     }
 
-    protected equipHero(Class<?> equip) {
+    protected void equipHero(Class<?> equip) {
         GearManager gearManager = GearManager.getInstance();
         CharacterEquipment characterEquipment = new CharacterEquipment();
 
