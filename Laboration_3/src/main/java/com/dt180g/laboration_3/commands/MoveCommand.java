@@ -14,8 +14,6 @@ public class MoveCommand implements CommandInterface {
     // Variables to hold from and to which tower the player would like to move
     private int fromTower;
     private int toTower;
-    // Getting the logger
-    HanoiLogger logger = HanoiLogger.getInstance();
 
     /**
      * Constructor for setting *Tower to this.*Tower
@@ -33,7 +31,7 @@ public class MoveCommand implements CommandInterface {
     @Override
     public void execute() {
         HanoiEngine.INSTANCE.performMove(fromTower, toTower, true);
-        logger.logInfo(fromTower + " " + toTower);
+        HanoiLogger.getInstance().logInfo(fromTower + " " + toTower);
     }
 
     /**
@@ -42,6 +40,6 @@ public class MoveCommand implements CommandInterface {
      */
     public void unExecute() {
         HanoiEngine.INSTANCE.performMove(toTower, fromTower, false);
-        logger.logInfo(AppConfig.LOG_UNDO_SYMBOL);
+        HanoiLogger.getInstance().logInfo(AppConfig.LOG_UNDO_SYMBOL);
     }
 }
