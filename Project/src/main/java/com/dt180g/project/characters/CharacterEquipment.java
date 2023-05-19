@@ -22,17 +22,21 @@ public class CharacterEquipment {
     }
 
     public int getTotalWeaponDamage() {
-        int totalWeaponDamage = 0;
+        int totalDamage = 0;
         if (weapons != null) {
-            totalWeaponDamage += weapons.getDamage();
+            for (Weapon weapon : weapons) {
+                totalDamage += weapon.getDamage();
+            }
         }
-        return totalWeaponDamage;
+        return totalDamage;
     }
 
     public int getTotalArmorProtection() {
         int totalArmorProtection = 0;
-        for (Armor armor : armorPieces.values()) { // Kan kanske göras lika som getTotalWeaponDamage?
-            totalArmorProtection += armorPieces.getProtection();
+        if (armorPieces != null) {
+            for (Armor armor : armorPieces.values()) {
+                totalArmorProtection += armor.getProtection();
+            }
         }
         return totalArmorProtection;
     }

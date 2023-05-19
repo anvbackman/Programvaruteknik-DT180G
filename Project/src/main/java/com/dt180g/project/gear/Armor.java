@@ -1,22 +1,28 @@
 package com.dt180g.project.gear;
 
+import com.dt180g.project.stats.BaseStat;
+import com.dt180g.project.stats.StatsManager;
+import com.dt180g.project.stats.Trait;
+import com.dt180g.project.support.AppConfig;
+import com.dt180g.project.support.Randomizer;
+
 import java.util.Map;
 
 public class Armor extends BaseGear {
 
-    private int protection;
-    private String material;
-    private Trait trait;
+    private final int protection;
+    private final String material;
+    private final Trait trait;
 
-    public Armor(Map<String, String properties>) {
+    public Armor(Map<String, String> armor) {
+        super("Armor", armor.get("name"), (armor.get("restriction")));
 
-        protection = Integer.parseInt(properties.get("protection"));
-        material = properties.get("material");
-        trait = Trait.valueOf(properties.get("trait"));
+        protection = Integer.parseInt(armor.get("protection"));
+        material = armor.get("material");
+        trait = new Trait(StatsManager.INSTANCE.getRandomTraitName(),
+                Randomizer.INSTANCE.getRandomValue(1, AppConfig.ARMOR_STAT_VALUE_UPPER_BOUND));
 
-        this.protection = protection;
-        this.material = material;
-        this.trait = trait;
+
     }
 
     public int getProtection() {
@@ -27,12 +33,14 @@ public class Armor extends BaseGear {
         return material;
     }
 
+    @Override
     public BaseStat getStat() {
-
+        return trait;
     }
 
+    @Override
     public String toString() {
-        return " of " + getStat();
+        return super.toString() + " of " + trait.getStatName();
     }
 
 }

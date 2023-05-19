@@ -2,8 +2,11 @@ package com.dt180g.project.characters;
 
 import com.dt180g.project.GameEngine;
 import com.dt180g.project.GameRunner;
+
 import com.dt180g.project.abilities.AbilityInfo;
 import com.dt180g.project.abilities.BaseAbility;
+import com.dt180g.project.characters.enemies.BaseEnemy;
+import com.dt180g.project.characters.heroes.BaseHero;
 import com.dt180g.project.support.AppConfig;
 import com.dt180g.project.support.Randomizer;
 
@@ -65,12 +68,27 @@ public abstract class BaseCharacter {
         characterStats.adjustActionPoints(availableAP);
         characterStats.adjustEnergyLevel(availableEnergy);
 
-        // Target enemies if execute is true, otherwise target heroes
+        List<BaseHero> targets1 = GameEngine.INSTANCE.getHeroes();
+        List<BaseEnemy> targets2 = GameEngine.INSTANCE.getEnemies();
+        List<BaseCharacter> targets;
+
         if (execute) {
-            targetEnemies(selectedAbilities);
+            targets = GameEngine.INSTANCE.getEnemies();
         }
         else {
-            targetHeroes(selectedAbilities);
+            targets = GameEngine.INSTANCE.getHeroes()
+        }
+
+
+        for (BaseCharacter target : targets) {
+            if (!target.isDead()) {
+                int damage = equipment.getTotalWeaponDamage();
+                boolean isMagic = false; // You need to determine whether the damage is magic or physical
+                List<Integer> damageInfo = target.registerDamage(damage, isMagic);
+                int mitigateAmount = damageInfo.get(0);
+                int actualDamage = damageInfo.get(1);
+                System.out.println(getCharacterName() + " dealt " + actualDamage + " damage to " + target.getCharacterName());
+            }
         }
     }
 
@@ -172,8 +190,8 @@ public abstract class BaseCharacter {
     }
 
     public void roundReset() {
-        characterStats.resetActionPoints(AppConfig.ROUND_RESET_AP);
-        characterStats.resetEnergyLevel(AppConfig.ROUND_RESET_ENERGY);
+        characterStats.resetActionPoints();
+        characterStats.resetEnergyLevel();
     }
 
     public void doTurn() {

@@ -1,7 +1,7 @@
 package com.dt180g.project.gear;
 
 import java.util.*;
-
+import com.dt180g.project.stats.BaseStat;
 
 public abstract class BaseGear {
 
@@ -13,7 +13,6 @@ public abstract class BaseGear {
     protected BaseGear(String type, String gearName, String classRestrictions) {
         this.type = type;
         this.gearName = gearName;
-        ;
         this.classRestrictions = new ArrayList<>();
         String[] classNames = classRestrictions.split(",");
         for (String className : classNames) {
@@ -37,13 +36,16 @@ public abstract class BaseGear {
         return classRestrictions;
     }
 
-    public boolean checkClassRestrictions(Class<?>) {
-
+    public boolean checkClassRestrictions(Class<?> checkClassType) {
+        for (Class<?> restriction : classRestrictions) {
+            if (restriction.isAssignableFrom(checkClassType)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public BaseStat getStat() {
-        return Armor.getStat(), Weapon.getStat();
-    }
+    public abstract BaseStat getStat();
 
     @Override
     public String toString() {

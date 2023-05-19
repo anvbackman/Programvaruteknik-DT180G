@@ -11,7 +11,7 @@ public abstract class BaseStat {
         this.baseValue = baseValue;
     }
 
-    public String getStatName(String statName) {
+    public String getStatName() {
         return statName;
     }
 
@@ -45,6 +45,6 @@ public abstract class BaseStat {
 
     @Override
     public String toString() {
-        return getStatName(statName) + getModifiedValue() + getTotalModifier();
+        return getStatName() + getModifiedValue() + getTotalModifier();
     }
 }
