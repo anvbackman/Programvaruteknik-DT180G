@@ -16,12 +16,12 @@ public class Weapon extends BaseGear {
     private Attribute attribute;
 
     public Weapon(Map<String, String> weapon) {
-        super("Weapon", weapon.get("name"), (weapon.get("restriction")));
+        super(weapon.get("type"), weapon.get("name"), (weapon.get("restriction")));
 
         damage = Integer.parseInt(weapon.get("damage"));
         wield = weapon.get("wield");
         attribute = new Attribute(StatsManager.INSTANCE.getRandomAttributeName(),
-                Randomizer.INSTANCE.getRandomValue(1, AppConfig.WEAPON_ATTRIBUTE_VALUE_UPPER_BOUND));
+                Randomizer.INSTANCE.getRandomValue(0, AppConfig.WEAPON_ATTRIBUTE_VALUE_UPPER_BOUND));
 
 
 
@@ -47,6 +47,6 @@ public class Weapon extends BaseGear {
 
     @Override
     public String toString() {
-        return " of " + getStat();
+        return String.format("%s of %s", super.toString(), getStat().getStatName());
     }
 }

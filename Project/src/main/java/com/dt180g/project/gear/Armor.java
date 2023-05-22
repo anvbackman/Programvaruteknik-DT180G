@@ -8,6 +8,8 @@ import com.dt180g.project.support.Randomizer;
 
 import java.util.Map;
 
+import static java.lang.Integer.parseInt;
+
 public class Armor extends BaseGear {
 
     private final int protection;
@@ -18,10 +20,10 @@ public class Armor extends BaseGear {
 
         super(armor.get("type"), armor.get("name"), armor.get("restriction"));
 
-        protection = Integer.parseInt(armor.get("protection"));
+        protection = parseInt(armor.get("protection"));
         material = armor.get("material");
         trait = new Trait(StatsManager.INSTANCE.getRandomTraitName(),
-                Randomizer.INSTANCE.getRandomValue(1, AppConfig.ARMOR_STAT_VALUE_UPPER_BOUND));
+                Randomizer.INSTANCE.getRandomValue(0, AppConfig.ARMOR_STAT_VALUE_UPPER_BOUND));
 
 
 

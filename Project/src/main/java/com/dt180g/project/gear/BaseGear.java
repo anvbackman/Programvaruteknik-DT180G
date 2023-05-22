@@ -2,6 +2,7 @@ package com.dt180g.project.gear;
 
 import java.util.*;
 import com.dt180g.project.stats.BaseStat;
+import com.dt180g.project.characters.heroes.BaseHero;
 
 public abstract class BaseGear {
 
@@ -14,13 +15,14 @@ public abstract class BaseGear {
         this.type = type;
         this.gearName = gearName;
         this.classRestrictions = new ArrayList<>();
-        String[] classNames = classRestrictions.split(",");
-        ClassLoader classLoader = getClass().getClassLoader();
-        for (String className : classNames) {
+
+        for (String restriction : classRestrictions.split(",")) {
+            String className = BaseHero.class.getPackageName() + "." + restriction.trim();
             try {
-                Class<?> clazz = classLoader.loadClass(className.trim());
-                this.classRestrictions.add(clazz);
-            } catch (ClassNotFoundException e) {
+                Class<?> heroClass = Class.forName(className);
+                this.classRestrictions.add(heroClass);
+            }
+            catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

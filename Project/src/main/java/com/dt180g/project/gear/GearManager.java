@@ -21,7 +21,7 @@ public class GearManager {
 
 
     private GearManager() {
-        List<Map<String, String>> weaponList = IOHelper.readFromFile("gear_weapons.json)");
+        List<Map<String, String>> weaponList = IOHelper.readFromFile("gear_weapons.json");
         for (Map<String, String> weaponData : weaponList) {
             Weapon weapon = new Weapon(weaponData);
             String weaponType = weapon.getType();

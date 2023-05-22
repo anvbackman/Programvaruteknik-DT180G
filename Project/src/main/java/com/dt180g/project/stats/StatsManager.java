@@ -35,13 +35,13 @@ public class StatsManager {
 
     public String getRandomAttributeName() {
 //        return attributeNames.get(Randomizer.INSTANCE.getRandomValue(attributeNames.size()));
-        int randomAttribute = Randomizer.INSTANCE.getRandomValue(attributeNames.size());
+        int randomAttribute = Randomizer.INSTANCE.getRandomValue(attributeNames.size() - 1);
         return attributeNames.get(randomAttribute);
     }
 
     public String getRandomTraitName() {
 //        return traitNames.get(Randomizer.INSTANCE.getRandomValue(traitNames.size()));
-        int randomTrait = Randomizer.INSTANCE.getRandomValue(attributeNames.size());
+        int randomTrait = Randomizer.INSTANCE.getRandomValue(attributeNames.size() - 1);
         return traitNames.get(randomTrait);
     }
 
