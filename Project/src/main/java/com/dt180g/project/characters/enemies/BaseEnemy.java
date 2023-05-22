@@ -25,8 +25,8 @@ public class BaseEnemy extends BaseCharacter {
 
         if (equip.equals(Weapon.class)) {
 
-            Weapon twoHandedWeapon = gearManager.getRandomWeapon();
-            Weapon oneHandedWeapon = gearManager.getRandomOneHandedWeapon();
+            Weapon twoHandedWeapon = gearManager.getRandomWeapon(equip);
+            Weapon oneHandedWeapon = gearManager.getRandomOneHandedWeapon(equip);
             Weapon weapon1;
             Weapon weapon2;
 

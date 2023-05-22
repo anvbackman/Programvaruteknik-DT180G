@@ -26,8 +26,8 @@ public abstract class BaseHero extends BaseCharacter {
 
         if (equip.equals(Weapon.class)) {
 
-            Weapon twoHandedWeapon = gearManager.getRandomWeapon();
-            Weapon oneHandedWeapon = gearManager.getRandomOneHandedWeapon();
+            Weapon twoHandedWeapon = gearManager.getRandomWeapon(equip);
+            Weapon oneHandedWeapon = gearManager.getRandomOneHandedWeapon(equip);
             Weapon weapon1;
             Weapon weapon2;
 
@@ -50,17 +50,17 @@ public abstract class BaseHero extends BaseCharacter {
 
         if (equip.equals(Armor.class)) {
 
-            Armor chest = gearManager.getRandomArmorOfType();
-            Armor hands = gearManager.getRandomArmorOfType();
-            Armor head = gearManager.getRandomArmorOfType();
-            Armor feet = gearManager.getRandomArmorOfType();
-            Armor legs = gearManager.getRandomArmorOfType();
+            Armor chest = gearManager.getRandomArmorOfType("Chest", equip);
+            Armor hands = gearManager.getRandomArmorOfType("Hands", equip);
+            Armor head = gearManager.getRandomArmorOfType("Head", equip);
+            Armor feet = gearManager.getRandomArmorOfType("Feet", equip);
+            Armor legs = gearManager.getRandomArmorOfType("Legs", equip);
 
-            characterEquipment.addArmorPiece(chest);
-            characterEquipment.addArmorPiece(hands);
-            characterEquipment.addArmorPiece(head);
-            characterEquipment.addArmorPiece(feet);
-            characterEquipment.addArmorPiece(legs);
+            characterEquipment.addArmorPiece("Chest", chest);
+            characterEquipment.addArmorPiece("Hands", hands);
+            characterEquipment.addArmorPiece("Head", head);
+            characterEquipment.addArmorPiece("Feet", feet);
+            characterEquipment.addArmorPiece("Legs", legs);
         }
 
 

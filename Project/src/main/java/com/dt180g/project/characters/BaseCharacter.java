@@ -5,6 +5,7 @@ import com.dt180g.project.GameRunner;
 
 import com.dt180g.project.abilities.AbilityInfo;
 import com.dt180g.project.abilities.BaseAbility;
+import com.dt180g.project.stats.BaseStat;
 import com.dt180g.project.characters.enemies.BaseEnemy;
 import com.dt180g.project.characters.heroes.BaseHero;
 import com.dt180g.project.support.AppConfig;
@@ -68,16 +69,28 @@ public abstract class BaseCharacter {
         characterStats.adjustActionPoints(availableAP);
         characterStats.adjustEnergyLevel(availableEnergy);
 
-        List<BaseHero> targets1 = GameEngine.INSTANCE.getHeroes();
-        List<BaseEnemy> targets2 = GameEngine.INSTANCE.getEnemies();
         List<BaseCharacter> targets;
 
         if (execute) {
-            targets = GameEngine.INSTANCE.getEnemies();
+            targets = GameEngine.INSTANCE.getAllCharacters().stream().filter(character -> character instanceof BaseEnemy).collect(Collectors.toList());
         }
         else {
-            targets = GameEngine.INSTANCE.getHeroes()
+            targets = GameEngine.INSTANCE.getAllCharacters().stream().filter(character -> character instanceof BaseHero).collect(Collectors.toList());
         }
+
+        // Eller
+//        if (execute) {
+//            List<BaseEnemy> enemies = GameEngine.INSTANCE.getEnemies();
+//            targets = new ArrayList<>(enemies.size());
+//            targets.addAll(enemies);
+//        }
+//        else {
+//            List<BaseHero> heroes = GameEngine.INSTANCE.getHeroes();
+//            targets = new ArrayList<>(heroes.size());
+//            targets.addAll(heroes);
+//        }
+
+
 
 
         for (BaseCharacter target : targets) {
