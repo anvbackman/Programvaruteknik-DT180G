@@ -216,7 +216,7 @@ public abstract class BaseCharacter {
 //        return characterStats.toString() + equipment.toString(); eller
         String characterInfo = "Character: " + getCharacterName() + "\n";
         characterInfo += "Stats: " + characterStats.toString() + "\n";
-        characterInfo += "Equipment: " + equipment.toString();
+        characterInfo += "Equipment: " + equipment;
 
         return characterInfo;
     }

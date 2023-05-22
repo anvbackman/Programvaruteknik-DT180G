@@ -15,15 +15,14 @@ public abstract class BaseGear {
         this.gearName = gearName;
         this.classRestrictions = new ArrayList<>();
         String[] classNames = classRestrictions.split(",");
+        ClassLoader classLoader = getClass().getClassLoader();
         for (String className : classNames) {
             try {
-                Class<?> classes = Class.forName(className.trim());
-                this.classRestrictions.add(classes);
-            }
-            catch (ClassNotFoundException e) {
+                Class<?> clazz = classLoader.loadClass(className.trim());
+                this.classRestrictions.add(clazz);
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
         }
 
     }
@@ -36,19 +35,16 @@ public abstract class BaseGear {
         return classRestrictions;
     }
 
-    public boolean checkClassRestrictions(Class<?> checkClassType) {
-        for (Class<?> restriction : classRestrictions) {
-            if (restriction.isAssignableFrom(checkClassType)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean checkClassRestriction(Class<?> checkClassType) {
+//        checkClassType = Character.class;
+        return classRestrictions.contains(checkClassType);
+
     }
 
     public abstract BaseStat getStat();
 
     @Override
     public String toString() {
-        return gearName.toString();
+        return gearName;
     }
 }

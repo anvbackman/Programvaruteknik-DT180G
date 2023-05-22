@@ -9,7 +9,7 @@ import java.util.logging.Formatter;
 
 public class ActivityLogger {
 
-    public static ActivityLogger INSTANCE;
+    public static ActivityLogger INSTANCE = new ActivityLogger();
     private Logger logger;
 
     private ActivityLogger() {

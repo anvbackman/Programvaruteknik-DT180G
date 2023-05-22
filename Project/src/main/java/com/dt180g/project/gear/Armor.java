@@ -15,12 +15,14 @@ public class Armor extends BaseGear {
     private final Trait trait;
 
     public Armor(Map<String, String> armor) {
-        super("Armor", armor.get("name"), (armor.get("restriction")));
+
+        super(armor.get("type"), armor.get("name"), armor.get("restriction"));
 
         protection = Integer.parseInt(armor.get("protection"));
         material = armor.get("material");
         trait = new Trait(StatsManager.INSTANCE.getRandomTraitName(),
                 Randomizer.INSTANCE.getRandomValue(1, AppConfig.ARMOR_STAT_VALUE_UPPER_BOUND));
+
 
 
     }
@@ -40,7 +42,8 @@ public class Armor extends BaseGear {
 
     @Override
     public String toString() {
-        return super.toString() + " of " + trait.getStatName();
+//        return BaseGear.class.getName() + " of " + trait.getStatName();
+        return String.format("%s of %s", super.toString(), getStat().getStatName());
     }
 
 }
