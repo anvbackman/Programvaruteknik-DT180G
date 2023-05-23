@@ -23,32 +23,23 @@ public class BaseEnemy extends BaseCharacter {
         GearManager gearManager = GearManager.getInstance();
         CharacterEquipment characterEquipment = new CharacterEquipment();
 
+
         if (equip.equals(Weapon.class)) {
 
             Weapon twoHandedWeapon = gearManager.getRandomWeapon(equip);
             Weapon oneHandedWeapon = gearManager.getRandomOneHandedWeapon(equip);
-            Weapon weapon1;
-            Weapon weapon2;
 
-            if (equip.equals(twoHandedWeapon)) {
-                weapon1 = twoHandedWeapon;
-                weapon2 = null;
-                characterEquipment.addWeapon(weapon1);
-                characterEquipment.addWeapon(weapon2);
-            }
-            else if (equip.equals(oneHandedWeapon)){
-                weapon1 = oneHandedWeapon;
-                weapon2 = oneHandedWeapon;
-                characterEquipment.addWeapon(weapon1);
-                characterEquipment.addWeapon(weapon2);
-            }
 
+            if (twoHandedWeapon != null) {
+                characterEquipment.addWeapon(twoHandedWeapon);
+            } else if (oneHandedWeapon != null) {
+                characterEquipment.addWeapon(oneHandedWeapon);
+                characterEquipment.addWeapon(oneHandedWeapon);
+
+            }
 
 
         }
-
-
-
     }
 
 

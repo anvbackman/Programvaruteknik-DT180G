@@ -12,8 +12,8 @@ public class GearManager {
 
     public static GearManager INSTANCE = new GearManager();
 
-    private Map<String, List<Weapon>> weapons = new HashMap<>();
-    private Map<String, List<Armor>> armorPieces = new HashMap<>();
+    private Map<String, List<Weapon>> weapons;
+    private Map<String, List<Armor>> armorPieces;
 
 
 
@@ -21,19 +21,12 @@ public class GearManager {
 
 
     private GearManager() {
-        List<Map<String, String>> weaponList = IOHelper.readFromFile("gear_weapons.json");
-        for (Map<String, String> weaponData : weaponList) {
-            Weapon weapon = new Weapon(weaponData);
-            String weaponType = weapon.getType();
-            weapons.computeIfAbsent(weaponType, key -> new ArrayList<>()).add(weapon);
-        }
+        armorPieces = getAllMappedArmorPieces();
+        weapons = getAllMappedWeapons();
 
-        List<Map<String, String>> armorDataList = IOHelper.readFromFile("gear_armor.json");
-        for (Map<String, String> armorData : armorDataList) {
-            Armor armor = new Armor(armorData);
-            String armorType = armor.getType();
-            armorPieces.computeIfAbsent(armorType, key -> new ArrayList<>()).add(armor);
-        }
+
+
+
 
     }
 
@@ -42,78 +35,85 @@ public class GearManager {
     }
 
     public Map<String, List<Armor>> getAllMappedArmorPieces() {
+        armorPieces = new HashMap<>();
+        List<Map<String, String>> armorList = IOHelper.readFromFile("gear_armor.json");
+        for (Map<String, String> armorMap : armorList) {
+
+            Armor armor = new Armor(armorMap);
+            String armorType = armor.getType();
+            List<Armor> armorMappedList = armorPieces.getOrDefault(armorType, new ArrayList<>());
+            armorMappedList.add(armor);
+            armorPieces.put(armorType, armorMappedList);
+        }
         return armorPieces;
     }
 
     public Map<String, List<Weapon>> getAllMappedWeapons() {
+        weapons = new HashMap<>();
+        List<Map<String, String>> weaponList = IOHelper.readFromFile("gear_weapons.json");
+        for (Map<String, String> weaponMap : weaponList) {
+            Weapon weapon = new Weapon(weaponMap);
+            String weaponType = weapon.getType();
+            List<Weapon> weaponMappedList = weapons.getOrDefault(weaponType, new ArrayList<>());
+            weaponMappedList.add(weapon);
+            weapons.put(weaponType, weaponMappedList);
+        }
         return weapons;
 
     }
 
     public List<Weapon> getWeaponsOfType(String weaponType) {
-        return weapons.getOrDefault(weaponType, new ArrayList<>());
+        return weapons.get(weaponType);
     }
 
     public Weapon getRandomWeapon(Class<?> randomWeapon) {
-        // Get all weapons from the class
-        List<Weapon> weaponOfClass = weapons.values().stream().flatMap(Collection::stream).filter(weapon -> weapon.getClass().equals(randomWeapon)).collect(Collectors.toList());
-        // Return a random weapon from the filtered list
-        if (!weaponOfClass.isEmpty()) {
-            int aRandom = Randomizer.INSTANCE.getRandomValue(weaponOfClass.size());
-            return weaponOfClass.get(aRandom);
-        }
-        return null;
+        List<Weapon> aRandomWeapon = new ArrayList<>();
+        for (List<Weapon> usableWeapons : weapons.values()) {
+            for (Weapon weapon : usableWeapons) {
+                if (weapon.checkClassRestriction(randomWeapon)) {
+                    aRandomWeapon.add(weapon);
+                }
+            }
+        };
+        return aRandomWeapon.get(Randomizer.INSTANCE.getRandomValue(0, aRandomWeapon.size() - 1));
     }
 
-    public Weapon getRandomWeapon(List<String> randomWeapon) {
-        List<Weapon> weaponsOfType = randomWeapon.stream()
-                .flatMap(type -> weapons.getOrDefault(type, Collections.emptyList()).stream()).collect(Collectors.toList());
-
-        // Return a random weapon from the filtered list
-        if (!weaponsOfType.isEmpty()) {
-            int randomIndex = new Random().nextInt(weaponsOfType.size());
-            return weaponsOfType.get(randomIndex);
+    public Weapon getRandomWeapon(List<String> weaponType) {
+        List<Weapon> aRandomWeapon = new ArrayList<>();
+        for (List<Weapon> usableWeapons : weapons.values()) {
+            for (Weapon weapon : usableWeapons) {
+                if (weaponType.contains(weapon.getType())) {
+                    aRandomWeapon.add(weapon);
+                }
+            }
         }
-
-        return null;
+        return aRandomWeapon.get(Randomizer.INSTANCE.getRandomValue(0, aRandomWeapon.size() - 1));
     }
 
 
 
     public Weapon getRandomOneHandedWeapon(Class<?> randomOneHandedWeapon) {
-        // Get all one-handed weapons of the specified class
-        List<Weapon> oneHandedWeapons = weapons.values().stream()
-                .flatMap(Collection::stream)
-                .filter(weapon -> weapon.getClass().equals(randomOneHandedWeapon))
-                .filter(weapon -> !weapon.isTwoHanded())
-                .collect(Collectors.toList());
-
-        // Return a random one-handed weapon from the filtered list
-        if (!oneHandedWeapons.isEmpty()) {
-            int randomIndex = new Random().nextInt(oneHandedWeapons.size());
-            return oneHandedWeapons.get(randomIndex);
+        List<Weapon> aRandomOneHandedWeapon = new ArrayList<>();
+        for (List<Weapon> usableWeapons : weapons.values()) {
+            for (Weapon weapon : usableWeapons) {
+                if (weapon.checkClassRestriction(randomOneHandedWeapon) && !weapon.isTwoHanded()) {
+                    aRandomOneHandedWeapon.add(weapon);
+                }
+            }
         }
-
-        return null; // or throw an exception, depending on your requirements
-
-
-
+        return aRandomOneHandedWeapon.get(Randomizer.INSTANCE.getRandomValue(0, aRandomOneHandedWeapon.size() - 1));
     }
 
-    public Weapon getRandomOneHandedWeapon(List<String> randomOneHandedWeapon) {
-        // Get all one-handed weapons of the specified types
-        List<Weapon> oneHandedWeaponsOfType = randomOneHandedWeapon.stream()
-                .flatMap(type -> weapons.getOrDefault(type, Collections.emptyList()).stream())
-                .filter(weapon -> !weapon.isTwoHanded())
-                .collect(Collectors.toList());
-
-        // Return a random one-handed weapon from the filtered list
-        if (!oneHandedWeaponsOfType.isEmpty()) {
-            int randomIndex = new Random().nextInt(oneHandedWeaponsOfType.size());
-            return oneHandedWeaponsOfType.get(randomIndex);
+    public Weapon getRandomOneHandedWeapon(List<String> weaponType) {
+        List<Weapon> aRandomWeapon = new ArrayList<>();
+        for (List<Weapon> usableWeapons : weapons.values()) {
+            for (Weapon weapon : usableWeapons) {
+                if (weaponType.contains(weapon.getType()) && !weapon.isTwoHanded()) {
+                    aRandomWeapon.add(weapon);
+                }
+            }
         }
-
-        return null;
+        return aRandomWeapon.get(Randomizer.INSTANCE.getRandomValue(0, aRandomWeapon.size() - 1));
     }
 
     public List<Armor> getAllArmorForRestriction(Class<?> armorForRestriction) {
@@ -122,33 +122,27 @@ public class GearManager {
         // Iterate over each armor type
         for (List<Armor> armorList : armorPieces.values()) {
             // Filter armor pieces based on the specified class
-            List<Armor> armorOfTypeForClass = armorList.stream()
-                    .filter(armor -> armor.getClassRestrictions().equals(armorForRestriction))
-                    .collect(Collectors.toList());
-
-            // Add the filtered armor pieces to the result list
-            armorForClass.addAll(armorOfTypeForClass);
+            for (Armor armor : armorList) {
+                if (armor.checkClassRestriction(armorForRestriction)) {
+                    armorForClass.add(armor);
+                }
+            }
         }
-
         return armorForClass;
     }
 
-    public Armor getRandomArmorOfType(String armor, Class<?> ofType) {
-        // Get the list of armor pieces of the specified type
-        List<Armor> armorOfType = armorPieces.getOrDefault(armor, Collections.emptyList());
-
-        // Filter armor pieces based on the specified class restriction
-        List<Armor> filteredArmor = armorOfType.stream()
-                .filter(a -> a.getClassRestrictions().equals(ofType))
-                .collect(Collectors.toList());
-
-        // Return a random armor piece from the filtered list
-        if (!filteredArmor.isEmpty()) {
-            int randomIndex = new Random().nextInt(filteredArmor.size());
-            return filteredArmor.get(randomIndex);
+    public Armor getRandomArmorOfType(String armorType, Class<?> armorForRestriction) {
+        List<Armor> armorForClass = new ArrayList<>();
+        // Iterate over each armor type
+        for (List<Armor> armorList : armorPieces.values()) {
+            // Filter armor pieces based on the specified class
+            for (Armor armor : armorList) {
+                if (armor.checkClassRestriction(armorForRestriction) && armorType.contains(armor.getType())) {
+                    armorForClass.add(armor);
+                }
+            }
         }
-
-        return null;
+        return armorForClass.get(Randomizer.INSTANCE.getRandomValue(0, armorForClass.size() - 1));
 
     }
 
