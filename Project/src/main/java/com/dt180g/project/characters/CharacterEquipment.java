@@ -70,9 +70,9 @@ public class CharacterEquipment {
         // Check if there are empty weapon slots
         if (amountOfEmptyWeaponSlots() > 0) {
             weapons.add(weapon);
-            return true; // Weapon added successfully
+            return false; // Weapon added successfully
         }
-        return false; // No empty weapon slots available
+        return true; // No empty weapon slots available
     }
 
     public boolean addArmorPiece(String armorKey, Armor armor) {
