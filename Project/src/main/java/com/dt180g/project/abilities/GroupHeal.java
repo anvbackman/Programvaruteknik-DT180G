@@ -37,6 +37,6 @@ public class GroupHeal extends BaseAbility {
 
     @Override
     public String toString() {
-        return magicalPhrase + AppConfig.ABILITY_GROUP_HEAL + " (" + getActionPointCost() + getEnergyCost() + ")";
+        return magicalPhrase + ": " + AppConfig.ABILITY_GROUP_HEAL;
     }
 }

@@ -40,6 +40,6 @@ public class ElementalBlast extends BaseAbility {
 
     @Override
     public String toString() {
-        return magicalPhrase + element + AppConfig.ABILITY_ELEMENTAL_BLAST + " (" + getActionPointCost() + getEnergyCost() + ")";
+        return magicalPhrase + ": " + element + " " + AppConfig.ABILITY_ELEMENTAL_BLAST;
     }
 }

@@ -34,6 +34,6 @@ public class FocusedShot extends BaseAbility {
 
     @Override
     public String toString() {
-        return AppConfig.ABILITY_FOCUSED_SHOT + " (" + getActionPointCost() + getEnergyCost() + ")";
+        return AppConfig.ABILITY_FOCUSED_SHOT;
     }
 }

@@ -16,7 +16,7 @@ public class FocusedHeal extends BaseAbility {
     }
 
     public boolean isHeal() {
-        return false;
+        return true;
     }
 
     public int getAmountOfTargets() {
@@ -36,6 +36,6 @@ public class FocusedHeal extends BaseAbility {
 
     @Override
     public String toString() {
-        return magicalPhrase + AppConfig.ABILITY_FOCUSED_HEAL + " (" + getActionPointCost() + getEnergyCost() + ")";
+        return magicalPhrase + ": " + AppConfig.ABILITY_FOCUSED_HEAL;
     }
 }

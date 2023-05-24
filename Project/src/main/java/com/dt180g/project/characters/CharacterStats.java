@@ -19,17 +19,24 @@ public class CharacterStats {
         for (int i = 0; i < attributeValues.size(); i++) {
             String attributeName = attributeNames.get(i);
             int attributeValue = attributeValues.get(i);
-            BaseStat attribute = new Attribute(attributeName, attributeValue);
+            BaseStat attribute = new Attribute(attributeName, attributeValue * AppConfig.ATTRIBUTE_BASE_VALUE);
             stats.put(attributeName, attribute);
         }
 
-//        // Sets traits with default values
-//        stats.put(AppConfig.TRAIT_VITALITY, new Attribute(AppConfig.TRAIT_VITALITY, AppConfig.TRAIT_VITALITY_BASE_VALUE));
-//        stats.put(AppConfig.TRAIT_ENERGY, new Attribute(AppConfig.TRAIT_ENERGY, AppConfig.TRAIT_ENERGY_BASE_VALUE));
-//        // Sets combat stats based on attributes and traits
-//        stats.put(AppConfig.COMBAT_STAT_PHYSICAL_POWER, new Attribute(AppConfig.COMBAT_STAT_PHYSICAL_POWER, AppConfig.ATTRIBUTE_STRENGTH));
-//        stats.put(AppConfig.TRAIT_DEFENSE_RATE, new Attribute(AppConfig.TRAIT_DEFENSE_RATE, AppConfig.TRAIT_DEFENCE_RATE_BASE_VALUE));
-//        stats.put(AppConfig.TRAIT_ATTACK_RATE, new Attribute(AppConfig.TRAIT_ATTACK_RATE, AppConfig.TRAIT_ATTACK_RATE_BASE_VALUE));
+//        stats.put(AppConfig.ATTRIBUTE_STRENGTH, new Attribute(AppConfig.ATTRIBUTE_STRENGTH, AppConfig.ATTRIBUTE_BASE_VALUE * 8));
+//        stats.put(AppConfig.ATTRIBUTE_DEXTERITY, new Attribute(AppConfig.ATTRIBUTE_DEXTERITY, AppConfig.ATTRIBUTE_BASE_VALUE * 8));
+//        stats.put(AppConfig.ATTRIBUTE_INTELLIGENCE, new Attribute(AppConfig.ATTRIBUTE_INTELLIGENCE, AppConfig.ATTRIBUTE_BASE_VALUE * 8));
+//        stats.put(AppConfig.ATTRIBUTE_WILLPOWER, new Attribute(AppConfig.ATTRIBUTE_WILLPOWER, AppConfig.ATTRIBUTE_BASE_VALUE * 8));
+
+        // Sets traits with default values
+        stats.put(AppConfig.TRAIT_VITALITY, new Attribute(AppConfig.TRAIT_VITALITY, AppConfig.TRAIT_VITALITY_BASE_VALUE));
+        stats.put(AppConfig.TRAIT_ENERGY, new Attribute(AppConfig.TRAIT_ENERGY, AppConfig.TRAIT_ENERGY_BASE_VALUE));
+
+        // Sets combat stats based on attributes and traits
+//        stats.put(AppConfig.COMBAT_STAT_PHYSICAL_POWER, new Attribute(AppConfig.COMBAT_STAT_PHYSICAL_POWER));
+        stats.put(AppConfig.TRAIT_DEFENSE_RATE, new Attribute(AppConfig.TRAIT_DEFENSE_RATE, AppConfig.TRAIT_DEFENCE_RATE_BASE_VALUE));
+        stats.put(AppConfig.TRAIT_ATTACK_RATE, new Attribute(AppConfig.TRAIT_ATTACK_RATE, AppConfig.TRAIT_ATTACK_RATE_BASE_VALUE));
+        stats.put(AppConfig.COMBAT_STAT_MAGIC_POWER, new Attribute(AppConfig.COMBAT_STAT_MAGIC_POWER, AppConfig.ATTRIBUTE_BASE_VALUE));
 
 
 
@@ -46,12 +53,11 @@ public class CharacterStats {
 
     public int getStatValue(String statName) {
         BaseStat stat = getStat(statName);
-        if (stat != null) {
-            return stat.getBaseValue();
+        if (stat == null) {
+            throw new IllegalArgumentException("Test" + statName);
         }
-        else {
-            return 0;
-        }
+
+        return stat.getModifiedValue();
     }
 
     public int getTotalActionPoints() {
@@ -59,11 +65,11 @@ public class CharacterStats {
     }
 
     public int getCurrentActionPoints() {
-        return getTotalActionPoints();
+        return getStatValue(AppConfig.COMBAT_STAT_ACTION_POINTS);
     }
 
     public int getTotalHitPoints() {
-        return AppConfig.TRAIT_VITALITY_BASE_VALUE;
+        return getStatValue(AppConfig.ATTRIBUTE_WILLPOWER);
     }
 
     public int getCurrentHitPoints() {
@@ -75,7 +81,13 @@ public class CharacterStats {
     }
 
     public int getCurrentEnergyLevel() {
-        return getTotalEnergyLevel();
+
+
+        BaseStat energyStat = stats.get(AppConfig.TRAIT_ENERGY);
+
+
+        return energyStat.getModifiedValue();
+
     }
 
     public int getDefenceRate() {

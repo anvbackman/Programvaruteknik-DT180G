@@ -41,7 +41,7 @@ public class StatsManager {
 
     public String getRandomTraitName() {
 //        return traitNames.get(Randomizer.INSTANCE.getRandomValue(traitNames.size()));
-        int randomTrait = Randomizer.INSTANCE.getRandomValue(attributeNames.size() - 1);
+        int randomTrait = Randomizer.INSTANCE.getRandomValue(traitNames.size() - 1);
         return traitNames.get(randomTrait);
     }
 

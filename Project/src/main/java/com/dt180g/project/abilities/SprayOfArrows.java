@@ -33,6 +33,6 @@ public class SprayOfArrows extends BaseAbility {
 
     @Override
     public String toString() {
-        return AppConfig.ABILITY_SPRAY_OF_ARROWS + " (" + getActionPointCost() + getEnergyCost() + ")";
+        return AppConfig.ABILITY_SPRAY_OF_ARROWS;
     }
 }

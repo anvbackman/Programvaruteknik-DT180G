@@ -33,6 +33,6 @@ public class HeavyAttack extends BaseAbility {
 
     @Override
     public String toString() {
-        return AppConfig.ABILITY_HEAVY_ATTACK + " (" + getActionPointCost() + getEnergyCost() + ")";
+        return AppConfig.ABILITY_HEAVY_ATTACK;
     }
 }

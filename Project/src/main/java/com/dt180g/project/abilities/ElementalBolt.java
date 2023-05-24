@@ -41,6 +41,6 @@ public class ElementalBolt extends BaseAbility {
 
     @Override
     public String toString() {
-        return magicalPhrase + element + AppConfig.ABILITY_ELEMENTAL_BOLT + " (" + getActionPointCost() + getEnergyCost() + ")";
+        return magicalPhrase + ": " + element + " " + AppConfig.ABILITY_ELEMENTAL_BOLT;
     }
 }

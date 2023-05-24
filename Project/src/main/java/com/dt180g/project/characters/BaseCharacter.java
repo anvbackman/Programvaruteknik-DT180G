@@ -23,6 +23,8 @@ public abstract class BaseCharacter {
 
     protected BaseCharacter(CharacterStats characterStats) {
         this.characterStats = characterStats;
+        this.equipment = new CharacterEquipment();
+
 
     }
 

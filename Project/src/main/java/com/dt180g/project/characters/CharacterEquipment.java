@@ -10,15 +10,28 @@ import java.util.*;
 public class CharacterEquipment {
 
     private List<Weapon> weapons;
-    private Map<String, Armor> armorPieces = new HashMap<>();
+    private Map<String, Armor> armorPieces;
 
 
     public List<Weapon> getWeapons() {
+        if (weapons == null) {
+            weapons = new ArrayList<>();
+        }
+
         return weapons;
     }
 
     public List<Armor> getArmorPieces() {
+
+        if (armorPieces == null) {
+            armorPieces = new HashMap<>();
+        }
+
+
+
+
         return new ArrayList<>(armorPieces.values());
+
     }
 
     public int getTotalWeaponDamage() {
@@ -42,12 +55,18 @@ public class CharacterEquipment {
     }
 
     public int amountOfEmptyWeaponSlots() {
-        int maxWeaponSlots = 2;
+
         int usedWeaponSlots = 0;
-        if (weapons != null) {
-            usedWeaponSlots = weapons.size();
+        for (Weapon weaponWield : weapons) {
+            if (weaponWield.isTwoHanded()) {
+                usedWeaponSlots += 2;
+            }
+            else {
+                usedWeaponSlots += 1;
+            }
         }
-        return maxWeaponSlots - usedWeaponSlots;
+
+        return Math.max(0, 2 - usedWeaponSlots);
     }
 
     public int amountOfEmptyArmorSlots() {
@@ -63,19 +82,33 @@ public class CharacterEquipment {
         return maxArmorSlots - usedArmorSlots;
     }
     public boolean addWeapon(Weapon weapon) {
-
         if (weapons == null) {
             weapons = new ArrayList<>();
         }
-        // Check if there are empty weapon slots
-        if (amountOfEmptyWeaponSlots() > 0) {
+
+        if (weapon.isTwoHanded()) {
+            if (weapons.size() >= 1) {
+                return false;
+            }
             weapons.add(weapon);
-            return false; // Weapon added successfully
         }
-        return true; // No empty weapon slots available
+        else {
+            if (weapons.size() >= 2) {
+                return false;
+            }
+            weapons.add(weapon);
+            weapons.add(weapon);
+        }
+
+        return true;
+
     }
 
     public boolean addArmorPiece(String armorKey, Armor armor) {
+        if (armorPieces == null) {
+            armorPieces = new HashMap<>();
+        }
+
         if (armorPieces.containsKey(armorKey)) {
             return false; // Armor slot is already occupied
         }

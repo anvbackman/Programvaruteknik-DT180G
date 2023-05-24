@@ -26,42 +26,50 @@ public abstract class BaseHero extends BaseCharacter {
         GearManager gearManager = GearManager.getInstance();
         CharacterEquipment characterEquipment = new CharacterEquipment();
 
-
-
-
-        if (equip.equals(Weapon.class)) {
-
-            Weapon twoHandedWeapon = gearManager.getRandomWeapon(equip);
-            Weapon oneHandedWeapon = gearManager.getRandomOneHandedWeapon(equip);
-
-
-            if (twoHandedWeapon != null) {
-                characterEquipment.addWeapon(twoHandedWeapon);
-            }
-            else if (oneHandedWeapon != null) {
-                characterEquipment.addWeapon(oneHandedWeapon);
-                characterEquipment.addWeapon(oneHandedWeapon);
-
-            }
-
-
-
+        characterEquipment.addWeapon(gearManager.getRandomWeapon(equip));
+        if (characterEquipment.amountOfEmptyWeaponSlots() == 1) {
+            characterEquipment.addWeapon(gearManager.getRandomOneHandedWeapon(equip));
         }
 
-        if (equip.equals(Armor.class)) {
-
-            Armor chest = gearManager.getRandomArmorOfType("Chest", equip);
-            Armor hands = gearManager.getRandomArmorOfType("Hands", equip);
-            Armor head = gearManager.getRandomArmorOfType("Head", equip);
-            Armor feet = gearManager.getRandomArmorOfType("Feet", equip);
-            Armor legs = gearManager.getRandomArmorOfType("Legs", equip);
-
-            characterEquipment.addArmorPiece("Chest", chest);
-            characterEquipment.addArmorPiece("Hands", hands);
-            characterEquipment.addArmorPiece("Head", head);
-            characterEquipment.addArmorPiece("Feet", feet);
-            characterEquipment.addArmorPiece("Legs", legs);
+        for (String armorType : gearManager.getAllMappedArmorPieces().keySet()) {
+            characterEquipment.addArmorPiece(armorType, gearManager.getRandomArmorOfType(armorType, equip));
         }
+
+
+
+//        if (equip.equals(Weapon.class)) {
+//
+//            Weapon twoHandedWeapon = gearManager.getRandomWeapon(equip);
+//            Weapon oneHandedWeapon = gearManager.getRandomOneHandedWeapon(equip);
+//
+//
+//            if (twoHandedWeapon != null) {
+//                characterEquipment.addWeapon(twoHandedWeapon);
+//            }
+//            else if (oneHandedWeapon != null) {
+//                characterEquipment.addWeapon(oneHandedWeapon);
+//                characterEquipment.addWeapon(oneHandedWeapon);
+//
+//            }
+
+
+
+
+
+//        if (equip.equals(Armor.class)) {
+//
+//            Armor chest = gearManager.getRandomArmorOfType("Chest", equip);
+//            Armor hands = gearManager.getRandomArmorOfType("Hands", equip);
+//            Armor head = gearManager.getRandomArmorOfType("Head", equip);
+//            Armor feet = gearManager.getRandomArmorOfType("Feet", equip);
+//            Armor legs = gearManager.getRandomArmorOfType("Legs", equip);
+//
+//            characterEquipment.addArmorPiece("Chest", chest);
+//            characterEquipment.addArmorPiece("Hands", hands);
+//            characterEquipment.addArmorPiece("Head", head);
+//            characterEquipment.addArmorPiece("Feet", feet);
+//            characterEquipment.addArmorPiece("Legs", legs);
+//        }
 
 
     }

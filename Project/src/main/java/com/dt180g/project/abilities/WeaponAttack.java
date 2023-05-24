@@ -34,6 +34,6 @@ public class WeaponAttack extends BaseAbility {
 
     @Override
     public String toString() {
-        return AppConfig.ABILITY_WEAPON_ATTACK + " (" + getActionPointCost() + getEnergyCost() + ")";
+        return AppConfig.ABILITY_WEAPON_ATTACK;
     }
 }

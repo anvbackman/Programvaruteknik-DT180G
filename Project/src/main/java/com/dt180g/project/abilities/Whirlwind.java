@@ -34,5 +34,5 @@ public class Whirlwind extends BaseAbility {
 
     @Override
     public String toString() {
-        return AppConfig.ABILITY_WHIRLWIND + " (" + getActionPointCost() + getEnergyCost() + ")";    }
+        return AppConfig.ABILITY_WHIRLWIND;    }
 }
