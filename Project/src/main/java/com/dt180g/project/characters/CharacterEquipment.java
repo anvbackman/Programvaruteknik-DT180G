@@ -120,31 +120,56 @@ public class CharacterEquipment {
     public String toString() {
 
 
-        StringBuilder stringBuilder = new StringBuilder();
+//        StringBuilder stringBuilder = new StringBuilder();
+//
+//        if (weapons != null && !weapons.isEmpty()) {
+//            for (Weapon weapon : weapons) {
+//                stringBuilder.append("[WEAPON TYPE] | ").append(weapon.getType())
+//                        .append(" | [WEAPON NAME] | ").append("name")
+//                        .append(" | [DAMAGE] | ").append(weapon.getDamage())
+//                        .append(" | [STAT] | ").append(weapon.getStat())
+//                        .append(" | [WIELD] | ").append(weapon.getWield())
+//                        .append("\n");
+//            }
+//        }
+//
+//        List<Armor> armorPieces = getArmorPieces();
+//        if (armorPieces != null && !armorPieces.isEmpty()) {
+//            for (Armor armor : armorPieces) {
+//                stringBuilder.append("[BODY PART] | ").append(armor.getType())
+//                        .append(" | [ARMOR NAME] | ").append("name")
+//                        .append(" | [PROTECTION] | ").append(armor.getProtection())
+//                        .append(" | [STAT] | ").append(armor.getStat())
+//                        .append("\n");
+//            }
+//        }
+//
+//        return stringBuilder.toString();
 
-        if (weapons != null && !weapons.isEmpty()) {
-            for (Weapon weapon : weapons) {
-                stringBuilder.append("[WEAPON TYPE] | ").append(weapon.getType())
-                        .append(" | [WEAPON NAME] | ").append("name")
-                        .append(" | [DAMAGE] | ").append(weapon.getDamage())
-                        .append(" | [STAT] | ").append(weapon.getStat())
-                        .append(" | [WIELD] | ").append(weapon.getWield())
-                        .append("\n");
-            }
-        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%s%s%s%n", AppConfig.ANSI_BLUE, " EQUIPMENT ", AppConfig.ANSI_RESET));
 
-        List<Armor> armorPieces = getArmorPieces();
-        if (armorPieces != null && !armorPieces.isEmpty()) {
-            for (Armor armor : armorPieces) {
-                stringBuilder.append("[BODY PART] | ").append(armor.getType())
-                        .append(" | [ARMOR NAME] | ").append("name")
-                        .append(" | [PROTECTION] | ").append(armor.getProtection())
-                        .append(" | [STAT] | ").append(armor.getStat())
-                        .append("\n");
-            }
-        }
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_WHITE, AppConfig.ATTRIBUTE_STRENGTH, AppConfig.ANSI_CYAN, getWeapons()));
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_VITALITY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_VITALITY), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_VITALITY).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_ACTION_POINTS, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_ACTION_POINTS), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_ACTION_POINTS).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
 
-        return stringBuilder.toString();
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_DEXTERITY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_DEXTERITY), AppConfig.ANSI_YELLOW, getStat(AppConfig.ATTRIBUTE_DEXTERITY).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_ENERGY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_ENERGY), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_ENERGY).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_PHYSICAL_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_PHYSICAL_POWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_PHYSICAL_POWER).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
+//
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_INTELLIGENCE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_INTELLIGENCE), AppConfig.ANSI_YELLOW, getStat(AppConfig.ATTRIBUTE_INTELLIGENCE).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_ATTACK_RATE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_ATTACK_RATE), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_ATTACK_RATE).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_MAGIC_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_MAGIC_POWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_MAGIC_POWER).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
+//
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_WILLPOWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_WILLPOWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.ATTRIBUTE_WILLPOWER).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_DEFENSE_RATE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_DEFENSE_RATE), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_DEFENSE_RATE).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_HEALING_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_HEALING_POWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_HEALING_POWER).getTotalModifier(), AppConfig.ANSI_RESET));
+//        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
+
+        return sb.toString();
 
 
 

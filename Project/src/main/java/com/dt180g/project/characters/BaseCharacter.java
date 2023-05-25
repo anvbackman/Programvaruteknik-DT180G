@@ -216,10 +216,9 @@ public abstract class BaseCharacter {
 
     public String toString() {
 //        return characterStats.toString() + equipment.toString(); eller
-
-        String characterInfo = String.format("%s%n", AppConfig.ANSI_WHITE, getCharacterName(), AppConfig.ANSI_RESET);
+        String characterInfo = getCharacterName();
         characterInfo += getCharacterStats();
-        characterInfo += "EQUIPMENT " + getEquipment();
+        characterInfo += getEquipment();
 
         return characterInfo;
     }
