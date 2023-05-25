@@ -118,41 +118,36 @@ public class CharacterEquipment {
     }
 
     public String toString() {
+
+
         StringBuilder stringBuilder = new StringBuilder();
 
         if (weapons != null && !weapons.isEmpty()) {
             for (Weapon weapon : weapons) {
-                stringBuilder.append("[WEAPON TYPE] | " + weapon.getType()).append("WEILD | " + weapon.getWield()).append("DAMAGE " + weapon.getDamage() + " | ")
-                        .append("WEAPON name").append(" of " + weapon.getStat());
+                stringBuilder.append("[WEAPON TYPE] | ").append(weapon.getType())
+                        .append(" | [WEAPON NAME] | ").append("name")
+                        .append(" | [DAMAGE] | ").append(weapon.getDamage())
+                        .append(" | [STAT] | ").append(weapon.getStat())
+                        .append(" | [WIELD] | ").append(weapon.getWield())
+                        .append("\n");
             }
         }
 
-        for (Map.Entry<String, Armor> entry : armorPieces.entrySet()) {
-            String armorKey = entry.getKey();
-            Armor armor = entry.getValue();
-            stringBuilder.append("[BODY PART] | " + armor.getType()).append("MATERIAL | ").append("PROTECTION " + armor.getProtection() + " | ")
-                    .append("ARMOR name").append(" of " + armor.getStat());
-
-            // eller List<Armor> armorPieces = getArmorPieces();
-            //    if (armorPieces != null && !armorPieces.isEmpty()) {
-            //        sb.append("Armor Pieces:\n");
-            //        for (Armor armor : armorPieces) {
-            //            sb.append("[").append(armor.getBodyPart()).append("] | MATERIAL | PROTECTION + ").append(armor.getProtection())
-            //                    .append(" | ").append(armor.getGearName()).append("\n");
-            //        }
-            //    }
-
-//        List<Armor> armorPieces = getArmorPieces();
-//        if (armorPieces != null && !armorPieces.isEmpty()) {
-//            stringBuilder.append("Armor Pieces:\n");
-//            for (Armor armor : armorPieces) {
-//                stringBuilder.append("[").append(armor.getType()).append("] | MATERIAL | PROTECTION + ").append(armor.getProtection())
-//                        .append(" | ");
-//            }
-//        }
-
-
+        List<Armor> armorPieces = getArmorPieces();
+        if (armorPieces != null && !armorPieces.isEmpty()) {
+            for (Armor armor : armorPieces) {
+                stringBuilder.append("[BODY PART] | ").append(armor.getType())
+                        .append(" | [ARMOR NAME] | ").append("name")
+                        .append(" | [PROTECTION] | ").append(armor.getProtection())
+                        .append(" | [STAT] | ").append(armor.getStat())
+                        .append("\n");
+            }
         }
+
         return stringBuilder.toString();
+
+
+
+
     }
 }

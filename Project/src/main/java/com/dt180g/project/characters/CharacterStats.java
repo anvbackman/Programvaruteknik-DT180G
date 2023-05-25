@@ -157,35 +157,61 @@ public class CharacterStats {
     }
     @Override
     public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        List<List<String>> tableData = new ArrayList<>();
+//
+//        // Add header row
+//        List<String> headerRow = Arrays.asList("Stat Name", "Base Value", "Static Modifier", "Dynamic Modifier", "Total Value");
+//        tableData.add(headerRow);
+//
+//        // Iterate over stats and collect information
+//        for (Map.Entry<String, BaseStat> entry : stats.entrySet()) {
+//            String statName = entry.getKey();
+//            BaseStat stat = entry.getValue();
+//
+//            // Collect stat information
+//            int baseValue = stat.getBaseValue();
+//            int staticModifier = stat.getStaticModifier();
+//            int dynamicModifier = stat.getTotalModifier() - stat.getStaticModifier();
+//            int totalValue = baseValue + staticModifier + dynamicModifier;
+//
+//            // Create a row for the stat
+//            List<String> statRow = Arrays.asList(statName, String.valueOf(baseValue),
+//                    String.valueOf(staticModifier), String.valueOf(dynamicModifier), String.valueOf(totalValue));
+//            tableData.add(statRow);
+//        }
+//
+//        // Format the table data
+//        String formattedTable = IOHelper.formatAsTable(tableData);
+//
+////        sb.append("Character Stats:\n");
+//        sb.append(formattedTable);
+//
+//        return sb.toString();
+
+
         StringBuilder sb = new StringBuilder();
-        List<List<String>> tableData = new ArrayList<>();
+        sb.append(String.format("%s%s%s%n", AppConfig.ANSI_BLUE, " STATISTICS ", AppConfig.ANSI_RESET));
 
-        // Add header row
-        List<String> headerRow = Arrays.asList("Stat Name", "Base Value", "Static Modifier", "Dynamic Modifier", "Total Value");
-        tableData.add(headerRow);
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_STRENGTH, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_STRENGTH), AppConfig.ANSI_YELLOW, getStat(AppConfig.ATTRIBUTE_STRENGTH).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_VITALITY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_VITALITY), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_VITALITY).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_ACTION_POINTS, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_ACTION_POINTS), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_ACTION_POINTS).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
 
-        // Iterate over stats and collect information
-        for (Map.Entry<String, BaseStat> entry : stats.entrySet()) {
-            String statName = entry.getKey();
-            BaseStat stat = entry.getValue();
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_DEXTERITY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_DEXTERITY), AppConfig.ANSI_YELLOW, getStat(AppConfig.ATTRIBUTE_DEXTERITY).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_ENERGY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_ENERGY), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_ENERGY).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_PHYSICAL_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_PHYSICAL_POWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_PHYSICAL_POWER).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
 
-            // Collect stat information
-            int baseValue = stat.getBaseValue();
-            int staticModifier = stat.getStaticModifier();
-            int dynamicModifier = stat.getTotalModifier() - stat.getStaticModifier();
-            int totalValue = baseValue + staticModifier + dynamicModifier;
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_INTELLIGENCE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_INTELLIGENCE), AppConfig.ANSI_YELLOW, getStat(AppConfig.ATTRIBUTE_INTELLIGENCE).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_ATTACK_RATE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_ATTACK_RATE), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_ATTACK_RATE).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_MAGIC_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_MAGIC_POWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_MAGIC_POWER).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
 
-            // Create a row for the stat
-            List<String> statRow = Arrays.asList(statName, String.valueOf(baseValue),
-                    String.valueOf(staticModifier), String.valueOf(dynamicModifier), String.valueOf(totalValue));
-            tableData.add(statRow);
-        }
-
-        // Format the table data
-        String formattedTable = IOHelper.formatAsTable(tableData);
-
-        sb.append("Character Stats:\n");
-        sb.append(formattedTable);
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_WILLPOWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_WILLPOWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.ATTRIBUTE_WILLPOWER).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_DEFENSE_RATE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_DEFENSE_RATE), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_DEFENSE_RATE).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_HEALING_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_HEALING_POWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_HEALING_POWER).getTotalModifier(), AppConfig.ANSI_RESET));
+        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
 
         return sb.toString();
     }
