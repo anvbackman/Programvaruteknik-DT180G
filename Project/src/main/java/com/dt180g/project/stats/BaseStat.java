@@ -1,5 +1,7 @@
 package com.dt180g.project.stats;
 
+import com.dt180g.project.support.AppConfig;
+
 public abstract class BaseStat {
     private String statName;
     private int baseValue;
@@ -9,6 +11,8 @@ public abstract class BaseStat {
     protected BaseStat(String statName, int baseValue) {
         this.statName = statName;
         this.baseValue = baseValue;
+        this.staticModifier = 0;
+        this.dynamicModifier = 0;
     }
 
     public String getStatName() {
@@ -16,11 +20,12 @@ public abstract class BaseStat {
     }
 
     public int getBaseValue() {
+
         return baseValue;
     }
 
     public int getModifiedValue() {
-        return baseValue + staticModifier + dynamicModifier;
+        return getBaseValue() + staticModifier + dynamicModifier;
     }
 
     public int getTotalModifier() {

@@ -55,7 +55,9 @@ public class CharacterEquipment {
     }
 
     public int amountOfEmptyWeaponSlots() {
-
+        if (weapons == null) {
+            weapons = new ArrayList<>();
+        }
         int usedWeaponSlots = 0;
         for (Weapon weaponWield : weapons) {
             if (weaponWield.isTwoHanded()) {
@@ -85,23 +87,18 @@ public class CharacterEquipment {
         if (weapons == null) {
             weapons = new ArrayList<>();
         }
-
         if (weapon.isTwoHanded()) {
             if (weapons.size() >= 1) {
                 return false;
             }
-            weapons.add(weapon);
         }
         else {
-            if (weapons.size() >= 2) {
+            if (weapons.size() >= 2 || weapons.size() == 1 && weapons.get(0).isTwoHanded()) {
                 return false;
             }
-            weapons.add(weapon);
-            weapons.add(weapon);
         }
-
+        weapons.add(weapon);
         return true;
-
     }
 
     public boolean addArmorPiece(String armorKey, Armor armor) {
