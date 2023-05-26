@@ -29,7 +29,7 @@ public abstract class BaseStat {
     }
 
     public int getTotalModifier() {
-        return staticModifier + dynamicModifier;
+        return getStaticModifier() + dynamicModifier;
     }
 
     public int getStaticModifier() {
@@ -50,6 +50,6 @@ public abstract class BaseStat {
 
     @Override
     public String toString() {
-        return getStatName() + getModifiedValue() + getTotalModifier();
+        return getStatName().toString() + getModifiedValue() + getTotalModifier();
     }
 }

@@ -120,56 +120,91 @@ public class CharacterEquipment {
     public String toString() {
 
 
-//        StringBuilder stringBuilder = new StringBuilder();
-//
-//        if (weapons != null && !weapons.isEmpty()) {
-//            for (Weapon weapon : weapons) {
-//                stringBuilder.append("[WEAPON TYPE] | ").append(weapon.getType())
-//                        .append(" | [WEAPON NAME] | ").append("name")
-//                        .append(" | [DAMAGE] | ").append(weapon.getDamage())
-//                        .append(" | [STAT] | ").append(weapon.getStat())
-//                        .append(" | [WIELD] | ").append(weapon.getWield())
-//                        .append("\n");
-//            }
-//        }
-//
-//        List<Armor> armorPieces = getArmorPieces();
-//        if (armorPieces != null && !armorPieces.isEmpty()) {
-//            for (Armor armor : armorPieces) {
-//                stringBuilder.append("[BODY PART] | ").append(armor.getType())
-//                        .append(" | [ARMOR NAME] | ").append("name")
-//                        .append(" | [PROTECTION] | ").append(armor.getProtection())
-//                        .append(" | [STAT] | ").append(armor.getStat())
-//                        .append("\n");
-//            }
-//        }
-//
-//        return stringBuilder.toString();
+        List<List<String>> formatList = new ArrayList<>();
+        String header = String.format("%s%s%n", AppConfig.ANSI_BLUE, "STATISTICS");
+
+        if (weapons != null) {
+            for (Weapon weapon : weapons) {
+                List<String> weaponsList = new ArrayList<>();
+                weaponsList.add(weapon.getType());
+                weaponsList.add(weapon.getWield());
+                weaponsList.add("Damage" + weapon.getDamage());
+                weaponsList.add("name" + " of " + weapon.getStat());
+
+                formatList.add(weaponsList);
+            }
+        }
+
+        if (armorPieces != null) {
+            for (Armor armor : armorPieces.values()) {
+                List<String> armorList = new ArrayList<>();
+                armorList.add(armor.getType());
+                armorList.add(armor.getMaterial());
+                armorList.add("Protection" + armor.getProtection());
+                armorList.add("name" + " of " + armor.getStat());
+
+                formatList.add(armorList);
+            }
+        }
+
+        return header + IOHelper.formatAsTable(formatList);
 
 
-        String header = String.format("%s%s%n", AppConfig.ANSI_BLUE, "EQUIPMENT");
 
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_WHITE, AppConfig.ATTRIBUTE_STRENGTH, AppConfig.ANSI_CYAN, getWeapons()));
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_VITALITY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_VITALITY), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_VITALITY).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_ACTION_POINTS, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_ACTION_POINTS), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_ACTION_POINTS).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
 
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_DEXTERITY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_DEXTERITY), AppConfig.ANSI_YELLOW, getStat(AppConfig.ATTRIBUTE_DEXTERITY).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_ENERGY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_ENERGY), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_ENERGY).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_PHYSICAL_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_PHYSICAL_POWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_PHYSICAL_POWER).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
+
+//        List<List<String>> formatList = new ArrayList<>();
 //
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_INTELLIGENCE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_INTELLIGENCE), AppConfig.ANSI_YELLOW, getStat(AppConfig.ATTRIBUTE_INTELLIGENCE).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_ATTACK_RATE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_ATTACK_RATE), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_ATTACK_RATE).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_MAGIC_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_MAGIC_POWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_MAGIC_POWER).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
 //
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_WILLPOWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_WILLPOWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.ATTRIBUTE_WILLPOWER).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_DEFENSE_RATE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_DEFENSE_RATE), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_DEFENSE_RATE).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_HEALING_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_HEALING_POWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_HEALING_POWER).getTotalModifier(), AppConfig.ANSI_RESET));
-//        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
+//
+//        List<String> formatListSection1 = new ArrayList<>();
+//        List<String> formatListSection2 = new ArrayList<>();
+//        List<String> formatListSection3 = new ArrayList<>();
+//        List<String> formatListSection4 = new ArrayList<>();
+//
+//        String header = String.format("%s%s%n", AppConfig.ANSI_BLUE, "STATISTICS");
+//
+////        formatList.add(formatListHeader);
+//
+//        String formatString = "%s%-15s%s%3s%s%3s%-7s|";
+//
+//
+//        formatListSection1.add(String.format(formatString, AppConfig.ANSI_WHITE,  AppConfig.ANSI_CYAN, getWeapons()));
+//        formatListSection1.add(String.format(formatString, AppConfig.ANSI_GREEN, AppConfig.TRAIT_VITALITY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_VITALITY), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.TRAIT_VITALITY).getTotalModifier(), AppConfig.ANSI_WHITE));
+//        formatListSection1.add(String.format(formatString, AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_ACTION_POINTS, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_ACTION_POINTS), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.COMBAT_STAT_ACTION_POINTS).getTotalModifier(), AppConfig.ANSI_WHITE));
+////        formatListSection1.add(separator);
+//        formatList.add(formatListSection1);
+//
+//
+//        formatListSection2.add(String.format(formatString, AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_DEXTERITY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_DEXTERITY), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.ATTRIBUTE_DEXTERITY).getTotalModifier(), AppConfig.ANSI_WHITE));
+//        formatListSection2.add(String.format(formatString, AppConfig.ANSI_GREEN, AppConfig.TRAIT_ENERGY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_ENERGY), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.TRAIT_ENERGY).getTotalModifier(), AppConfig.ANSI_WHITE));
+//        formatListSection2.add(String.format(formatString, AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_PHYSICAL_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_PHYSICAL_POWER), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.COMBAT_STAT_PHYSICAL_POWER).getTotalModifier(), AppConfig.ANSI_WHITE));
+////        formatListSection2.add(separator);
+//        formatList.add(formatListSection2);
+//
+//
+//        formatListSection3.add(String.format(formatString, AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_INTELLIGENCE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_INTELLIGENCE), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.ATTRIBUTE_INTELLIGENCE).getTotalModifier(), AppConfig.ANSI_WHITE));
+//        formatListSection3.add(String.format(formatString, AppConfig.ANSI_GREEN, AppConfig.TRAIT_ATTACK_RATE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_ATTACK_RATE), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.TRAIT_ATTACK_RATE).getTotalModifier(), AppConfig.ANSI_WHITE));
+//        formatListSection3.add(String.format(formatString, AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_MAGIC_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_MAGIC_POWER), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.COMBAT_STAT_MAGIC_POWER).getTotalModifier(), AppConfig.ANSI_WHITE));
+////        formatListSection3.add(separator);
+//        formatList.add(formatListSection3);
+//
+//
+//        formatListSection4.add(String.format(formatString, AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_WILLPOWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_WILLPOWER), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.ATTRIBUTE_WILLPOWER).getTotalModifier(), AppConfig.ANSI_WHITE));
+//        formatListSection4.add(String.format(formatString, AppConfig.ANSI_GREEN, AppConfig.TRAIT_DEFENSE_RATE, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_DEFENSE_RATE), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.TRAIT_DEFENSE_RATE).getTotalModifier(), AppConfig.ANSI_WHITE));
+//        formatListSection4.add(String.format(formatString + "\n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_HEALING_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_HEALING_POWER), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.COMBAT_STAT_HEALING_POWER).getTotalModifier(), AppConfig.ANSI_WHITE));
+////        formatListSection4.add(String.format(separator + "\n"));
+//        formatList.add(formatListSection4);
 
-        return header;
+
+
+
+
+//        return header + IOHelper.formatAsTable(formatList);
+
+
+
+
 
 
 
