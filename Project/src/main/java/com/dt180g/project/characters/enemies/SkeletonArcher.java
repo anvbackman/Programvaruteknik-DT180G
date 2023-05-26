@@ -1,6 +1,7 @@
 package com.dt180g.project.characters.enemies;
 
 import com.dt180g.project.abilities.*;
+import com.dt180g.project.gear.Weapon;
 import com.dt180g.project.support.AppConfig;
 
 import java.util.ArrayList;
@@ -14,6 +15,11 @@ public class SkeletonArcher extends BaseEnemy {
         List<String> enemyType = new ArrayList<>();
         enemyType.add(SkeletonArcher.class.getSimpleName());
         equipEnemy(enemyType);
+
+        for (Weapon weapon : getEquipment().getWeapons()) {
+            getCharacterStats().adjustStatStaticModifier(weapon.getStat().getStatName(), weapon.getStat().getBaseValue());
+        }
+
         addAbilities(Arrays.asList(new WeaponAttack(), new FocusedShot(), new SprayOfArrows()));
     }
 }

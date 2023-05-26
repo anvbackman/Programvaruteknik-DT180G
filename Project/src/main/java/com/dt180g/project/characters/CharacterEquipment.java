@@ -146,8 +146,8 @@ public class CharacterEquipment {
 //
 //        return stringBuilder.toString();
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%s%s%s%n", AppConfig.ANSI_BLUE, " EQUIPMENT ", AppConfig.ANSI_RESET));
+
+        String header = String.format("%s%s%n", AppConfig.ANSI_BLUE, "EQUIPMENT");
 
 //        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_WHITE, AppConfig.ATTRIBUTE_STRENGTH, AppConfig.ANSI_CYAN, getWeapons()));
 //        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.TRAIT_VITALITY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_VITALITY), AppConfig.ANSI_YELLOW, getStat(AppConfig.TRAIT_VITALITY).getTotalModifier(), AppConfig.ANSI_RESET));
@@ -169,7 +169,7 @@ public class CharacterEquipment {
 //        sb.append(String.format("%s%-25s%s%-6s%s+%s%s%n", AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_HEALING_POWER, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_HEALING_POWER), AppConfig.ANSI_YELLOW, getStat(AppConfig.COMBAT_STAT_HEALING_POWER).getTotalModifier(), AppConfig.ANSI_RESET));
 //        sb.append(String.format("%s%n", AppConfig.ANSI_WHITE + " | " + AppConfig.ANSI_RESET));
 
-        return sb.toString();
+        return header;
 
 
 

@@ -1,6 +1,7 @@
 package com.dt180g.project.characters.enemies;
 
 import com.dt180g.project.abilities.*;
+import com.dt180g.project.gear.Weapon;
 import com.dt180g.project.support.AppConfig;
 
 import java.util.ArrayList;
@@ -13,6 +14,11 @@ public class SkeletonMage extends BaseEnemy {
         List<String> enemyType = new ArrayList<>();
         enemyType.add(SkeletonMage.class.getSimpleName());
         equipEnemy(enemyType);
+
+        for (Weapon weapon : getEquipment().getWeapons()) {
+            getCharacterStats().adjustStatStaticModifier(weapon.getStat().getStatName(), weapon.getStat().getBaseValue());
+        }
+
         addAbilities(Arrays.asList(new WeaponAttack(), new ElementalBolt(AppConfig.ELEMENT_FIRE),
                 new ElementalBolt(AppConfig.ELEMENT_ICE), new ElementalBolt(AppConfig.ELEMENT_AIR),
                 new ElementalBlast(AppConfig.ELEMENT_FIRE), new ElementalBlast(AppConfig.ELEMENT_ICE),

@@ -6,6 +6,7 @@ package com.dt180g.project;
  * @author Erik Ström
  */
 public final class Project {
+
     private Project() { throw new IllegalStateException("Utility class"); }
 
     /**
