@@ -23,16 +23,14 @@ public abstract class BaseHero extends BaseCharacter {
     }
 
     protected void equipHero(Class<?> equip) {
-        GearManager gearManager = GearManager.getInstance();
-        CharacterEquipment characterEquipment = new CharacterEquipment();
 
-        characterEquipment.addWeapon(gearManager.getRandomWeapon(equip));
-        if (characterEquipment.amountOfEmptyWeaponSlots() == 1) {
-            characterEquipment.addWeapon(gearManager.getRandomOneHandedWeapon(equip));
+        getEquipment().addWeapon(GearManager.INSTANCE.getRandomWeapon(equip));
+        if (getEquipment().amountOfEmptyWeaponSlots() == 1) {
+            getEquipment().addWeapon(GearManager.INSTANCE.getRandomOneHandedWeapon(equip));
         }
 
-        for (String armorType : gearManager.getAllMappedArmorPieces().keySet()) {
-            characterEquipment.addArmorPiece(armorType, gearManager.getRandomArmorOfType(armorType, equip));
+        for (String armorType : GearManager.INSTANCE.getAllMappedArmorPieces().keySet()) {
+            getEquipment().addArmorPiece(armorType, GearManager.INSTANCE.getRandomArmorOfType(armorType, equip));
         }
 
 

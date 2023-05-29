@@ -121,31 +121,42 @@ public class CharacterEquipment {
 
 
         List<List<String>> formatList = new ArrayList<>();
-        String header = String.format("%s%s%n", AppConfig.ANSI_BLUE, "STATISTICS");
+        String header = String.format("%s%s%n", AppConfig.ANSI_BLUE, "STATISTICS", AppConfig.ANSI_RESET);
+//        String breakLine = String.format("%s%s", AppConfig.ANSI_WHITE, " | ", AppConfig.ANSI_RESET);
 
-        if (weapons != null) {
+        if (weapons != null && !weapons.isEmpty()) {
             for (Weapon weapon : weapons) {
                 List<String> weaponsList = new ArrayList<>();
-                weaponsList.add(weapon.getType());
-                weaponsList.add(weapon.getWield());
-                weaponsList.add("Damage" + weapon.getDamage());
-                weaponsList.add("name" + " of " + weapon.getStat());
+                weaponsList.add(String.format("%s%s%8s%s", AppConfig.ANSI_WHITE, "[" + weapon.getType().toUpperCase() + "]", " | ", AppConfig.ANSI_RESET));
+
+                weaponsList.add(String.format("%s%s%s%5s%s", AppConfig.ANSI_MAGENTA,  weapon.getWield(), AppConfig.ANSI_WHITE, " | ", AppConfig.ANSI_RESET));
+
+                weaponsList.add(String.format("%s%s%s%6s%s%5s%s", AppConfig.ANSI_RED, "Damage ", AppConfig.ANSI_GREEN, "+" + weapon.getDamage(), AppConfig.ANSI_WHITE, " | ", AppConfig.ANSI_RESET));
+
+                weaponsList.add(String.format("%s%s%s%s%s", AppConfig.ANSI_CYAN, weapon.toString() + " ", AppConfig.ANSI_YELLOW, "+" + weapon.getStat().getBaseValue(), AppConfig.ANSI_RESET));
 
                 formatList.add(weaponsList);
             }
         }
 
-        if (armorPieces != null) {
+
+        if (armorPieces != null && !armorPieces.isEmpty()) {
             for (Armor armor : armorPieces.values()) {
                 List<String> armorList = new ArrayList<>();
-                armorList.add(armor.getType());
-                armorList.add(armor.getMaterial());
-                armorList.add("Protection" + armor.getProtection());
-                armorList.add("name" + " of " + armor.getStat());
+
+
+                armorList.add(String.format("%s%s%8s%s", AppConfig.ANSI_WHITE, "[" + armor.getType().toUpperCase() + "]", " | ", AppConfig.ANSI_RESET));
+
+                armorList.add(String.format("%s%s%s%16s%s", AppConfig.ANSI_MAGENTA,  armor.getMaterial(), AppConfig.ANSI_WHITE, " | ", AppConfig.ANSI_RESET));
+
+                armorList.add(String.format("%s%s%s%2s%s%5s%s", AppConfig.ANSI_RED, "Protection ", AppConfig.ANSI_GREEN, "+" + armor.getProtection(), AppConfig.ANSI_WHITE, " | ", AppConfig.ANSI_RESET));
+
+                armorList.add(String.format("%s%s%s%5s%s", AppConfig.ANSI_CYAN, armor.toString() + " ", AppConfig.ANSI_YELLOW, "+" + armor.getStat().getBaseValue(), AppConfig.ANSI_RESET));
 
                 formatList.add(armorList);
             }
         }
+
 
         return header + IOHelper.formatAsTable(formatList);
 
