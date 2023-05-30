@@ -8,6 +8,7 @@ import com.dt180g.project.gear.Armor;
 import com.dt180g.project.gear.BaseGear;
 import com.dt180g.project.gear.GearManager;
 import com.dt180g.project.gear.Weapon;
+import com.dt180g.project.support.ActivityLogger;
 import com.dt180g.project.support.AppConfig;
 
 import java.util.ArrayList;
@@ -86,7 +87,9 @@ public abstract class BaseHero extends BaseCharacter {
     }
 
     public void doTurn() {
-
-
+        ActivityLogger.INSTANCE.logTurnInfo(getTurnInformation(getCharacterName()));
+        if (!isDead()) {
+            executeActions(true);
+        }
     }
 }

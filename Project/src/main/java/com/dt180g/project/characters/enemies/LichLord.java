@@ -13,7 +13,7 @@ public class LichLord extends BaseEnemy {
         super(AppConfig.ENEMY_LICH_LORD, AppConfig.ATTRIBUTE_VALUES_LICH_LORD);
         List<String> enemyType = new ArrayList<>();
         enemyType.add(LichLord.class.getSimpleName());
-        getCharacterStats().adjustStatDynamicModifier(AppConfig.TRAIT_VITALITY, getCharacterStats().getCurrentHitPoints() * AppConfig.BOSS_HEALTH_MULTIPLIER);
+        getCharacterStats().adjustStatStaticModifier(AppConfig.TRAIT_VITALITY, getCharacterStats().getCurrentHitPoints() * AppConfig.BOSS_HEALTH_MULTIPLIER);
         equipEnemy(enemyType);
         addAbilities(Arrays.asList(new WeaponAttack(), new HeavyAttack(), new Whirlwind(), new FocusedHeal(),
                 new ElementalBolt(AppConfig.ELEMENT_FIRE), new ElementalBlast(AppConfig.ELEMENT_FIRE)));

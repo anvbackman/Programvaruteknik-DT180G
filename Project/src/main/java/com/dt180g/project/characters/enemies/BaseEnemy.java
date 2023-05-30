@@ -6,6 +6,7 @@ import com.dt180g.project.characters.CharacterStats;
 import com.dt180g.project.gear.Armor;
 import com.dt180g.project.gear.GearManager;
 import com.dt180g.project.gear.Weapon;
+import com.dt180g.project.support.ActivityLogger;
 
 import java.util.List;
 
@@ -49,6 +50,10 @@ public class BaseEnemy extends BaseCharacter {
     }
 
     public void doTurn() {
+        ActivityLogger.INSTANCE.logTurnInfo(getTurnInformation(getCharacterName()));
+        if (!isDead()) {
+            executeActions(false);
+        }
 
 
 
