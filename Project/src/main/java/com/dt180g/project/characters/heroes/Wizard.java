@@ -4,11 +4,22 @@ import com.dt180g.project.abilities.*;
 import com.dt180g.project.gear.Armor;
 import com.dt180g.project.gear.Weapon;
 import com.dt180g.project.support.AppConfig;
-
 import java.util.Arrays;
 
+/**
+ * The class Wizard representing the wizard character for the game.
+ * The class extends the BaseHero class and sets the character name, attribute values and equipment.
+ * The Wizard class has the ability to perform basic weapon attack and two other magic abilities.
+ * @author Andreas Backman
+ */
 public class Wizard extends BaseHero {
 
+    /**
+     * Constructor that creates a new instance of the Wizard class
+     * The character name is appended with the hero role and the characters ability values are set
+     * The character is then equipped with the appropriate gear and its abilities are set.
+     * @param characterName the characters name
+     */
     public Wizard(String characterName) {
         super(characterName + " The " + AppConfig.HERO_WIZARD, AppConfig.ATTRIBUTE_VALUES_WIZARD_HERO);
         equipHero(Wizard.class);
