@@ -71,16 +71,16 @@ public abstract class BaseCharacter {
 //        String turnInfo = "[" + turn.toUpperCase() + "] " + character + " | " + actionPoints + " AP | " +
 //                hitPoints + " HP | " + energyLevel + " Energy";
 //        return turnInfo;
-        String formatString = "%s[%s%s%s%s%s%s%s%s%n";
+        String formatString = "%s[%s%s%s%s%s%s%s%s%s";
 
         if (this instanceof SkeletonArcher || this instanceof SkeletonWarrior || this instanceof SkeletonMage) {
-            return String.format(formatString, AppConfig.ANSI_RED, AppConfig.CHARACTER_TYPE_ENEMY + " TURN]", getCharacterName(), " | ", getActionPoints() + " AP ", " | ", getHitPoints() + " HP ", " | ", getEnergyLevel() + " Energy ");
+            return String.format(formatString, AppConfig.ANSI_RED, AppConfig.CHARACTER_TYPE_ENEMY + " TURN] ", getCharacterName(), " | ", getActionPoints() + " AP ", " | ", getHitPoints() + " HP ", " | ", getEnergyLevel() + " Energy ", AppConfig.ANSI_RESET);
         }
         if (this instanceof LichLord) {
-            return String.format(formatString, AppConfig.ANSI_RED, AppConfig.CHARACTER_TYPE_ENEMY + " BOSS TURN]", getCharacterName(), " | ", getActionPoints() + " AP ", " | ", getHitPoints() + " HP ", " | ", getEnergyLevel() + " Energy ");
+            return String.format(formatString, AppConfig.ANSI_RED, AppConfig.CHARACTER_TYPE_ENEMY + " BOSS TURN] ", getCharacterName(), " | ", getActionPoints() + " AP ", " | ", getHitPoints() + " HP ", " | ", getEnergyLevel() + " Energy ", AppConfig.ANSI_RESET);
         }
         else {
-            return String.format(formatString, AppConfig.ANSI_BLUE, AppConfig.CHARACTER_TYPE_HERO + " TURN] ", getCharacterName(), " | ", getActionPoints() + " AP ", " | ", getHitPoints() + " HP ", " | ", getEnergyLevel() + " Energy ");
+            return String.format(formatString, AppConfig.ANSI_BLUE, AppConfig.CHARACTER_TYPE_HERO + " TURN] ", getCharacterName(), " | ", getActionPoints() + " AP ", " | ", getHitPoints() + " HP ", " | ", getEnergyLevel() + " Energy ", AppConfig.ANSI_RESET);
         }
     }
 
@@ -240,8 +240,7 @@ public abstract class BaseCharacter {
 
         mitigateAmount = damage - actualDamage;
         characterStats.adjustHitPoints(- actualDamage);
-        ActivityLogger.INSTANCE.logTurnInfo("Original damage = " + damage);
-        ActivityLogger.INSTANCE.logTurnInfo("Total damage = " + actualDamage);
+
 
         return Arrays.asList(mitigateAmount, actualDamage);
     }

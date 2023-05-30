@@ -27,11 +27,8 @@ public class FocusedHeal extends BaseAbility {
     public boolean execute(int attackValue, boolean targets) {
         String info = toString();
         int amountOfTargets = getAmountOfTargets();
-        int damage = attackValue * AppConfig.SINGLE_TARGET_ABILITY_MULTIPLIER;
-        boolean targetEnemies = targets;
-        AbilityInfo abilityInfo = new AbilityInfo(info, amountOfTargets, damage, targetEnemies, isMagic(), isHeal());
-        return GameEngine.INSTANCE.characterAttack(abilityInfo);
-
+        int damage = attackValue;
+        return performAbility(info, amountOfTargets, damage, targets);
     }
 
     @Override

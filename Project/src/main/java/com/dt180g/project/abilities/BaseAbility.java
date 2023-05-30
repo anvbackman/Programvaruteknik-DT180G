@@ -14,9 +14,14 @@ public abstract class BaseAbility {
     }
 
     protected boolean performAbility(String info, int amountOfTargets, int damage, boolean targetEnemies) {
-        AbilityInfo abilityInfo = new AbilityInfo(info, amountOfTargets, damage, targetEnemies, isMagic(), isHeal());
-        boolean abilityPerformed = GameEngine.INSTANCE.characterAttack(abilityInfo);
-        return abilityPerformed;
+        String ability = String.format("%s", info + " (-" + actionPointCost + " AP, " + "-" + energyCost + " Energy)");
+        if (isHeal()) {
+            damage = -damage;
+            return GameEngine.INSTANCE.characterAttack(new AbilityInfo(ability, amountOfTargets, damage, targetEnemies, isMagic(), isHeal()));
+        }
+        else {
+            return GameEngine.INSTANCE.characterAttack(new AbilityInfo(ability, amountOfTargets, damage, targetEnemies, isMagic(), isHeal()));
+        }
     }
 
     public int getActionPointCost() {

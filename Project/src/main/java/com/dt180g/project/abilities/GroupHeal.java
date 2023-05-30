@@ -28,11 +28,7 @@ public class GroupHeal extends BaseAbility {
         String info = toString();
         int amountOfTargets = getAmountOfTargets();
         int damage = attackValue;
-        boolean targetEnemies = targets;
-        AbilityInfo abilityInfo = new AbilityInfo(info, amountOfTargets, damage, targetEnemies, isMagic(), isHeal());
-        return GameEngine.INSTANCE.characterAttack(abilityInfo);
-
-
+        return performAbility(info, amountOfTargets, damage, targets);
     }
 
     @Override

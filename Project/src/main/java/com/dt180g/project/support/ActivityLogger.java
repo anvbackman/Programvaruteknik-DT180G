@@ -1,5 +1,9 @@
 package com.dt180g.project.support;
 
+import com.dt180g.project.abilities.AbilityInfo;
+import com.dt180g.project.abilities.BaseAbility;
+import com.dt180g.project.characters.BaseCharacter;
+
 import java.util.*;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
@@ -22,6 +26,7 @@ public class ActivityLogger {
             }
         });
         logger.addHandler(consoleHandler);
+        logger.setUseParentHandlers(false);
     }
 
     public static ActivityLogger getInstance() {
@@ -45,7 +50,7 @@ public class ActivityLogger {
     }
 
     public void logRoundInfo(String round) {
-        performLog(round);
+        performLog(String.format("%s%s%s%n", AppConfig.ANSI_PURPLE, round, AppConfig.ANSI_RESET));
     }
 
     public void logTurnInfo(String turn) {
@@ -53,18 +58,18 @@ public class ActivityLogger {
     }
 
     public void logAttack(String attack) {
-        performLog(attack);
+        performLog(String.format("%9s%s%s", AppConfig.ANSI_GREEN, attack, AppConfig.ANSI_RESET));
     }
 
     public void logDamage(String damage) {
-        performLog(damage);
+        performLog(String.format("%13s%s%s", AppConfig.ANSI_YELLOW, damage, AppConfig.ANSI_RESET));
     }
 
     public void logDeath(String death) {
-        performLog(death);
+        performLog(String.format("%13s%s%s", AppConfig.ANSI_RED, death, AppConfig.ANSI_RESET));
     }
 
     public void logHealing(String heal) {
-        performLog(heal);
+        performLog(String.format("%13s%s%s", AppConfig.ANSI_CYAN, heal, AppConfig.ANSI_RESET));
     }
 }

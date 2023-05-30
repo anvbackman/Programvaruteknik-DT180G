@@ -132,7 +132,7 @@ public class CharacterEquipment {
                 weaponsList.add(breakLine);
                 weaponsList.add(String.format("%s %s", AppConfig.ANSI_PURPLE, weapon.getWield()));
                 weaponsList.add(breakLine);
-                weaponsList.add(String.format("%s Damage %14s+%s", AppConfig.ANSI_RED, AppConfig.ANSI_GREEN, weapon.getDamage()));
+                weaponsList.add(String.format("%s Damage %14s%3s", AppConfig.ANSI_RED, AppConfig.ANSI_GREEN, "+" + weapon.getDamage()));
                 weaponsList.add(breakLine);
                 weaponsList.add(String.format("%s %s", AppConfig.ANSI_CYAN, weapon));
                 weaponsList.add(String.format("%s %3s%s", AppConfig.ANSI_YELLOW, "+" + weapon.getStat().getModifiedValue(), AppConfig.ANSI_RESET));
@@ -150,7 +150,7 @@ public class CharacterEquipment {
                 armorList.add(breakLine);
                 armorList.add(String.format("%s %s", AppConfig.ANSI_PURPLE, armor.getMaterial()));
                 armorList.add(breakLine);
-                armorList.add(String.format("%s Protection %10s+%s", AppConfig.ANSI_RED, AppConfig.ANSI_GREEN, armor.getProtection()));
+                armorList.add(String.format("%s Protection %10s%3s", AppConfig.ANSI_RED, AppConfig.ANSI_GREEN, "+" + armor.getProtection()));
                 armorList.add(breakLine);
                 armorList.add(String.format("%s %s", AppConfig.ANSI_CYAN, armor));
                 armorList.add(String.format("%s %3s%s", AppConfig.ANSI_YELLOW, "+" + armor.getStat().getModifiedValue(), AppConfig.ANSI_RESET));
