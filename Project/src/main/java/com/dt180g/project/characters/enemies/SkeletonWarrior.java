@@ -11,9 +11,8 @@ import java.util.List;
 public class SkeletonWarrior extends BaseEnemy {
     public SkeletonWarrior(int enemyNumber) {
         super(AppConfig.ENEMY_SKELETON_WARRIOR + " " + enemyNumber, AppConfig.ATTRIBUTE_VALUES_SKELETON_WARRIOR);
-        List<String> enemyType = new ArrayList<>();
-        enemyType.add(SkeletonWarrior.class.getSimpleName());
-        equipEnemy(enemyType);
+        List<String> enemyWeapon = Arrays.asList(AppConfig.WEAPON_AXE, AppConfig.WEAPON_SWORD, AppConfig.WEAPON_SHIELD);
+        equipEnemy(enemyWeapon);
 
         for (Weapon weapon : getEquipment().getWeapons()) {
             getCharacterStats().adjustStatStaticModifier(weapon.getStat().getStatName(), weapon.getStat().getBaseValue());

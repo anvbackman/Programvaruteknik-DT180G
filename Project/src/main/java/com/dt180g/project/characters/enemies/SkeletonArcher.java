@@ -12,9 +12,8 @@ public class SkeletonArcher extends BaseEnemy {
 
     public SkeletonArcher(int enemyNumber) {
         super(AppConfig.ENEMY_SKELETON_ARCHER + " " + enemyNumber, AppConfig.ATTRIBUTE_VALUES_SKELETON_ARCHER);
-        List<String> enemyType = new ArrayList<>();
-        enemyType.add(SkeletonArcher.class.getSimpleName());
-        equipEnemy(enemyType);
+        List<String> enemyWeapon = Arrays.asList(AppConfig.WEAPON_BOW, AppConfig.WEAPON_CROSSBOW);
+        equipEnemy(enemyWeapon);
 
         for (Weapon weapon : getEquipment().getWeapons()) {
             getCharacterStats().adjustStatStaticModifier(weapon.getStat().getStatName(), weapon.getStat().getBaseValue());

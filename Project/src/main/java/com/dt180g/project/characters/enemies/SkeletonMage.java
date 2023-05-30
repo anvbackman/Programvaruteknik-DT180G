@@ -11,9 +11,8 @@ import java.util.List;
 public class SkeletonMage extends BaseEnemy {
     public SkeletonMage(int enemyNumber) {
         super(AppConfig.ENEMY_SKELETON_MAGE + " " + enemyNumber, AppConfig.ATTRIBUTE_VALUES_SKELETON_MAGE);
-        List<String> enemyType = new ArrayList<>();
-        enemyType.add(SkeletonMage.class.getSimpleName());
-        equipEnemy(enemyType);
+        List<String> enemyWeapon = Arrays.asList(AppConfig.WEAPON_STAFF, AppConfig.WEAPON_WAND);
+        equipEnemy(enemyWeapon);
 
         for (Weapon weapon : getEquipment().getWeapons()) {
             getCharacterStats().adjustStatStaticModifier(weapon.getStat().getStatName(), weapon.getStat().getBaseValue());
