@@ -67,6 +67,7 @@ public abstract class BaseHero extends BaseCharacter {
     /**
      * Does the turn for the hero, logging the turn information and executes the actions if said character is alive.
      */
+    @Override
     public void doTurn() {
         ActivityLogger.INSTANCE.logTurnInfo(getTurnInformation(getCharacterName()));
         if (!isDead()) {
