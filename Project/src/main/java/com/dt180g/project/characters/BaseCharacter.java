@@ -261,7 +261,7 @@ public abstract class BaseCharacter {
      * Method for resetting the characters action points and energy level at the start of a round.
      * It does this by deciding if the current amount + the round reset amount is larger that the maximum amount or not.
      * If it is, it simply resets the amount to max to not exceed the maximum amount allowed,
-     * else it resets it using the round reset constant.
+     * else it resets it using the round reset constants.
      */
     public void roundReset() {
 
