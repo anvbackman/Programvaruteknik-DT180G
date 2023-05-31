@@ -20,7 +20,7 @@ public class Weapon extends BaseGear {
     private Attribute attribute;
 
     /**
-     * Constructor used to create an Weapon object with a parameter to store weapons.
+     * Constructor used to create a Weapon object with a parameter to store weapons.
      * It stores the type, name and class restriction and then assign the weapon specific
      * damage, wield and attribute. The attribute is randomized using the Randomizer class.
      *
