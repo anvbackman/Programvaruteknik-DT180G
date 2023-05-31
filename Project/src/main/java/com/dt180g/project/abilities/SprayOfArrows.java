@@ -6,7 +6,7 @@ import com.dt180g.project.support.AppConfig;
  * The Class SprayOfArrows representing the ability spray of arrows.
  * The class provides methods to calculate and retrieve action point and energy point costs.
  * The class extends the BaseAbility class and provides implementation for its abstract methods.
- * The ability is a non-healing and non-magical ranged ability that attacks multiple characters.
+ * The ability is a non-healing and non-magical ranged physical attack ability that targets multiple characters.
  * @author Andreas Backman
  */
 public class SprayOfArrows extends BaseAbility {
@@ -33,7 +33,7 @@ public class SprayOfArrows extends BaseAbility {
     /**
      * Method for specifying if the ability is a healing ability.
      *
-     * @return fals indicating that the ability is not a healing ability.
+     * @return false indicating that the ability is not a healing ability.
      */
     @Override
     public boolean isHeal() {
