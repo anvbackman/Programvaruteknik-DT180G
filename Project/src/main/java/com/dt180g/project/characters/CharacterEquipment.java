@@ -181,7 +181,7 @@ public class CharacterEquipment {
      * Method for returning a formatted String of the characters weapons and armor pieces
      * with their respective information such as type and stats.
      *
-     * @return the header and the weapons and armorPieces lists formatted through IOHelper
+     * @return the header and the weapons and armorPieces lists formatted through the class IOHelpers formatter.
      */
     @Override
     public String toString() {
