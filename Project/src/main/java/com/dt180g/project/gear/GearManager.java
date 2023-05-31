@@ -211,7 +211,7 @@ public class GearManager {
         for (List<Armor> armorList : armorPieces.values()) {
 
             for (Armor armor : armorList) {
-                
+
                 if (armor.checkClassRestriction(armorForRestriction) && armorType.contains(armor.getType())) {
                     armorForClass.add(armor);
                 }

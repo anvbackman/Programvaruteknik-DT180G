@@ -183,36 +183,30 @@ public class CharacterStats {
     }
 
     /**
-     * Method for adjusting the characters action points using the adjustDynamicModifier() method.
+     * Method for adjusting the characters action points using the adjustStatDynamicModifier() method.
      *
      * @param adjust the action points
      */
     public void adjustActionPoints(int adjust) {
-
-        BaseStat adjustAP = stats.get(AppConfig.COMBAT_STAT_ACTION_POINTS);
-        adjustAP.adjustDynamicModifier(adjust);
+        adjustStatDynamicModifier(AppConfig.COMBAT_STAT_ACTION_POINTS, adjust);
     }
 
     /**
-     * Method for adjusting the characters hit points using the adjustDynamicModifier() method.
+     * Method for adjusting the characters hit points using the adjustStatDynamicModifier() method.
      *
      * @param adjust the hit points
      */
     public void adjustHitPoints(int adjust) {
-
-        BaseStat adjustHP = stats.get(AppConfig.TRAIT_VITALITY);
-        adjustHP.adjustDynamicModifier(adjust);
+        adjustStatDynamicModifier(AppConfig.TRAIT_VITALITY, adjust);
     }
 
     /**
-     * Method for adjusting the characters energy level using the adjustDynamicModifier() method.
+     * Method for adjusting the characters energy level using the adjustStatDynamicModifier() method.
      *
      * @param adjust the energy level
      */
     public void adjustEnergyLevel(int adjust) {
-
-        BaseStat adjustEnergy = stats.get(AppConfig.TRAIT_ENERGY);
-        adjustEnergy.adjustDynamicModifier(adjust);
+        adjustStatDynamicModifier(AppConfig.TRAIT_ENERGY, adjust);
     }
 
     /**

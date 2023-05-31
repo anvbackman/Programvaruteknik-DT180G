@@ -60,6 +60,7 @@ public abstract class BaseHero extends BaseCharacter {
      *
      * @return the characters name.
      */
+    @Override
     public String getCharacterName() {
         return characterName;
     }

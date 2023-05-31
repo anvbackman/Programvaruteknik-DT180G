@@ -87,6 +87,7 @@ public abstract class BaseAbility {
      * Method that takes an ability as a String
      * @return a String of the ability
      */
+    @Override
     public abstract String toString();
 }
 

@@ -296,6 +296,7 @@ public abstract class BaseCharacter {
      * Method for returning a String of the characters name, stats and equipment information.
      * @return the String
      */
+    @Override
     public String toString() {
 
         String header = String.format("%s****************************************\n%28s\n****************************************\n", AppConfig.ANSI_WHITE, getCharacterName());

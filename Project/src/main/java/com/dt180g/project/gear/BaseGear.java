@@ -84,6 +84,7 @@ public abstract class BaseGear {
      *
      * @return a String of the gear name
      */
+    @Override
     public String toString() {
         return gearName;
     }

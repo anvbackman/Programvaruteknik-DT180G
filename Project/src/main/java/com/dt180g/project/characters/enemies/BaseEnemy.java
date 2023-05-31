@@ -44,6 +44,7 @@ public class BaseEnemy extends BaseCharacter {
      *
      * @return the characters name.
      */
+    @Override
     public String getCharacterName() {
         return characterName;
     }
@@ -51,6 +52,7 @@ public class BaseEnemy extends BaseCharacter {
     /**
      * Does the turn for the enemy, logging the turn information and executes the actions if said character is alive.
      */
+    @Override
     public void doTurn() {
         ActivityLogger.INSTANCE.logTurnInfo(getTurnInformation(getCharacterName()));
         if (!isDead()) {
