@@ -117,6 +117,7 @@ public class CharacterEquipment {
         return true; // Armor piece added successfully
     }
 
+    @Override
     public String toString() {
 
 
