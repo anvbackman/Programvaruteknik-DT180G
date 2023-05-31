@@ -5,7 +5,9 @@ import com.dt180g.project.support.AppConfig;
 /**
  * The Class ElementalBlast representing the ability elemental blast.
  * The class provides methods to calculate and retrieve action point and energy point costs.
- * The class extends the BaseAbility class.
+ * The class extends the BaseAbility class and provides implementation for its abstract methods.
+ * The ability is a non-healing magical ability that targets multiple characters
+ * and the ability comes with different elements.
  * @author Andreas Backman
  */
 public class ElementalBlast extends BaseAbility {
@@ -16,7 +18,7 @@ public class ElementalBlast extends BaseAbility {
 
     /**
      * Constructor that creates an ElementalBlast object with the specified element.
-     * The abilities magical phrase and the cost of action points and energy are set
+     * The ability magical phrase and the cost of action points and energy are set
      * to the values defined in the AppConfig class
      *
      * @param element the element chosen for the ability.
@@ -74,6 +76,7 @@ public class ElementalBlast extends BaseAbility {
 
     /**
      * Method for returning a String of the ability including the magical phrase, the element and the ability type.
+     *
      * @return the string.
      */
     @Override

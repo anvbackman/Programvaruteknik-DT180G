@@ -20,6 +20,7 @@ public class Cleric extends BaseHero {
      * Constructor that creates a new instance of the Cleric class
      * The character name is appended with the hero role and the characters ability values are set
      * The character is then equipped with the appropriate gear and its abilities are set.
+     *
      * @param characterName the characters name
      */
     public Cleric(String characterName) {

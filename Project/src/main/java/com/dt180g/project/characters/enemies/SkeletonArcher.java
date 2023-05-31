@@ -18,6 +18,7 @@ public class SkeletonArcher extends BaseEnemy {
      * Constructor that creates a new instance of the SkeletonArcher class
      * The enemy type is appended with the enemies number and the enemies ability values are set
      * The enemy is then equipped with the appropriate gear and its abilities are set.
+     *
      * @param enemyNumber number of the enemy
      */
     public SkeletonArcher(int enemyNumber) {

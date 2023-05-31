@@ -29,6 +29,7 @@ public class BaseEnemy extends BaseCharacter {
 
     /**
      * Method for equipping the enemy with weapons of the enemy class.
+     *
      * @param equip the class.
      */
     protected void equipEnemy(List<String> equip) {
@@ -40,6 +41,7 @@ public class BaseEnemy extends BaseCharacter {
 
     /**
      * Getting the name of the enemy character.
+     *
      * @return the characters name.
      */
     public String getCharacterName() {

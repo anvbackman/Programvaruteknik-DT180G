@@ -29,6 +29,7 @@ public abstract class BaseHero extends BaseCharacter {
 
     /**
      * Method for equipping the hero with weapons and armor of the heroes class.
+     *
      * @param equip the class.
      */
     protected void equipHero(Class<?> equip) {
@@ -56,6 +57,7 @@ public abstract class BaseHero extends BaseCharacter {
 
     /**
      * Getting the name of the hero character.
+     *
      * @return the characters name.
      */
     public String getCharacterName() {
