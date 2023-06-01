@@ -142,13 +142,56 @@ public Map<String, List<Armor>> getAllMappedArmorPieces() {
 
 Next we will may implement the getWeaponsOfType() method which simply returns a weapon using the type.
 The methods getRandomWeapon(Class<?>), getRandomOneHandedWeapon(Class<?>) and getAllArmorForRestriction(Class<?>)
-are similar as well with some exceptions in the if-statement used and the returns.
-The most basic of these is the method getAllArmorForRestriction(Class<?>).
+are similar but with some exceptions in the if-statement used and the returns.
+The most fundemental of these is the method getAllArmorForRestriction(Class<?>).
 
-We start by initializing a new ArrayList and then iterate over the values of armorPieces. For each iteration we
-iterate over the previous iteration using an Armor object, and for each of these iterations we check if the 
-checkClassRestriction method in the Armor class allows this armor and if it does we add it to the List we first created.
-After all iterations are completed we return the list.
+We start by initializing a new ArrayList called armorForClass and then iterate over the values of the armorPieces Map. 
+For each iteration we iterate over the previous iteration using an Armor object, and for each of these iterations we 
+check if the checkClassRestriction method in the Armor class allows this armor and if it does we add it to the armorForClass
+list. After all iterations are completed we return the armorForClass list.
+In the getRandomWeapon(Class<?>) we do the same but when we return the weapon we use the Randomizer class to give the
+character a random weapon. The same goes for the getRandomOneHandedWeapon(Class<?>) method but here we check the class
+restrictions AND that the weapon is not two-handed. This is done using a method inside the Weapon class.
+```
+public List<Armor> getAllArmorForRestriction(Class<?> armorForRestriction) {
+
+        List<Armor> armorForClass = new ArrayList<>();
+
+        for (List<Armor> armorList : armorPieces.values()) {
+            for (Armor armor : armorList) {
+                if (armor.checkClassRestriction(armorForRestriction)) {
+                    armorForClass.add(armor);
+                }
+            }
+        }
+
+        return armorForClass;
+    }
+```
+
+When we have the random weapons we need to be able to return these based on its type as well. And to do this we utilize
+the methods getRandomOneHandedWeapon(List<String>) and getRandomWeapon(List<String>). These are implemented in the same
+way as the previous methods with the exception that we instead of checking for class restrictions, we check if 
+our parameter contains the type we get from Weapon:getType()
+```
+if (weaponType.contains(weapon.getType()) && !weapon.isTwoHanded()) {
+                    aRandomWeapon.add(weapon);
+                }
+```
+
+Lastly we also need to be able to return a random armor based on its type. This is done in a similar as
+getAllArmorForRestriction(Class<?>) but with the use of two parameters. One for the type and one for the restriction.
+The difference here is that we both check for the class restriction and the type and then returns it using the Randomizer
+class to get a random weapon of the given type.
+```
+if (armor.checkClassRestriction(armorForRestriction) && armorType.contains(armor.getType())) {
+                    armorForClass.add(armor);
+                }
+            }
+        }
+
+        return armorForClass.get(Randomizer.INSTANCE.getRandomValue(0, armorForClass.size() - 1));
+```
 
 
 
