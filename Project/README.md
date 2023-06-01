@@ -55,7 +55,7 @@ The abstract BaseStat class acts as the superclass of the three types of stats a
 subclasses will use. It is responsible for retrieving the stats name and value, but also create static and dynamic 
 modifiers that will be used later on.
 
-We may start by creating said variables and then create a BaseStat object for these. Next up simply create a method
+We may start by creating said variables and then construct a BaseStat object for these. Next up simply create a method
 that returns each of these according to the project specifications. statName, baseValue and staticModifier will need no
 explanation but the method getModifiedValue is simply created by getting the base value and adding the static and dynamic
 modifiers to it. The getTotalModifier method is simular but only adds the static and dynamic modifiers together.
@@ -67,18 +67,89 @@ public void adjustStaticModifier(int staticModifier) {
         this.staticModifier += staticModifier;
     }
 ```
-The resetDynamicModifier is created in a simular way, but without a parameter and the value is instead set to 0.
-
-Lastly the class will use a toString() method to return the stats name, modified value and total modifier.
+The resetDynamicModifier is created in a similar fashion, but without a parameter and the value is instead set to 0.
+Lastly the class will use a toString() method to return the stats name, modified value and total modifier
+which will show on the Hero details screen under the statistics.
 
 
 #### Attribute, Trait and CombatStat
-These classes all derive from the BaseStat class, but there are some differences in how they are implemented when it 
-comes to the CombatStat class.
+These classes all derive from the BaseStat class. The Attribute and Trait classes are implemented in the same way,
+but there are some differences in how they are implemented when it comes to the CombatStat class.
 
+The Attribute and Trait classes simply creates an object of themselves with parameters for the stat name and value,
+and use these to refer to the superclass.
+```
+public Trait(String statName, int baseValue) {
+        super(statName, baseValue);
+    }
+```
 
-The CombatStat class adds two new functionalities. These are for attribute and trait reliance and is firstly set as
+The CombatStat class adds two new functionalities. These are for attribute and trait reliance and is firstly declared as
 instance variables and then initialized in the constructor. Instead of returning the statName and baseValue to the
 superclass it returns the statName and the baseValue as 0. 
+It then overrides the getBaseValue() method in BaseStat using the specified multiplication. 
+```
+@Override
+    public int getBaseValue() {
+        return (int) Math.round(attributeReliance.getModifiedValue() * AppConfig.COMBAT_STAT_MULTIPLIER +
+                traitReliance.getModifiedValue() * AppConfig.COMBAT_STAT_MULTIPLIER);
+    }
+```
+
+### Gear
+
+#### GearManager
+The GearManager class is responsible for manage the weapons and armor of the game and also provide the ability to 
+generate random gear for the characters.
+
+Similar to the StatsManager class, the GearManager class implement an eager singleton in order to give global access
+to its instance. Since the class will need a way to store weapons and armor we first need somewhere to store them.
+To do that one can simply declare these as Maps with the types String for storing the key values and List for storing
+the values.
+
+In the constructor, we initialize two Maps by assigning them the corresponding methods for retrieving weapons and armor. 
+We set the Maps using the methods getAllMappedArmorPieces() and getAllMappedWeapons() which are implemented in the same way.
+For the purpose of this explanation, let us focus on the details of getAllMappedArmorPieces().
+
+To begin with, we create an empty HashMap and assign it to the variable armorPieces. The armor data is stored in a 
+JSON file, so our first step is to retrieve this data and assign it to a list. 
+
+Next, we iterate over each element in the armorList.
+During each iteration, we create an Armor object by passing the current armorMap to its constructor. 
+This gives access to the type of armor using the method getType() in the Armor class.
+To obtain the values, we create a new list, using the armorType as the key, and initialize it as an empty ArrayList. 
+We then add the current armor object to this list.
+
+Finally, we add the armorType and the list of armor objects as arguments to the armorPieces HashMap using the put method.
+Once all the iterations are complete, we return the armorPieces HashMap, which contains the armor mapped by their respective types.
+```
+public Map<String, List<Armor>> getAllMappedArmorPieces() {
+
+        armorPieces = new HashMap<>();
+        List<Map<String, String>> armorList = IOHelper.readFromFile("gear_armor.json");
+
+        for (Map<String, String> armorMap : armorList) {
+            Armor armor = new Armor(armorMap);
+            String armorType = armor.getType();
+            List<Armor> armorMappedList = armorPieces.getOrDefault(armorType, new ArrayList<>());
+            armorMappedList.add(armor);
+            armorPieces.put(armorType, armorMappedList);
+        }
+
+        return armorPieces;
+    }
+```
+
+Next we will may implement the getWeaponsOfType() method which simply returns a weapon using the type.
+The methods getRandomWeapon(Class<?>), getRandomOneHandedWeapon(Class<?>) and getAllArmorForRestriction(Class<?>)
+are similar as well with some exceptions in the if-statement used and the returns.
+The most basic of these is the method getAllArmorForRestriction(Class<?>).
+
+We start by initializing a new ArrayList and then iterate over the values of armorPieces. For each iteration we
+iterate over the previous iteration using an Armor object, and for each of these iterations we check if the 
+checkClassRestriction method in the Armor class allows this armor and if it does we add it to the List we first created.
+After all iterations are completed we return the list.
+
+
 
 ## Discussion

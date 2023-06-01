@@ -8,8 +8,8 @@ package com.dt180g.project.stats;
 public abstract class BaseStat {
 
     // Variables for the stat name, its base value and the static and dynamic modifiers
-    private String statName;
-    private int baseValue;
+    private final String statName;
+    private final int baseValue;
     private int staticModifier;
     private int dynamicModifier;
 

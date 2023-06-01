@@ -175,9 +175,7 @@ public class GearManager {
 
         List<Armor> armorForClass = new ArrayList<>();
 
-        // Iterate over each armor type
         for (List<Armor> armorList : armorPieces.values()) {
-            // Filter armor pieces based on the specified class
             for (Armor armor : armorList) {
                 if (armor.checkClassRestriction(armorForRestriction)) {
                     armorForClass.add(armor);
