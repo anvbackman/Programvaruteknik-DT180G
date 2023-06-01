@@ -50,6 +50,35 @@ public String getRandomAttributeName() {
     }
 ```
 
-#### 
+#### BaseStat
+The abstract BaseStat class acts as the superclass of the three types of stats and will define behaviours that these
+subclasses will use. It is responsible for retrieving the stats name and value, but also create static and dynamic 
+modifiers that will be used later on.
+
+We may start by creating said variables and then create a BaseStat object for these. Next up simply create a method
+that returns each of these according to the project specifications. statName, baseValue and staticModifier will need no
+explanation but the method getModifiedValue is simply created by getting the base value and adding the static and dynamic
+modifiers to it. The getTotalModifier method is simular but only adds the static and dynamic modifiers together.
+
+The class should also contain methods for adjusting the static and dynamic modifiers and this is done by creating it
+with a parameter which then is appended to the original variable. 
+```
+public void adjustStaticModifier(int staticModifier) {
+        this.staticModifier += staticModifier;
+    }
+```
+The resetDynamicModifier is created in a simular way, but without a parameter and the value is instead set to 0.
+
+Lastly the class will use a toString() method to return the stats name, modified value and total modifier.
+
+
+#### Attribute, Trait and CombatStat
+These classes all derive from the BaseStat class, but there are some differences in how they are implemented when it 
+comes to the CombatStat class.
+
+
+The CombatStat class adds two new functionalities. These are for attribute and trait reliance and is firstly set as
+instance variables and then initialized in the constructor. Instead of returning the statName and baseValue to the
+superclass it returns the statName and the baseValue as 0. 
 
 ## Discussion
