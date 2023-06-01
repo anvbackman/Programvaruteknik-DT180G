@@ -193,6 +193,67 @@ if (armor.checkClassRestriction(armorForRestriction) && armorType.contains(armor
         return armorForClass.get(Randomizer.INSTANCE.getRandomValue(0, armorForClass.size() - 1));
 ```
 
+#### BaseGear
+The abstract class BaseGear acts as the superclass of the Armor and Weapon classes and will define behaviours that these
+subclasses will use. It is responsible for providing information regarding the gears type, name and class restrictions.
+So we may firstly declare these variables in the instance field.
+
+The constructor will create a BaseGear object using said parameters. This is straight forward for the type and 
+gear name, but classRestriction will need to be initialized as a new List. It then splits the class restrictions into
+individual class names with the use of the split() method and then uses the trim method() to remove any whitespace.
+We then retrieve the package name from the BaseHero class which retrieve the package name where this class is located.
+In doing so we may then check that the class is found and then use that information to check if the class 
+are allowed to use the gear or not.
+```
+this.classRestrictions = new ArrayList<>();
+
+        for (String restriction : classRestrictions.split(",")) {
+            String className = BaseHero.class.getPackageName() + "." + restriction.trim();
+            try {
+                Class<?> characterClass = Class.forName(className);
+                this.classRestrictions.add(characterClass);
+            }
+            catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+```
+
+The returns of type and class restrictions are returned using a regular method, but the gearName will be returned using 
+the toString() method. 
+To be able to check for class restrictions we simply create a boolean method to check if classRestrictions contains 
+the class to be checked.
+Lastly we will need to retrieve the stats that are connected to the gear and we may do so by declaring an abstract method,
+that will retrieve these stats from the Armor and Weapon class.
+
+#### Armor, Weapon
+The Armor and Weapon class extends the BaseGear class and will add additional properties specific to the gear.
+We know that the BaseGear is expecting its subclasses to refer the type, name and restrictions of the gear, and
+this is simply done via a super in the constructor.
+
+But these classes will also return some other things. The Weapon class will return the weapons damage, wield and attribute
+and the Armor class will return the armor protection, the material of the armor and trait. 
+The attribute and trait need to be returned randomized but are done in the same fashion.
+In the constructor we may simply assign a new Attribute or Trait object and with the help of 
+StatsManager:getRandomAttributeName() and getRandomTraitName() we may retrieve its name. The value of the stat
+is also randomized but using the Randomizer class. 
+```
+public Weapon(Map<String, String> weapon) {
+        super(weapon.get("type"), weapon.get("name"), (weapon.get("restriction")));
+
+        damage = Integer.parseInt(weapon.get("damage"));
+        wield = weapon.get("wield");
+        attribute = new Attribute(StatsManager.INSTANCE.getRandomAttributeName(),
+                Randomizer.INSTANCE.getRandomValue(0, AppConfig.WEAPON_ATTRIBUTE_VALUE_UPPER_BOUND));
+    }
+```
+
+Returning these variables are straight forward but we need to make sure that the getStat() method uses the @Override
+annotation since it overrides its abstract method in the BaseGear class. The same goes for the toString() method
+which will return the gears name and stat name.
+There is a key difference in the Weapons class though. Since some weapons are two-handed and some are one-handed, we
+need a way to check this. Using a boolean method we may return true if the variable wield contains the String "Two Handed".
+
 
 
 ## Discussion
