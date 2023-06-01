@@ -26,15 +26,6 @@ public class GearManager {
     }
 
     /**
-     * Method to return the instance of the GearManager.
-     *
-     * @return the instance of the GearManager
-     */
-    public static GearManager getInstance() {
-        return INSTANCE;
-    }
-
-    /**
      * Method to get all armor pieces from a JSON-file.
      * It then iterates over it and gets each armor type and its corresponding values and puts
      * the results in armorPieces as keys and values.
