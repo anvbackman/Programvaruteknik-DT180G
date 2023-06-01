@@ -36,15 +36,6 @@ public class ActivityLogger {
     }
 
     /**
-     * Method for returning the ActivityLoggers instance.
-     *
-     * @return the instance
-     */
-    public static ActivityLogger getInstance() {
-        return INSTANCE;
-    }
-
-    /**
      * Method for delaying the execution
      */
     private void delayExecution() {

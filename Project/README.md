@@ -256,4 +256,34 @@ need a way to check this. Using a boolean method we may return true if the varia
 
 
 
+
+
+### ActivityLogger
+The ActivityLogger is used for the logging functionality during gameplay.
+It does this by simply logging actions to the console and will also be used for some formatting of these messages.
+The logger needs to be implemented as an eager singleton and since the INSTANCE variable is public there is no need
+for a getInstance() method. We declare a new Logger object and initializes it in the constructor.
+
+Since we need to write to the console we also implement a ConsoleHandler which is formatted and added to the logger. 
+Here it is important to set its parent handlers to false in order to not print the messages twice to the console. 
+There were some problems faced due to this that took a while to figure out.
+
+As the project specification informs of, we will need to be able to execute a delay for the thread which is straight 
+forward since the method is given in the assignment.
+
+The method responsible for all the logging is called performLog and takes a String as its parameter.
+This will print a message as long as there is no need for the delay to be executed.
+```
+private void performLog(String message) {
+        if (AppConfig.USE_SLEEP_DELAY) {
+            delayExecution();
+        }
+        logger.info(message);
+    }
+```
+
+The rest of the methods will all take a String as its parameter and performLog using said parameter.
+
+
+
 ## Discussion
