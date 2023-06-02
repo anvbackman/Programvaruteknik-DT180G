@@ -255,6 +255,79 @@ There is a key difference in the Weapons class though. Since some weapons are tw
 need a way to check this. Using a boolean method we may return true if the variable wield contains the String "Two Handed".
 
 
+### Abilities
+
+#### BaseAbility
+
+The BaseAbility class is an abstract class that acts as the base of the ability hierarchy. The class represents
+all nine abilities of the game and provides functionality and methods to calculate and retrieve the cost of action
+points and energy. All deriving subclasses make use of the BaseAbility's abstract methods.
+
+With that said one may start by declaring the instance variables of the class, which is used for the cost of action
+points and energy which will be initialized in the constructor when creating a BaseAbility object. These variables
+are then returned using their respective get method.
+
+To perform these ability we create the protected boolean method performAbility() which takes four parameters.
+These consists of a String to get the ability name, an integer to get the amount of targets, another int for the 
+damage or heal amount (the variable is called damage in this case) and a boolean to check if an enemy or hero should be targeted.
+This will then be formatted according to the specification in the project assignment. 
+The method will also specify what happens if a heal is executed by simply subtracting the damage variable from itself.
+The method then returns a new AbilityInfo object to the GameEngine:characterAttack() method.
+```
+protected boolean performAbility(String info, int amountOfTargets, int damage, boolean targetEnemies) {
+        String ability = String.format("%s", info + " (-" + actionPointCost + " AP, " + "-" + energyCost + " Energy)");
+        if (isHeal()) {
+            damage = - damage;
+        }
+        return GameEngine.INSTANCE.characterAttack(new AbilityInfo(ability, amountOfTargets, damage, targetEnemies, isMagic(), isHeal()));
+    }
+```
+
+The BaseAbility class utilizes five abstract methods to retrieve information of each ability. As these methods are
+abstract we simply do not add a body to it. These will be explained more thoroughly explained below.
+
+
+#### The abilities
+
+Each of the games abilities implements its own class and they all derive from the BaseAbility class. 
+The abilities are implemented very similar but has some key differences, so let us start of with the most basic
+ability which is the WeaponAttack class. This is an ability that is added to all characters in the game.
+
+Same as all other abilities, the WeaponAttack class uses its constructor to refer to its superclass, telling it
+what the ability's action point and energy cost is. In this case the cost of action points are set to 
+the constant LOWEST_AP_COST which is located in the AppConfig class. The WeaponAttack class however does not use up
+any energy, like every other ability does, which is why this value is set to 0. If it were to use energy it would
+be declared in the same way as the ability point cost using a constant from the AppConfig class. For example
+HIGH_ENERGY_COST.
+
+Moving on to the abstract methods that the abilities will override. First of we need to check if the ability is
+a magical ability, healing ability or physical ability. This is done using the isMagic() and isHeal() methods 
+by simply returning true or false for each ability.
+
+Then we use the getAmountOfTargets() method to return how many target the ability will attack or heal. This is done
+using two constants residing in the AppConfig class. These are called ABILITY_SINGLE_TARGET and ABILITY_GROUP_TARGET
+and is applied to each ability based on the project specification.
+
+The boolean method execute() is used to return the abilities name, attack or heal value, amount of targets and who to
+attack. The name of the ability is retrieved using the classes toString() method.
+
+This was the most basic ability, so lets move on to one of the more advanced ones.
+For example the ElementalBlast class.
+This class utilizes two extra functions, which is a magical phrase which each of the magical and healing abilities uses
+and the element variable which is only utilized by this class and the ElementalBolt class.
+These are declared as instance variables and are initialized in the constructor and added to the toString() method,
+which will be returned when execute is called.
+```
+public ElementalBlast(String element) {
+        super(AppConfig.HIGHEST_AP_COST, AppConfig.HIGH_ENERGY_COST);
+        this.element = element;
+        magicalPhrase = AppConfig.MAGICAL_PHRASE_1;
+    }
+```
+
+
+
+
 
 
 

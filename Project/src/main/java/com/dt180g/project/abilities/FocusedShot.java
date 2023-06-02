@@ -61,7 +61,7 @@ public class FocusedShot extends BaseAbility {
     public boolean execute(int attackValue, boolean targets) {
         String info = toString();
         int amountOfTargets = getAmountOfTargets();
-        int damage = attackValue;
+        int damage = attackValue * AppConfig.SINGLE_TARGET_ABILITY_MULTIPLIER;
         return performAbility(info, amountOfTargets, damage, targets);
     }
 

@@ -29,14 +29,14 @@ public abstract class BaseAbility {
      * Method for performing the ability using the given parameters.
      * @param info the name of the ability.
      * @param amountOfTargets the amount of targets.
-     * @param damage the damage made.
+     * @param damage the damage or heal made.
      * @param targetEnemies if enemy or hero should be targeted
      * @return the ability information
      */
     protected boolean performAbility(String info, int amountOfTargets, int damage, boolean targetEnemies) {
         String ability = String.format("%s", info + " (-" + actionPointCost + " AP, " + "-" + energyCost + " Energy)");
         if (isHeal()) {
-            damage = -damage;
+            damage = - damage;
         }
         return GameEngine.INSTANCE.characterAttack(new AbilityInfo(ability, amountOfTargets, damage, targetEnemies, isMagic(), isHeal()));
     }
