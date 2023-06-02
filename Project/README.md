@@ -405,7 +405,39 @@ To do this we declare a variable totalDamage to hold the total damage. We then i
 Weapon object and for each iteration we add the weapon damage to totalDamage using the getDamage() method
 residing in the Weapon class. Once the iterations are complete, the totalDamage is returned.
 
+Now we need to specify the amount of empty gear slots in order to not add to many weapons and armor pieces.
+The amountOfEmptyArmorSlots() method simply done by returning the size of armorPieces subtracted from the max amount of slots.
+The amountOfEmptyWeaponSlots() method is a bit more complicated since we need to adhere to the restriction
+that a two-handed weapon only may be equipped once while a one-handed weapon can be equipped twice.
+To do this we may first iterate over the weapons list using a Weapon object and for each iteration check if the weapon
+is two-handed (using the isTwoHanded() method). If it is we remove all slots of the amount of empty slots and if it is
+one-handed we remove one, which will allow it to add another one-handed weapon on the next iteration. Once completed
+the method returns the used amount of slots.
+```
+int usedWeaponSlots = 0;
 
+        for (Weapon weaponWield : weapons) {
+            if (weaponWield.isTwoHanded()) {
+                usedWeaponSlots += 2;
+            }
+            else {
+                usedWeaponSlots += 1;
+            }
+        }
+
+        return Math.max(0, 2 - usedWeaponSlots);
+```
+
+Now lets add some equipment! The addWeapon() and addArmorPiece() methods are similar since they both check if it is
+possible to add another gear. We simply check if its allowed to add another gear, if it is the methods return true
+and if its not, they return false.
+
+The toString() method in the CharacterEquipment class works in the same way for both weapons and armor, so let us
+break down the weapons part.
+The this toString() will return what later on will be seen on the equipment screen. This includes the weapons
+type, wield, damage, name and stat. 
+To do this we iterate over the weapons list using a Weapon object and for each iteration we add the specified
+information to a list
 
 
 
