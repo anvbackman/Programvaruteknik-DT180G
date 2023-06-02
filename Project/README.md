@@ -309,7 +309,9 @@ using two constants residing in the AppConfig class. These are called ABILITY_SI
 and is applied to each ability based on the project specification.
 
 The boolean method execute() is used to return the abilities name, attack or heal value, amount of targets and who to
-attack. The name of the ability is retrieved using the classes toString() method.
+attack. The name of the ability is retrieved using the classes toString() method. It is important to note that all
+single attack abilities shall be multiplied with the constant SINGLE_TARGET_ABILITY_MULTIPLIER to make them more
+viable.
 
 This was the most basic ability, so lets move on to one of the more advanced ones.
 For example the ElementalBlast class.
@@ -326,6 +328,82 @@ public ElementalBlast(String element) {
 ```
 
 
+### Characters
+
+#### BaseCharacter
+
+The abstract class BaseCharacter represents the base characters in the game and provides methods and functionality
+for the stats, equipment and abilities that are utilized by the characters.
+So to start of we may create instance variables for these three functionalities.
+The variable for the stats and equipment are declared as objects of their respective class CharacterStats and
+CharacterEquipment while the abilities need a List object of the BaseAbility class.
+These are then initialized in the constructor when a BaseCharacter object is called and each get their own
+get method to return them which are straight forward, except for the getCharacterName() which utilizes the
+getAllCharacters() method residing in the GameEngine class.
+
+In order to return the stats hit points, action points and energy level we instead utilize the CharacterStats class.
+This class is responsible for returning the turn information during gameplay. This can be done by checking
+which class instance is active and then return formatted String.
+```
+if (this instanceof SkeletonArcher || this instanceof SkeletonWarrior || this instanceof SkeletonMage) {
+            return String.format(...);
+        }
+```
+
+The class uses the boolean method isDead to check if the character is alive by simply returning true if the characters
+hit points are less than or equal to 0.
+In order to add abilities to the characters we may declare a method for this by setting the methods parameter equal
+to the instance variable "abilities". This will be used when implementing each character to add the specified abilities.
+
+The class will also make use of a Deque method to select which random ability that is to be used during gameplay.
+It does this by iterating over a list of abilities and then randomizing the ability selected using the Randomizer class,
+adding the ability to the Deque and returning it.
+
+In order for characters to deal and receive damage, we need a method for calculating this since different amount of 
+damage is to be made depending on the characters armor protection, defence rate and if the damage is done
+using a magic ability or not. To do this we may declare an integer parameter to retreive the damage and a boolean
+parameter to check if the damage is made using a magic ability or not.
+The damage is then returned with both the mitigated amount and the actual damage made.
+
+We also need to implement a solution that makes it possible for the characters to get healed. This is done 
+using the method registerHealing() using an integer parameter. Here the method simply check if the healing amount
+added to the current hit points is greater than the characters max hit points. If it is, it resets the characters
+hit points to max and if its not, the character is healed with the healing amount.
+```
+ public int registerHealing(int heal) {
+
+        int currentHP = getHitPoints();
+        int maxHP = characterStats.getTotalHitPoints();
+        if (currentHP + heal > maxHP) {
+            characterStats.resetHitPoints();
+        }
+        else {
+            characterStats.adjustHitPoints(heal);
+        }
+        return getHitPoints();
+    }
+```
+
+There is also a need for a method that will be used to reset the action points and the energy level.
+This is done in the same way as the registerHealing() method, but using a constant from the AppConfig class, instead
+of declaring the method using a parameter.
+
+Finally the toString() method. This makes it possible to show the heroes stats in the Hero Details screen.
+It does so by simply returning a List containing information that we will get from the CharacterStats and 
+CharacterEquipment classes later on.
+
+#### CharacterEquipment
+
+The CharacterEquipment class stores the weapons and armor pieces and calculates damage and armor protection.
+We start by declaring these variables in the instance field. The weapons is stored in a List while the armor
+is stored in a Map.
+The get methods will then initialize these and return them.
+
+The class need to return the total damage and armor protection, which is done in the same way for both.
+Lets look at getTotalWeaponDamage().
+To do this we declare a variable totalDamage to hold the total damage. We then iterate over the weapons list using a 
+Weapon object and for each iteration we add the weapon damage to totalDamage using the getDamage() method
+residing in the Weapon class. Once the iterations are complete, the totalDamage is returned.
 
 
 
