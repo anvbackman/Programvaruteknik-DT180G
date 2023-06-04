@@ -3,6 +3,7 @@
 ## Environments & Tools
 Lenovo Ideapad 5, Windows 10, IntelliJ IDEA, Java, Git 2.37.3, Google Chrome,
 Windows Powershell, Bitbucket
+---
 
 ## Purpose
 
@@ -22,12 +23,14 @@ such as class diagrams and hierarchies, documentation using Javadoc, unit testin
 * Provide clear explanations of the implementations using Javadoc, making sure that others may understand it
 * Making sure that the file structure adheres with the specification in the project assignment
 * Implementing a solution for creating the games characters and equipping them with gear, stats and abilities
+---
 
 ## Procedures
 
 ### Stats
 
 #### Stats Manager
+
 According to the project assignment the StatsManager class is to be implemented as an eager Singleton in
 order to give access to its single instance. Since the INSTANCE attribute is meant to be public there is no need for
 one to create a method for returning it. Therefor this is straight forward.
@@ -51,6 +54,7 @@ public String getRandomAttributeName() {
 ```
 
 #### BaseStat
+
 The abstract BaseStat class acts as the superclass of the three types of stats and will define behaviours that these
 subclasses will use. It is responsible for retrieving the stats name and value, but also create static and dynamic 
 modifiers that will be used later on.
@@ -73,6 +77,7 @@ which will show on the Hero details screen under the statistics.
 
 
 #### Attribute, Trait and CombatStat
+
 These classes all derive from the BaseStat class. The Attribute and Trait classes are implemented in the same way,
 but there are some differences in how they are implemented when it comes to the CombatStat class.
 
@@ -99,6 +104,7 @@ It then overrides the getBaseValue() method in BaseStat using the specified mult
 ### Gear
 
 #### GearManager
+
 The GearManager class is responsible for manage the weapons and armor of the game and also provide the ability to 
 generate random gear for the characters.
 
@@ -194,6 +200,7 @@ if (armor.checkClassRestriction(armorForRestriction) && armorType.contains(armor
 ```
 
 #### BaseGear
+
 The abstract class BaseGear acts as the superclass of the Armor and Weapon classes and will define behaviours that these
 subclasses will use. It is responsible for providing information regarding the gears type, name and class restrictions.
 So we may firstly declare these variables in the instance field.
@@ -227,6 +234,7 @@ Lastly we will need to retrieve the stats that are connected to the gear and we 
 that will retrieve these stats from the Armor and Weapon class.
 
 #### Armor, Weapon
+
 The Armor and Weapon class extends the BaseGear class and will add additional properties specific to the gear.
 We know that the BaseGear is expecting its subclasses to refer the type, name and restrictions of the gear, and
 this is simply done via a super in the constructor.
@@ -440,6 +448,7 @@ To do this we iterate over the weapons list using a Weapon object and for each i
 information to a list before we return it.
 
 #### CharacterStats
+
 The CharacterStats class is responsible for providing various methods to retrieve and modify the stats in the game,
 this includes the characters attributes, traits and combat stats. This is done using a combined Map for the three.
 Therefor we simply create a single Map in the instance field.
@@ -579,6 +588,7 @@ and the current hit points of LichLord multiplied by the constant, as value.
 
 
 ### ActivityLogger
+
 The ActivityLogger is used for the logging functionality during gameplay.
 It does this by simply logging actions to the console and will also be used for some formatting of these messages.
 The logger needs to be implemented as an eager singleton and since the INSTANCE variable is public there is no need
@@ -604,6 +614,66 @@ private void performLog(String message) {
 
 The rest of the methods will all take a String as its parameter and performLog using said parameter.
 
+---
 
 
 ## Discussion
+
+The purpose of the assignment has been addressed through the implementation of the various components, including
+the stats, abilities and gear functionality.
+
+In the Stats module, the StatsManager class is implemented as an eager Singleton, providing access to its single instance. 
+The class effectively manages the stats attributes, traits, and combat stats using lists to store the values. 
+The methods for returning the stats themselves and generating randomized versions are implemented correctly 
+using the Randomizer class. The BaseStat class, along with its subclasses Attribute, Trait, and CombatStat, 
+effectively define the behaviors and provide necessary methods for accessing the stats.
+
+Moving on to the Gear module, the GearManager class is responsible for managing weapons and armor in the game. 
+It efficiently utilizes Maps to store the weapons and armor, and provides methods to retrieve them based on their types. 
+The implementation of the getAllMappedArmorPieces() method demonstrates parsing of JSON data to retrieve armor 
+information and Map them based on their types. The class also implements methods for generating random gear, 
+such as getRandomWeapon() and getRandomOneHandedWeapon(), which correctly consider class restrictions and type requirements.
+
+In the Abilities module, the BaseAbility class serves as the foundation for all nine abilities in the game. 
+It provides methods to calculate and retrieve the cost of action points and energy for each ability. 
+The performAbility() method is effectively implemented to handle various types of abilities, the number of targets, 
+damage or healing amounts, and target selection (enemy or hero). The method appropriately formats 
+the ability information and returns it as an AbilityInfo object.
+
+Overall, the implementation successfully aligns with the purpose of the assignment by applying the principles of OOP, 
+adhering to specifications, maintaining readability and maintainability, and providing clear explanations through Javadoc. 
+The project demonstrates an understanding of class hierarchies, relationships, and documentation. 
+The unit tests and mvn -test pass without issues, indicating that the expected behavior of the implemented classes
+has been fulfilled.
+
+To further improve the project, it would be beneficial to ensure comprehensive unit tests cover all possible scenarios and edge cases. 
+This would help validate the functionality of the implemented classes and catch any potential issues or bugs. 
+In conclusion, by reaching the goals set it can be established that the purpose of this project assignment has been
+fulfilled.
+
+### Alternative Solutions
+
+The BaseCharacter:getTurnInformation() method returns a String based on which characters turn it is currently.
+This was done by using this code.
+```
+if (this instanceof SkeletonArcher || this instanceof SkeletonWarrior || this instanceof SkeletonMage) {
+            return String.format(...);
+        }
+```
+One way of doing this would be to simply check if the getCharacterName() method contained the name of the character using a String
+with the character name. For example:
+```
+if (getCharacterName().contains("Skeleton") {}
+```
+Although this would work for this version of the game, what is to say that we would not add a Skeleton that
+has turned good and is now a Hero? Also, one may think that this way of doing it would look bad. Therefor it might be 
+better to check for the classes name instead.
+
+### Personal Reflections
+The final project of this course was a valuable learning experience that showcased the application of OOP concepts 
+learned during the course, by providing deeper knowledge for class hierarchies, inheritance and relationships and also 
+providing an opportunity to strengthen my skills in the Java programming language and in programming overall. 
+I have received a bigger understanding in using JSON-files in my project, and have also gained a better understanding of
+some things that hasn't been crystal clear during the previous assignments. Such as why the @Override annotation is used
+and why an eager singleton can vary in the way one initializes it.
+Overall, the final project has been a challenging but fun experience and I am looking forward to the next OOP course!
