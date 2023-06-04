@@ -18,7 +18,7 @@ such as class diagrams and hierarchies, documentation using Javadoc, unit testin
     constants.
 * Implementing classes in an organized manner using appropriate inheritance and relationships between classes
 * The intended behavior of each class need to be fulfilled
-* All unit tests and mvn -test need to be passed without issues, ensuring that they produce an expected result
+* All unit tests and mvn test need to be passed without issues, ensuring that they produce an expected result
 * Making sure that the implementations ensures readability and maintainability
 * Provide clear explanations of the implementations using Javadoc, making sure that others may understand it
 * Making sure that the file structure adheres with the specification in the project assignment
@@ -643,7 +643,7 @@ the ability information and returns it as an AbilityInfo object.
 Overall, the implementation successfully aligns with the purpose of the assignment by applying the principles of OOP, 
 adhering to specifications, maintaining readability and maintainability, and providing clear explanations through Javadoc. 
 The project demonstrates an understanding of class hierarchies, relationships, and documentation. 
-The unit tests and mvn -test pass without issues, indicating that the expected behavior of the implemented classes
+The unit tests and mvn test pass without issues, indicating that the expected behavior of the implemented classes
 has been fulfilled.
 
 To further improve the project, it would be beneficial to ensure comprehensive unit tests cover all possible scenarios and edge cases. 
