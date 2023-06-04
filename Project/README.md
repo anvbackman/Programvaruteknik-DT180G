@@ -242,6 +242,8 @@ this is simply done via a super in the constructor.
 But these classes will also return some other things. The Weapon class will return the weapons damage, wield and attribute
 and the Armor class will return the armor protection, the material of the armor and trait. 
 The attribute and trait need to be returned randomized but are done in the same fashion.
+Just make sure that the randomization is done between the value 1 to the constant in order to pass the TestWeaponAttribute
+and TestArmorStat tests, since the stat value is not allowed to be 0 or more than the constant.
 In the constructor we may simply assign a new Attribute or Trait object and with the help of 
 StatsManager:getRandomAttributeName() and getRandomTraitName() we may retrieve its name. The value of the stat
 is also randomized but using the Randomizer class. 
@@ -252,7 +254,7 @@ public Weapon(Map<String, String> weapon) {
         damage = Integer.parseInt(weapon.get("damage"));
         wield = weapon.get("wield");
         attribute = new Attribute(StatsManager.INSTANCE.getRandomAttributeName(),
-                Randomizer.INSTANCE.getRandomValue(0, AppConfig.WEAPON_ATTRIBUTE_VALUE_UPPER_BOUND));
+                Randomizer.INSTANCE.getRandomValue(1, AppConfig.WEAPON_ATTRIBUTE_VALUE_UPPER_BOUND));
     }
 ```
 
