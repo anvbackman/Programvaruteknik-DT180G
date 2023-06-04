@@ -1,20 +1,19 @@
 package com.dt180g.project;
 
 /**
- * The main starting point for Project Assignment.
+ * The main starting point for Project.
+ * Responsible for creation of game running entity and trigger its simulation.
  * @author Erik Ström
  */
 public final class Project {
-    private Project() { // Utility classes should not have a public or default constructor
-        throw new IllegalStateException("Utility class");
-    }
+
+    private Project() { throw new IllegalStateException("Utility class"); }
 
     /**
-     * Simple output of the assignment's name. Be sure to replace
-     * this when working with the assignment!
-     * @param args command arguments.
+     * Create game running entity and trigger its simulation.
+     * @param args command arguments. Not relevant here.
      */
     public static void main(final String... args) {
-        System.out.println("Project Assignment!");
+        new GameRunner().runGame();
     }
 }
