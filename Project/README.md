@@ -449,6 +449,18 @@ initialize the stats Map and with the help of the StatsManager class we may retr
 To do so we may use a loop to get the attribute names and values. The values will be multiplied with the 
 ATTRIBUTE_BASE_VALUE found in the AppConfig class. We will then create a new Attribute object using the attribute name
 and value using put method to add them into the stats Map as values and the attributeName as key.
+```
+this.stats = new HashMap<>();
+
+        List<String> attributeNames = StatsManager.INSTANCE.getAttributeNames();
+
+        for (int i = 0; i < attributeValues.size(); i++) {
+            String attributeName = attributeNames.get(i);
+            int attributeValue = attributeValues.get(i) * AppConfig.ATTRIBUTE_BASE_VALUE;
+            BaseStat attribute = new Attribute(attributeName, attributeValue);
+            stats.put(attributeName, attribute);
+        }
+```
 
 The trait and combat stats will need to be added in a slightly different way since these do not have a common constant
 as the attribute has its ATTRIBUTE_BASE_VALUE. For example the vitality trait has the constant 
@@ -464,6 +476,12 @@ We may start of with the getStat() and getStatValue() methods. The getStat() met
 by using its parameter to return the stats name from the stats Map.
 The getStatValue also takes the statName as a parameter but uses it to create a new BaseStat object and then returns 
 the method getModifiedValue() from the BaseStat class.
+```
+public int getStatValue(String statName) {
+        BaseStat stat = getStat(statName);
+        return stat.getModifiedValue();
+    }
+```
 
 We will then need some methods to retrieve the total and current amount of action points, energy level and hit points.
 This is done together with constants using the getStat() method to get the total amount, and the getStatValue to get the current amount.
@@ -499,8 +517,65 @@ In this example we assign the formats used to a String to make it easier to chan
 
 Each section is then added to the main list and returned using the formatAsTable(method) alongside with the header.
 
+#### BaseHero, BaseEnemy
 
+The BaseHero and BaseEnemy classes are abstract classes that extends the BaseCharacter class
+and provide functionality for the heroes and enemies.
 
+The classes are implemented in a similar fashion but the BaseHero class has a couple of more features.
+Both classes declares a String in the instance field that is used to store the name of the character.
+This is then initialized in the constructor using a parameter for the character name. The constructor uses
+another parameter which is a list of attribute values.
+This will then be used to refer to the superclass using the attribute value.
+The character name is then returned using the getCharacterName() method. Since this overrides the superclass,
+we make sure to use the @Override annotation for this.
+
+Equipping weapons are done in the same way for both the heroes and enemies, but since the enemies are not allowed any 
+armor, we simply skipp that for the BaseEnemy class.
+Adding the weapons is done by first retrieving a random weapon, and check if its allowed to add another weapon. If
+it is then the weapon is equipped using addWeapon() method.
+```
+getEquipment().addWeapon(GearManager.INSTANCE.getRandomWeapon(equip));
+        if (getEquipment().amountOfEmptyWeaponSlots() == 1) {
+            getEquipment().addWeapon(GearManager.INSTANCE.getRandomOneHandedWeapon(equip));
+        }
+```
+Adding the armor is slightly different since the armor is stored in a Map. We may then iterate over the GearManager:getAllMappedArmorPieces() 
+method using the keySet() method. For each iteration we then add an armor piece using the armorType as key and using
+getRandomArmorOfType() as value. 
+```
+for (String armorType : GearManager.INSTANCE.getAllMappedArmorPieces().keySet()) {
+            getEquipment().addArmorPiece(armorType, GearManager.INSTANCE.getRandomArmorOfType(armorType, equip));
+        }
+```
+
+Another method that the BaseHero class has is the resetHeroStats() method. This is done by simply creating a new 
+CharacterStats object and calling the reset methods residing there.
+
+Lastly the doTurn() method does the turn for the hero and logs the action done.
+
+#### The Characters
+
+The characters of the game each has their own class that extends the BaseHero or BaseEnemy class.
+All of these classes are quite similar but has som key differences. Each class uses its constructor
+to refer its name and ATTRIBUTE_VALUES back to the superclass.
+Each character also will be equipped with weapons and armor (no armor for the enemies) and their abilities. 
+
+Each hero is equipped calling the equipHero() method using the class as an argument. 
+It then gets the gears stat name and base value by iteration over the getWeapons() and getArmorPieces() methods using
+an object of the Weapon and Armor classes. 
+
+To add the characters abilities we use the addAbilities() method and add the specified abilities as a List.
+
+The enemy classes are slightly different since the equipEnemy method is declared using a List parameter instead
+of the Class parameter of equipHero. This means that we cant add the equipment in the same way as for the heroes.
+This can instead be done by creating a List in which we add the weapons manually using the constants residing in the
+AppConfig class. We then use that list as an argument when calling the equipEnemy() method.
+
+The LichLord has one more functionality though, since the LichLords vitality are to be multiplied with this constant
+BOSS_HEALTH_MULTIPLIER.
+We may do this by simply using the adjustStatStaticModifier in the CharacterStats class using the stat name as key
+and the current hit points of LichLord multiplied by the constant, as value.
 
 
 ### ActivityLogger
