@@ -35,7 +35,7 @@ public class Armor extends BaseGear {
         protection = parseInt(armor.get("protection"));
         material = armor.get("material");
         trait = new Trait(StatsManager.INSTANCE.getRandomTraitName(),
-                Randomizer.INSTANCE.getRandomValue(0, AppConfig.ARMOR_STAT_VALUE_UPPER_BOUND));
+                Randomizer.INSTANCE.getRandomValue(1, AppConfig.ARMOR_STAT_VALUE_UPPER_BOUND));
     }
 
     /**

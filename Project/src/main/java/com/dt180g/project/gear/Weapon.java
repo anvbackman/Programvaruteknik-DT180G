@@ -32,7 +32,7 @@ public class Weapon extends BaseGear {
         damage = Integer.parseInt(weapon.get("damage"));
         wield = weapon.get("wield");
         attribute = new Attribute(StatsManager.INSTANCE.getRandomAttributeName(),
-                Randomizer.INSTANCE.getRandomValue(0, AppConfig.WEAPON_ATTRIBUTE_VALUE_UPPER_BOUND));
+                Randomizer.INSTANCE.getRandomValue(1, AppConfig.WEAPON_ATTRIBUTE_VALUE_UPPER_BOUND));
     }
 
     /**
