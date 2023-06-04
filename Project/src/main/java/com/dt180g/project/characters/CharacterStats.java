@@ -6,7 +6,7 @@ import com.dt180g.project.support.IOHelper;
 import java.util.*;
 
 /**
- * The CharacterStats class represents the character stats.
+ * The CharacterStats class represents the character stats that is used in the game.
  * The class stores and manages the attributes, traits and combat stats of the characters.
  * @author Andreas Backman
  */

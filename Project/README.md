@@ -437,7 +437,69 @@ break down the weapons part.
 The this toString() will return what later on will be seen on the equipment screen. This includes the weapons
 type, wield, damage, name and stat. 
 To do this we iterate over the weapons list using a Weapon object and for each iteration we add the specified
-information to a list
+information to a list before we return it.
+
+#### CharacterStats
+The CharacterStats class is responsible for providing various methods to retrieve and modify the stats in the game,
+this includes the characters attributes, traits and combat stats. This is done using a combined Map for the three.
+Therefor we simply create a single Map in the instance field.
+
+The constructor will then be used to create a CharacterStats object with a parameter for the attributeValues and
+initialize the stats Map and with the help of the StatsManager class we may retrieve the attribute names.
+To do so we may use a loop to get the attribute names and values. The values will be multiplied with the 
+ATTRIBUTE_BASE_VALUE found in the AppConfig class. We will then create a new Attribute object using the attribute name
+and value using put method to add them into the stats Map as values and the attributeName as key.
+
+The trait and combat stats will need to be added in a slightly different way since these do not have a common constant
+as the attribute has its ATTRIBUTE_BASE_VALUE. For example the vitality trait has the constant 
+TRAIT_VITALITY_BASE_VALUE while the energy trait use TRAIT_ENERGY_BASE_VALUE. 
+Both the traits and combat stats are added in a similar way using the put method.
+
+The traits are added using its trait name as key and the value as a new Trait object containing the trait name and value.
+The combat stats uses the combat stat name as key but creates a new CombatStat object which takes three parameters instead
+of two. That is since it first takes the stat name but then takes both an attribute and a trait.
+
+The class then uses plenty of methods to return these types of stats.
+We may start of with the getStat() and getStatValue() methods. The getStat() method simply returns the name of the stat,
+by using its parameter to return the stats name from the stats Map.
+The getStatValue also takes the statName as a parameter but uses it to create a new BaseStat object and then returns 
+the method getModifiedValue() from the BaseStat class.
+
+We will then need some methods to retrieve the total and current amount of action points, energy level and hit points.
+This is done together with constants using the getStat() method to get the total amount, and the getStatValue to get the current amount.
+The methods for returning the defence rate, attack rate, physical power, magical power and healing power are done
+in the same way by returning their constants using the getStatValue() method.
+
+In order to adjust the characters hit points, action points and energy level, we will create the adjustStatDynamicModifier()
+method which takes two parameters. The stat name and the amount of value to adjust. We can do this by declaring a 
+BaseStat object and assigning the stats value from the stats Map using the statName to get it.
+We then use the adjustStaticModifier() method in the BaseStat class to change the value using the value received as 
+an argument. This method is then used for the hit points, energy and action points to adjust them.
+There is also a method called adjustStatStaticModifier which is used to set bonuses set on gear and for the vitality 
+multiplying for the LichLord.
+
+The methods for resetting the action points, energy level and hit points simply does this by creating a new BaseStat
+object using the stats constant and then use the resetDynamicModifier() method residing in the BaseStat class.
+
+The toString() method is responsible for returning a formatted list of all stat values which will be seen in the 
+Hero Details screen under the STATISTICS field. This can be done by creating one main list and then a list 
+for each row. We then format and add each column to the section list using the add method. An example of how this 
+mey be done 
+```
+String formatStringBreak = "%s%-15s%s%3s%s%4s%-7s|";
+String formatStringNoBreak = "%s%-15s%s%3s%s%4s";
+
+formatListSection1.add(String.format(formatStringBreak, AppConfig.ANSI_GREEN, AppConfig.ATTRIBUTE_STRENGTH, AppConfig.ANSI_CYAN, getStatValue(AppConfig.ATTRIBUTE_STRENGTH), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.ATTRIBUTE_STRENGTH).getTotalModifier(), AppConfig.ANSI_WHITE));
+formatListSection1.add(String.format(formatStringBreak, AppConfig.ANSI_GREEN, AppConfig.TRAIT_VITALITY, AppConfig.ANSI_CYAN, getStatValue(AppConfig.TRAIT_VITALITY), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.TRAIT_VITALITY).getTotalModifier(), AppConfig.ANSI_WHITE));
+formatListSection1.add(String.format(formatStringNoBreak, AppConfig.ANSI_GREEN, AppConfig.COMBAT_STAT_ACTION_POINTS, AppConfig.ANSI_CYAN, getStatValue(AppConfig.COMBAT_STAT_ACTION_POINTS), AppConfig.ANSI_YELLOW, "+" + getStat(AppConfig.COMBAT_STAT_ACTION_POINTS).getTotalModifier()));
+
+formatList.add(formatListSection1);
+```
+In this example we assign the formats used to a String to make it easier to change the formatting in the future.
+
+Each section is then added to the main list and returned using the formatAsTable(method) alongside with the header.
+
+
 
 
 
