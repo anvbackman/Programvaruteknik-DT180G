@@ -81,4 +81,65 @@ residing in the AppConfig class (DISC_AMOUNT_MINIMUM, and DISC_AMOUNT_MAXIMUM).
 We then call the resetGame() method in the HanoiEngine class, using the disc amount as an argument, resets the logger
 and log the disc amount as a String.
 
+The MoveCommand class is used to move the discs from one tower to another. We may first declare two int variables
+for this in the instance field.
+These are then initialized in the constructor during construction.
+
+The MoveCommand class got an execute() method as well, but this will instead execute the moves. This is done
+using the performMove() method in the HanoiEngine class, which takes three arguments. The move from, move to
+and a boolean set to true to update the move counter.
+We then log the move using the logInfo() method in the HanoiLogger class.
+```
+@Override
+    public void execute() {
+        HanoiEngine.INSTANCE.performMove(fromTower, toTower, true);
+        HanoiLogger.getInstance().logInfo(fromTower + " " + toTower);
+    }
+```
+The MoveCommand class also makes it possible to undo a move by simply reversing the order of the execute arguments
+and the boolean is set to false.
+The method will then log an undo symbol which uses the constant LOG_UNDO_SYMBOL located in  the AppConfig class.
+
+
+### CommandManager
+
+The CommandManager class is used to redo, undo and clearing the moves made.
+The class is to be implemented as an eager singleton, with the CommandManager INSTANCE object declared as public in
+the instance field.
+In order to store our redo and undo moves we create two MoveCommand Deques as well.
+These are then initialized as LinkedLists during construction.
+
+In order to execute our commands we utilize the executeCommand() method with a CommandInterface object as a parameter.
+We then check if the move is valid using try / catch. If the move is valid we execute said command, and if the command
+is a NewGameCommand, we clear the moves done. If it instead is a MoveCommand command we push the methods argument
+to the undoMoves Deque and calls the clear() method on the redoMoves Deque.
+If we catch an InvalidMoveException we throw an error message.
+
+
+In order to undo and redo moves, we do create the undoMove() and redoMove() methods. Using try / catch we first check if
+the Deque is not empty. If it is not empty, we create a new MoveCommand object and pops the move from the undoMoves/
+redoMoves Deque. In the undoMoves() method we call the unExecute() method to make the move in the reversed order and
+in the redoMove() method we instead call the execute() method to reverse the redoMove. Ones this is done we push the 
+object to the Deque.
+If we catch an InvalidMoveException we simply print out the error message.
+```
+public void undoMove() {
+        try {
+            if (!undoMoves.isEmpty()) {
+                MoveCommand undoneCommand = undoMoves.pop();
+                undoneCommand.unExecute();
+                redoMoves.push(undoneCommand);
+
+            }
+        }
+        catch (InvalidMoveException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+```
+
+We then want to return the Deque sizes using the getUndoAmount() and getRedoAmount() methods, which is straight forward.
+Lastly we can use the clearMoves() method if we would like to clear the Deques, by simply calling the clear() method
+on them.
+
 ## Discussion
