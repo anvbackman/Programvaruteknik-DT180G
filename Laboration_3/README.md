@@ -142,4 +142,35 @@ We then want to return the Deque sizes using the getUndoAmount() and getRedoAmou
 Lastly we can use the clearMoves() method if we would like to clear the Deques, by simply calling the clear() method
 on them.
 
+
+### Replayer
+
+The Replayer class is responsible for reading and replaying the game from a log file. It does this using a BufferedReader 
+object which is initialized during construction. When called on the constructor initializes a new BufferedReader
+object using the getLogFilePath() method as a new FileReader object. We also want to make sure to throw any IOException
+and URISyntaxException errors.
+```
+public Replayer() throws IOException, URISyntaxException {
+        bufferedReader = new BufferedReader(new FileReader(AppConfig.getLogFilePath()));
+    }
+```
+
+We then need to get the data from the log file, since we for example need to be able to read the number of 
+discs to use for the new game. For this we utilize the runReplay() method. We first parse the first line of the log file
+using the trim() method and assign it to a variable called numDiscs. We then execute a NewGameCommand object 
+using the numDiscs variable. 
+
+We then create a String variable which we will store each line of the log file on. To do this we make use of a while 
+loop to iterate through the log file and read each line using the readLine() method. During the iteration
+we check if the current line is equal to the LOG_UNDO_SYMBOL constant. If it is, we call the undoMove() method which
+will undo the previous move.
+Otherwise we know that the line represent a move, so we split the line into an array of Strings. We then
+store the fromTower and toTower indexes into their respective int variables. These are then used to execute a command
+by creating a new MoveCommand object using these new variables.
+If the method shouldShowReplayMoves() inside the AppConfig class is true, then we instead executes the ShowCommand() method.
+We then simply close the bufferedReader when the bottom of the log file has been reached.
+
+
+
+
 ## Discussion
