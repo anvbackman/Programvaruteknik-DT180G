@@ -181,7 +181,6 @@ concrete commands that implements the CommandInterface. The CommandManager class
 undo and redo functionality and maintains executed, undone and redoable commands. The use of the Command Design Pattern
 allows for encapsulation of each action as a command and provides a flexible structure for managing the different moves
 of the game.
-
 Next, the implementation makes use of the singleton pattern. For example in the HanoiLogger where we implemented it
 as a lazy singleton, ensuring that only one instance of the logger is created and that it is only created when needed.
 The class CommandManager is implemented as an eager singleton, which guarantees the use of a single instance throughout
@@ -191,7 +190,6 @@ Furthermore, we make use of custom logging for recording the moves during the ga
 in a way that it is only initialized when necessary based on the configuration specified in the AppConfig class. The 
 logger utilize a customized formatter for its logging contents, which allow for being able to track and replay
 moves from the previous game.
-
 The assignment includes support for undo and redo functionality using the CommandManager class, by maintaining two Deques
 to store the executed moves. The undoMove() method then allows for undoing the previous move by reversing the 
 execution while the redoMove() method enables for redoing a move that was just undone. 
