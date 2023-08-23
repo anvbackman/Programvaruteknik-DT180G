@@ -173,36 +173,42 @@ We then simply close the bufferedReader when the bottom of the log file has been
 
 ## Discussion
 
-The purpose of the assignment was to implement a text-base version of the Tower of Hanoi game, while applying key
-software engineering concepts. Let us discuss how the purposes of the assignment have been reached.
+### Logger
+The logger was constructed as a lazy singleton which uses the SimpleFormatter class as specified in the assignment description.
+The tests provided has all been passed which tells us that it is successful in logging the entries from the game
+and that the constructor is private.
 
-First of all, the implementation includes the Command Design pattern. The classes Move command and NewGameCommand are 
-concrete commands that implements the CommandInterface. The CommandManager class then handles commands and manages
-undo and redo functionality and maintains executed, undone and redoable commands. The use of the Command Design Pattern
-allows for encapsulation of each action as a command and provides a flexible structure for managing the different moves
-of the game.
-Next, the implementation makes use of the singleton pattern. For example in the HanoiLogger where we implemented it
-as a lazy singleton, ensuring that only one instance of the logger is created and that it is only created when needed.
-The class CommandManager is implemented as an eager singleton, which guarantees the use of a single instance throughout
-the game. While making sure that both classes are globally accessible across the program.
+After running and passing the provided tests and by running the game itself without facing any errors, we may establish
+that the program runs as specified. By creating the HanoiLogger as a lazy singleton we make sure that the logger only
+gets created when it is needed, This is done by calling the InitializeLogger class which will construct the logger
+which then logs the actions of the Towers of Hanoi game. The logs are then formatted using the SimpleFormatter class.
 
-Furthermore, we make use of custom logging for recording the moves during the game. The class HanoiLogger is implemented
-in a way that it is only initialized when necessary based on the configuration specified in the AppConfig class. The 
-logger utilize a customized formatter for its logging contents, which allow for being able to track and replay
-moves from the previous game.
-The assignment includes support for undo and redo functionality using the CommandManager class, by maintaining two Deques
-to store the executed moves. The undoMove() method then allows for undoing the previous move by reversing the 
-execution while the redoMove() method enables for redoing a move that was just undone. 
+Based on the above we may establish that the assigned goals: "Implement the HanoiLogger class as a Lazy Singleton to log 
+move activities during the game, adhering to lazy initialization and utilizing a customized formatter for log contents."
+Has been accomplished, since the class is a lazy singleton which only starts its instance when specified in the constructor
+and formats the output using the SimpleFormatter class.
 
-The implementation offers replay functionality through the Replayer class, by reading the game moves from the log file 
-and replays them using the CommandManager. The Replayer class parses the log file, executes new game commands,
-undoes moves when encountering the undo move symbol and performs the moves recorded giving the user the ability 
-to recreate a previous game.
 
-The final implementation is aligned with the specifications and demonstrates proficiency in applying relevant software 
-engineering concepts. It passes the provided unit test, showing that the implementation is functioning as expected.
-The combination of the Command Design Pattern, custom logging, undo and redo functionalities and utilizing the singleton
-pattern we may conclude that we successfully fulfill the purpose and goals of the assignment.
+### Commands
+The classes MoveCommand and NewGameCommand was created as concrete classes which utilizes the HanoiEngine to perform
+moves and start new games. Using the unit tests provided me can see that every goal is passed. The NewGameCommand class
+supports the amount of discs chosen and uses the constants for the lower and upper bound residing in the AppConfig class.
+In the MoveCommand class we see that we are able to both use the execute and unexecute commands without failure, to 
+move the discs in the game.
+
+The classes are concrete and implements the CommandInterface using the HanoiEngine class to store the commands the user
+has made and stores the information. In MoveCommand the execute and unexecute actions update the information by 
+either incrementing amount of moves or not by checking PerformMove inside the HanoiEngine class and moves the disk from
+the current position to the wanted position and checks if the amount of moves should be incremented.
+The NewGameCommand saves the amount of discs that the player has chosen which then remains in the game if the player
+chose to restart the game.
+
+Based on the above we may establish that the assigned goals: "Develop the MoveCommand and NewGameCommand classes as concrete commands implementing the
+CommandInterface, ensuring proper interaction with the HanoiEngine." has been accomplished. The classes are made 
+concrete and implements the CommandInterface by taking the users input to execute commands that are then passed to
+the HanoiEngine class.
+
+
 
 
 ### Personal Reflections
