@@ -174,7 +174,7 @@ We then simply close the bufferedReader when the bottom of the log file has been
 ## Discussion
 
 ### Logger
-The logger was constructed as a lazy singleton which uses the SimpleFormatter class as specified in the assignment description.
+The logger was constructed as a lazy singleton which uses the SimpleFormatter as specified in the assignment description.
 The tests provided has all been passed which tells us that it is successful in logging the entries from the game
 and that the constructor is private.
 
@@ -186,27 +186,70 @@ which then logs the actions of the Towers of Hanoi game. The logs are then forma
 Based on the above we may establish that the assigned goals: "Implement the HanoiLogger class as a Lazy Singleton to log 
 move activities during the game, adhering to lazy initialization and utilizing a customized formatter for log contents."
 Has been accomplished, since the class is a lazy singleton which only starts its instance when specified in the constructor
-and formats the output using the SimpleFormatter class.
+and formats the output using the SimpleFormatter.
 
 
 ### Commands
 The classes MoveCommand and NewGameCommand was created as concrete classes which utilizes the HanoiEngine to perform
 moves and start new games. Using the unit tests provided me can see that every goal is passed. The NewGameCommand class
 supports the amount of discs chosen and uses the constants for the lower and upper bound residing in the AppConfig class.
-In the MoveCommand class we see that we are able to both use the execute and unexecute commands without failure, to 
+In the MoveCommand class we see that we are able to both use the execute and unExecute commands without failure, to 
 move the discs in the game.
 
 The classes are concrete and implements the CommandInterface using the HanoiEngine class to store the commands the user
-has made and stores the information. In MoveCommand the execute and unexecute actions update the information by 
-either incrementing amount of moves or not by checking PerformMove inside the HanoiEngine class and moves the disk from
+has made and stores the information. In MoveCommand the execute and unExecute actions update the information by 
+either incrementing amount of moves or not by checking performMove inside the HanoiEngine class and moves the disk from
 the current position to the wanted position and checks if the amount of moves should be incremented.
 The NewGameCommand saves the amount of discs that the player has chosen which then remains in the game if the player
 chose to restart the game.
 
-Based on the above we may establish that the assigned goals: "Develop the MoveCommand and NewGameCommand classes as concrete commands implementing the
-CommandInterface, ensuring proper interaction with the HanoiEngine." has been accomplished. The classes are made 
-concrete and implements the CommandInterface by taking the users input to execute commands that are then passed to
-the HanoiEngine class.
+Based on the above we may establish that the assigned goals: "Develop the MoveCommand and NewGameCommand classes as 
+concrete commands implementing the CommandInterface, ensuring proper interaction with the HanoiEngine." has been 
+accomplished. The classes are made concrete and implements the CommandInterface by taking the users input to execute 
+commands that are then passed to the HanoiEngine class.
+
+
+### CommandManager
+By creating the CommandManager class using an eager singleton we can make sure that the instance is created as soon
+as the class loads in, which is done with an instance that calls on the constructor. The class contains the undo method
+which uses an array, storing the undo moves made through the executeCommand method. The class also contains the redo
+method which will store the undo moves in order to redo the last element in the Deque array by using ".pop".
+The CommandManager class is constructed as an eager singleton and handles command invocations and stores the moves 
+executed in their respective Deques for undo and redo.
+
+Based on the above we may establish that the assigned goals: "Implement the CommandManager class as an Eager Singleton to handle command invocations,
+manage undo / redo mechanics, and maintain the state of executed, undone, and redoable
+commands." is accomplished. This since the class is constructed as an eager singleton since it is constructed
+upon initializing in contrast to the HanoiLogger and also handles the command invocations by storing the input in the
+assigned Deques. When a redo or undo is made the latest entry is passed to the execute or unExecute methods residing in
+the MoveCommand class, depending on the input that the user has made. There are other methods to hold a stack though,
+for example using "stacks" instead of Deque. However the Deque has more flexibility, which could make it easier in the
+future if more implementations were to be done. 
+
+
+### Replayer
+The class replays the previous game by recreating the game using the log files, which are sent using the CommandManager,
+which executes every move. So if the game were to shut down, one would be able to resume where they last were.
+The Replayer does not really replay the game, but rather starts an identical game using the log files by taking
+the arguments of the moves by the fromTower and toTower methods and sends them to the CommandManager class to execute.
+
+Based on the above we may establish that the assigned goals: "Create the Replayer class for replaying previous games using recorded log files, leveraging the
+CommandManager for command invocations and handling output silencing." is accomplished. By the class being able to
+replay previous games by making use of the recorded log files and the moves that has been logged, by passing it
+to the CommandMannager class which handles the output of the game. By doing this we can "replay" the previous game
+by simply running an identical game.
+
+
+### Final Tests
+The program has been implemented in accordance to the specifications and design, and passes all tests provided.
+It is able to handle all class specific tests and also the commands for testing InvalidMoveException. The programs design
+is constructed to align the provided diagram and assignment instructions given. 
+
+Based on the above we may establish that the assigned goals: "Ensuring that the final implementation is in line with 
+the design specifications, passes all provided unit tests, and demonstrates proficiency in applying relevant 
+software engineering concepts." has been accomplished.
+
+
 
 
 
